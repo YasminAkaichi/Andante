@@ -1,0 +1,59 @@
+from abc import ABC, abstractmethod
+from aloe.clause import *
+
+class ClauseCollection(ABC):
+    @abstractmethod
+    def add(self, func, clause):
+        pass
+    
+    @abstractmethod
+    def match(self, atom):
+        pass
+
+class TreeBasedClauseCollection(ClauseCollection):
+    def __init__(self, clauses, operators=None):
+        if operators is None:
+            self.headlessclauses = [clause for clause in clauses if not clause.head]
+            clauses = [clause for clause in clauses if clause.head]
+            operators = [clause.head for clause in clauses]
+        self.clauses = set(clauses)
+        self.collec = dict()
+        for op, clause in zip(operators, clauses):
+            self.add(op, clause)
+            
+    def add(self, func, clause):
+        self.clauses.add(clause)
+        fname = func.longname
+        if fname not in self.collec:
+            self.collec[fname] = [{'Vars':set()} for _ in range(func.arity)]
+        for term, term_dict in zip(func, self.collec[fname]):
+            if isinstance(term, Constant):
+                if not term.name in term_dict:
+                    term_dict[term.name] = set()
+                term_dict[term.name].add(clause)    
+            elif isinstance(term, Variable):
+                term_dict['Vars'].add(clause)                        
+            elif isinstance(term, Operator):
+                if 'Funcs' not in term_dict:
+                    term_dict['Funcs'] = TreeBasedClauseCollection([],[])                       
+                term_dict['Funcs'].add(term,clause)
+            
+    def match(self, expr):
+        name = expr.longname
+        if name not in self.collec:
+            return set()
+        sets = []
+        for term, term_dict in zip(expr, self.collec[name]):
+            if   isinstance(term, Constant):
+                if term.name in term_dict:
+                    sets.append(term_dict[term.name] | term_dict['Vars'])
+                else:
+                    sets.append(term_dict['Vars'])
+            elif isinstance(term, Variable):
+                sets.append(self.clauses)
+            elif isinstance(term, Operator):
+                sets.append(term_dict['Funcs'].match(term))
+        return set.intersection(*sets)
+            
+    def __repr__(self):
+        return repr(self.collec)  

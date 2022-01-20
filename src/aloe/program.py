@@ -1,55 +1,65 @@
-from aloe.clause  import *
-from aloe.options import *
-from aloe.mode    import ModeHandler
-from aloe.parser  import AloeParser
-from aloe.solver  import AloeSolver
-from aloe.clausecollection import TreeBasedClauseCollection
+import aloe.solver
+from aloe.clause    import Clause
+from aloe.options   import Options
+from aloe.mode      import ModeHandler
+from aloe.knowledge import Knowledge, LogicProgram
 
 class AloeProgram:
-    def __init__(self, B=None, E=None, M=None, options=DefaultOptions()):
+    def __init__(self, options=None, knowledge=None, modes=None, examples=None):
         """
         Class representing a Aloe program
-        Attributes:
+        Attributes :
+            - options:   see aloe.options
+            - knowledge: gathers all clauses (aloe.knowledge.Knowledge object)
+            - examples:  dictionnary of positive and negative examples 
+            - solver:    handles all queries (aloe.solver.Solver object)
+            - modes:     assembles modes and determinations (aloe.modes.ModeHandler object)
+            - learner:   handles inductive learning (aloe.learner.Learner object) 
             -B: background knowledge
             -E: examples
             -M: modes
             -options: options
         """
-        self.B = B if B else LogicProgram()
-        self.E = E if E else {'pos':[], 'neg':[]}
-        self.M = M if M else Modehandler()
-        self.options = options
-        self.parser = AloeParser()
-        self.solver = AloeSolver(self, self)
+        self.options   = options   if options   else Options()
+        self.knowledge = knowledge if knowledge else LogicProgram(options=self.options)
+        self.solver    = getattr(aloe.solver, self.options.solver)()
+        self.modes     = modes     if modes     else ModeHandler(options=self.options)
+        self.examples  = examples  if examples  else {'pos':[], 'neg':[]}
+        #self.learner   = getattr(aloe.learner, self.options.learner)()
+        
+    @staticmethod
+    def build_from_file(filename): 
+        import aloe.parser
+        return aloe.parser.AloeParser.parse_file(None, filename)
+    
+    @staticmethod
+    def build_from_text(text): 
+        import aloe.parser
+        return aloe.parser.AloeParser.parse(None, text)
         
     def __repr__(self):
-        B = repr(self.B)
-        E = repr(self.E)
-        M = repr(self.M)
+        B = repr(self.knowledge)
+        E = repr(self.examples)
+        M = repr(self.modes)
         o = repr(self.options)
         return 'Background:\n%s\n\nExamples:\n%s\n\nModes:\n%s\n\noptions:\n%s' % (B,E,M,o)
-    
+        
     def query(self, q):
         """
-        Launch a query to the aloe program. 
+        Launch a query to the aloe solver. 
         The query 'q' can be:
         - a string: the query will then first be parsed and then evaluated
         - a clause
         - a list of clauses
         """
+        assert isinstance(q, str) \
+            or isinstance(q, Clause) \
+            or isinstance(q, (tuple, list)) and all(isinstance(el, Clause) for el in q)
         if isinstance(q, str):
-            q = list(self.parser.parse_clauses(q))            
-        return self.solver.query(q)
+            if not hasattr(self, 'parser'):
+                import aloe.parser
+                self.parser = aloe.parser.AloeParser()
+            q = list(self.parser.parse_clauses(q))
+        return self.solver.query(q, self.knowledge)
         
-class LogicProgram:
-    def __init__(self, clauses=None):
-        self.clauses = clauses if clauses else list()
-        self.collection = TreeBasedClauseCollection(self.clauses)
-        
-    def match(self, atom):
-        return self.collection.match(atom)
-        
-    def __repr__(self):
-        return '\n'.join([str(clause) for clause in self.clauses])
-
-  
+    def add_option(self, field, value): self.options[field] = value

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from aloe.clause import *
+from aloe.clause import Constant, Variable, Operator
 
 class ClauseCollection(ABC):
     @abstractmethod
@@ -28,9 +28,9 @@ class TreeBasedClauseCollection(ClauseCollection):
             self.collec[fname] = [{'Vars':set()} for _ in range(func.arity)]
         for term, term_dict in zip(func, self.collec[fname]):
             if isinstance(term, Constant):
-                if not term.name in term_dict:
-                    term_dict[term.name] = set()
-                term_dict[term.name].add(clause)    
+                if not term.value in term_dict:
+                    term_dict[term.value] = set()
+                term_dict[term.value].add(clause)    
             elif isinstance(term, Variable):
                 term_dict['Vars'].add(clause)                        
             elif isinstance(term, Operator):
@@ -45,8 +45,8 @@ class TreeBasedClauseCollection(ClauseCollection):
         sets = []
         for term, term_dict in zip(expr, self.collec[name]):
             if   isinstance(term, Constant):
-                if term.name in term_dict:
-                    sets.append(term_dict[term.name] | term_dict['Vars'])
+                if term.value in term_dict:
+                    sets.append(term_dict[term.value] | term_dict['Vars'])
                 else:
                     sets.append(term_dict['Vars'])
             elif isinstance(term, Variable):

@@ -1,44 +1,30 @@
-from aloe.program import AloeProgram, LogicProgram
-from aloe.options import Options, DefaultOptions
+from abc import ABC, abstractmethod
+from aloe.options import Options
 from aloe.variablebank import VariableBank
 
-class AloeSolver:
-    def __init__(self, knowledge, options=DefaultOptions):
-        assert isinstance(knowledge, (AloeProgram, LogicProgram))
-        assert isinstance(knowledge, (AloeProgram, Options))
-        self._knowledge = knowledge
-        self._options = options
+class Solver(ABC):
+    @abstractmethod
+    def query(self, q, knowledge):
+        pass
 
-    @property
-    def knowledge(self):
-        """
-        Knowledge can be given either as an AloeProgram or a LogicProgram object
-        Retreaving information is made differently in each case
-        """
-        if isinstance(self._knowledge, AloeProgram):
-            return self._knowledge.B
-        else:
-            return self._knowledge
+class AloeSolver(Solver):
+    def __init__(self, options=None):
+        assert isinstance(options, Options) or options is None
+        self.options = options if options else Options()
         
-    @property
-    def options(self):
-        """
-        Options can be given either as an AloeProgram or an Options object
-        Accessing options is made differently in each case
-        """
-        if isinstance(self._options, AloeProgram):
-            return self._options.options
-        else:
-            return self._options
-        
-    def query(self, q, **options):
+    def query(self, q, knowledge):
         """
         Launch a query
-        Input: 
-        q: a clause or a list of clauses
+        Inputs: 
+        q: a string, a clause or a list of clauses
         options: parameters for the query, see aloe.query
         """
-        assert isinstance(q, Clause) or (isinstance(q, list) and all(isinstance(el, Clause) for el in q))
+        assert isinstance(knowledge, Knowledge)
+        assert isinstance(q, str) \
+            or isinstance(q, Clause) \
+            or (isinstance(q, list) and all(isinstance(el, Clause) for el in q))
+        if isinstance(q, str):
+            pass
         if isinstance(q, Clause):
             q = [q]
         for clause in q:
@@ -47,20 +33,25 @@ class AloeSolver:
                 raise NotImplementedError(message)
             if clause.head:
                 atom = clause.head 
-                yield (clause, self._query(self, [atom]))
+                yield (clause, self._query(self, [atom], knowledge))
             else:
                 atom = clause.body[0]
-                yield (clause, not self._query(self, [atom]))
+                yield (clause, not self._query(self, [atom], knowledge))
             
-    def _query(self, atoms):
+    def _query(self, atoms, knowledge):
         """ 
         Checks the truth of an atom
         Takes a list of atoms as input
         """
         curr_state = AloeState(atoms)
         states = []
-        while atoms:
-            atom = atoms.pop() #
+        while curr_state.has_atoms():
+            atom = curr_state.next_atom() #
+            candidates = knowledge.match(atom)
+            if not candidates: return False
+            
+        
+        return True
             
 class AloeState:
     def __init__(self, atoms, var_bank=None):

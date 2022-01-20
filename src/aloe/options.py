@@ -5,6 +5,7 @@ class Options(object):
     c       = 2     # Maximal body size for new clauses
     h       = 30    # Maximal depth of deduction
     verbose = 0     # Level of logging output
+    solver  = "AloeSolver"
     
     def __init__(self, options=[]):
         # Here we introduce the user's options
@@ -21,9 +22,5 @@ class Options(object):
             raise AttributeError(message)
             
     def __repr__(self):
-        return '\n'.join(['%s: %s' % (attr, str(getattr(self, attr))) for attr in self.__slots__])
+        return '\n'.join(['%s: %s' % (attr, str(getattr(self, attr))) for attr in self.__dir__() if attr[:1]!='_'])
 
-@dataclass(frozen=True)
-class DefaultOptions(Options):
-    def __init__(self):
-        super().__init__()

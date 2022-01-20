@@ -3,11 +3,12 @@ import bisect
 from parsimonious.grammar import Grammar
 from parsimonious.nodes import NodeVisitor
 from parsimonious.exceptions import ParseError, VisitationError
-from aloe.clause  import *
-from aloe.mode    import *
-from aloe.options import *
-from aloe.program import *
-from aloe.helpers import red
+from aloe.clause    import Clause, Predicate, Function, Variable, Constant
+from aloe.mode      import ModeHandler, Mode, Modeh, Modeb, Type
+from aloe.options   import Options
+from aloe.program   import AloeProgram
+from aloe.knowledge import LogicProgram
+from aloe.helpers   import red
 
 grammar = Grammar(
     r"""    
@@ -185,10 +186,11 @@ class AloeVisitor(NodeVisitor):
         opt_header, background, opt_pos_ex, opt_neg_ex = visited_children
         header, pos_ex, neg_ex = opt_header[0], opt_pos_ex[0], opt_neg_ex[0]
         modehandler, options = header['modehandler'], header['options']
-        return AloeProgram(B=background, 
-                             M=modehandler,
-                             E={'pos':pos_ex,'neg':neg_ex},
-                             options=options)
+        program = AloeProgram(options=options, 
+                              knowledge=background, 
+                              modes=modehandler, 
+                              examples={'pos':pos_ex,'neg':neg_ex})
+        return program
     
     def visit_header(self, node, visited_children):
         header = {'mode':list(), 'determination':list(), 'set':list()}

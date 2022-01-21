@@ -22,7 +22,7 @@ class AloeProgram:
         """
         self.options   = options   if options   else Options()
         self.knowledge = knowledge if knowledge else LogicProgram(options=self.options)
-        self.solver    = getattr(aloe.solver, self.options.solver)()
+        self.solver    = getattr(aloe.solver, self.options.solver)(options=self.options)
         self.modes     = modes     if modes     else ModeHandler(options=self.options)
         self.examples  = examples  if examples  else {'pos':[], 'neg':[]}
         #self.learner   = getattr(aloe.learner, self.options.learner)()
@@ -30,16 +30,17 @@ class AloeProgram:
     @staticmethod
     def build_from_file(filename): 
         import aloe.parser
-        return aloe.parser.AloeParser.parse_file(None, filename)
+        return aloe.parser.AloeParser().parse_file(filename)
     
     @staticmethod
     def build_from_text(text): 
         import aloe.parser
-        return aloe.parser.AloeParser.parse(None, text)
+        return aloe.parser.AloeParser().parse(text)
         
     def __repr__(self):
         B = repr(self.knowledge)
-        E = repr(self.examples)
+        E = 'Positive:\n%s\nNegative:\n%s' % ('\n'.join(repr(e) for e in self.examples['pos']),
+                                              '\n'.join(repr(e) for e in self.examples['neg']))
         M = repr(self.modes)
         o = repr(self.options)
         return 'Background:\n%s\n\nExamples:\n%s\n\nModes:\n%s\n\noptions:\n%s' % (B,E,M,o)
@@ -60,6 +61,6 @@ class AloeProgram:
                 import aloe.parser
                 self.parser = aloe.parser.AloeParser()
             q = list(self.parser.parse_clauses(q))
-        return self.solver.query(q, self.knowledge)
+        return list(self.solver.query(q, self.knowledge))
         
-    def add_option(self, field, value): self.options[field] = value
+    def set(self, field, value): self.options[field] = value

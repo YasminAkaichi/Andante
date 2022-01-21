@@ -16,14 +16,21 @@ class TreeBasedClauseCollection(ClauseCollection):
             self.headlessclauses = [clause for clause in clauses if not clause.head]
             clauses = [clause for clause in clauses if clause.head]
             operators = [clause.head for clause in clauses]
-        self.clauses = set(clauses)
+        self.allclauses = set()
+        self.clausesbyoperator = dict()
         self.collec = dict()
         for op, clause in zip(operators, clauses):
             self.add(op, clause)
             
     def add(self, func, clause):
-        self.clauses.add(clause)
         fname = func.longname
+        
+        self.allclauses.add(clause)
+        
+        if fname not in self.clausesbyoperator:
+            self.clausesbyoperator[fname] = set()
+        self.clausesbyoperator[fname].add(clause)
+            
         if fname not in self.collec:
             self.collec[fname] = [{'Vars':set()} for _ in range(func.arity)]
         for term, term_dict in zip(func, self.collec[fname]):
@@ -50,7 +57,7 @@ class TreeBasedClauseCollection(ClauseCollection):
                 else:
                     sets.append(term_dict['Vars'])
             elif isinstance(term, Variable):
-                sets.append(self.clauses)
+                sets.append(self.clausesbyoperator[name])
             elif isinstance(term, Operator):
                 sets.append(term_dict['Funcs'].match(term))
         return set.intersection(*sets)

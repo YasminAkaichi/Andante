@@ -24,3 +24,6 @@ class Options(object):
     def __repr__(self):
         return '\n'.join(['%s: %s' % (attr, str(getattr(self, attr))) for attr in self.__dir__() if attr[:1]!='_'])
 
+    def __setitem__(self, key, value): setattr(self, key, value)
+        
+    def __getitem__(self, key): return getattr(self, key)

@@ -184,8 +184,15 @@ class AloeVisitor(NodeVisitor):
     # 3. For aloe file as a whole
     def visit_aloefile(self, node, visited_children):
         opt_header, background, opt_pos_ex, opt_neg_ex = visited_children
-        header, pos_ex, neg_ex = opt_header[0], opt_pos_ex[0], opt_neg_ex[0]
-        modehandler, options = header['modehandler'], header['options']
+        if opt_header:
+            header = opt_header[0]
+            modehandler, options = header['modehandler'], header['options']
+        else:
+            header, modehandler, options = None, None, None
+            
+        pos_ex = opt_pos_ex[0] if opt_pos_ex else []
+        neg_ex = opt_neg_ex[0] if opt_neg_ex else []
+        
         program = AloeProgram(options=options, 
                               knowledge=background, 
                               modes=modehandler, 
@@ -288,13 +295,13 @@ class AloeParser:
         output = self.visitor.visit(tree)
         return output
     
-    def parse_clauses(self, c):
+    def parse_clauses(self, text):
         at = AloeText(text)
         at.preprocess()
         clauses = at.get_clauses()
         for clause in clauses:            
             try:
-                yield self.parse_rule(at.text,'hornclause')
+                yield self.parse_rule(clause,'hornclause')
             except ParseError as e:
                 message = 'Parsing error\nClause:%s' % (str(clause))
                 raise Exception(message)

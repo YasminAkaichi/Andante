@@ -22,7 +22,7 @@ class Clause:
         return str(self)==str(other)
     
     def is_unit(self):
-        n_atoms = (1 if self.head else 0) + len(body)
+        n_atoms = (1 if self.head else 0) + len(self.body)
         return n_atoms==1
     
     def is_skomelized(self):
@@ -63,7 +63,7 @@ class Constant(Term):
     def __init__(self, value):
         self.value = value
         
-    def __repr__(self): return self.value
+    def __repr__(self): return repr(self.value)
     def is_skolemized(self): return True
     
 class Variable(Term):
@@ -74,6 +74,6 @@ class Variable(Term):
         """
         self.value = value
         
-    def __repr__(self): return repr(self.value)
+    def __repr__(self): return 'V%d' % (self.value) if isinstance(self.value, int) else self.value
     def is_skolemized(self): return False
     

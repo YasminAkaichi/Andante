@@ -1,4 +1,4 @@
-set(verbose,1).
+set(verbose,0).
 
 modeh(1,echec_cours(+personne)).
 modeb(1,echec_pre(+personne)).

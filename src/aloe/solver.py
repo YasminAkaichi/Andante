@@ -3,12 +3,14 @@ from aloe.options import Options
 from aloe.variablebank import VariableBank
 from aloe.query import learn_subst, unify
 from aloe.knowledge import Knowledge
-from aloe.clause import Clause
+from aloe.clause import Clause, Operator
 
 class Solver(ABC):
     @abstractmethod
     def query(self, q, knowledge):
         pass
+    
+    def solve(self, q, knowledge): return self.query(q, knowledge)
 
 class AloeSolver(Solver):
     def __init__(self, options=None):
@@ -19,28 +21,25 @@ class AloeSolver(Solver):
         """
         Launch a query
         Inputs: 
-        q: a clause or a list of clauses
+        q: a clause
         options: parameters for the query, see aloe.query
         """
         assert isinstance(knowledge, Knowledge)
-        assert isinstance(q, Clause) \
-            or (isinstance(q, list) and all(isinstance(el, Clause) for el in q))
-        if isinstance(q, Clause):
-            q = [q]
-        for clause in q:
-            if not clause.is_unit():
-                message = 'Query not implemented for non unit clauses\nClause: %s' % (clause)
-                raise NotImplementedError(message)
-            if clause.head:
-                atom = clause.head 
-                results = list(self._query([atom], knowledge))
-                success = len(results)>0
-                yield (clause, success, results)
-            else:
-                atom = clause.body[0]
-                results = list(self._query([atom], knowledge))
-                success = len(results)>0
-                yield (clause, not success, results)
+        assert isinstance(q, Clause)
+        if not q.is_unit():
+            message = 'Query not implemented for non unit clauses\nClause: %s' % (clause)
+            raise NotImplementedError(message)
+        if q.head:
+            atom = q.head 
+            results = list(self._query([atom], knowledge))
+            print('R',results)
+            success = len(results)>0
+            return success, results
+        else:
+            atom = q.body[0]
+            results = list(self._query([atom], knowledge))
+            success = len(results)>0
+            return not success, results
             
     def _query(self, atoms, knowledge):
         """ 
@@ -63,12 +62,13 @@ class AloeSolver(Solver):
             
             atom = curr_state.next_atom()
             atom = curr_state.var_bank.apply_subst(atom)
-            verboseprint('Atom', atom)
+            verboseprint('Atom', atom, atom.longname)
             
             # If a clause has not yet be matched to the atom
             if not curr_state.next_clause:
                 # 1. Get all clauses whose head matches the atom
                 candidates = knowledge.match(atom)
+                verboseprint('Candidates', candidates)
                 if not candidates: 
                     if not alternate_states:
                         return
@@ -127,3 +127,11 @@ class AloeState:
     def next_atom(self):
         self.curr_atom = self.atoms.pop()
         return self.curr_atom
+
+    
+def print_class_in_depth(element):
+    print(element.__class__, element)
+    if isinstance(element, Operator):
+        for t in element:
+            print('Child -',end=' ')
+            print_class_in_depth(t)

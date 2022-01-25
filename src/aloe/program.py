@@ -1,8 +1,10 @@
 import aloe.solver
+import aloe.learner
 from aloe.clause    import Clause
 from aloe.options   import Options
 from aloe.mode      import ModeHandler
 from aloe.knowledge import Knowledge, LogicProgram
+
 
 class AloeProgram:
     def __init__(self, options=None, knowledge=None, modes=None, examples=None):
@@ -25,7 +27,7 @@ class AloeProgram:
         self.solver    = getattr(aloe.solver, self.options.solver)(options=self.options)
         self.modes     = modes     if modes     else ModeHandler(options=self.options)
         self.examples  = examples  if examples  else {'pos':[], 'neg':[]}
-        #self.learner   = getattr(aloe.learner, self.options.learner)()
+        self.learner   = getattr(aloe.learner, self.options.learner)()
         
     @staticmethod
     def build_from_file(filename): 
@@ -61,6 +63,14 @@ class AloeProgram:
                 import aloe.parser
                 self.parser = aloe.parser.AloeParser()
             q = list(self.parser.parse_clauses(q))
-        return list(self.solver.query(q, self.knowledge))
+        return list(self.solver.query(q_, self.knowledge) for q_ in q)
         
     def set(self, field, value): self.options[field] = value
+        
+    def induce(self):
+        self.learner.induce(self.examples, self.modes, self.knowledge, self.solver)
+        
+        
+        
+        
+        

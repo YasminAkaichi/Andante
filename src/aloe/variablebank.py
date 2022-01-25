@@ -63,10 +63,15 @@ class VariableBank:
             op_args = [self.apply_subst(t) for t in term]
             return term.__class__(term.name, op_args)
         
-        
     def copy(self):
         vb = VariableBank()
         vb.variables = self.variables.copy()
         vb.count = self.count
         vb.subst = self.subst.copy()
         return vb
+    
+    def var4skolem(self, skolem):
+        """ returns variable corresponding to skolem value 'skolem' """
+        if skolem not in self.subst:
+            self.subst[skolem] = newVariable
+        return self.subst[skolem]

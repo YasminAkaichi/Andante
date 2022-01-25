@@ -1,3 +1,6 @@
+from aloe.clause import Operator, Constant, Variable
+from aloe.variablebank import VariableBank
+
 class ModeHandler:
     def __init__(self, modes=None, determinations=None, options=None):
         """
@@ -26,11 +29,20 @@ class ModeHandler:
                 self.determinations[deterh] = set()
             self.determinations[deterh].update(l_deterb)
             
+    def modeb4modeh(self, modeh):
+        deterh = modeh if isinstance(modeh, str) else modeh.determform()
+        if deterh in self.determinations:
+            return [self.modeb[deterb] for deterb in self.determinations[deterh]]
+        else:
+            return [value for _, value in self.modeb.items()]
+            
     def __repr__(self):
         
         return 'modeh: %s\nmodeb: %s\ndeterminations: %s' % (repr(self.modeh), 
                                                              repr(self.modeb),
                                                              repr(self.determinations))
+    
+
 
             
 class Mode:

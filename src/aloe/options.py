@@ -2,10 +2,12 @@ from dataclasses import dataclass
 
 @dataclass       
 class Options(object):
+    i       = 2
     c       = 2     # Maximal body size for new clauses
     h       = 30    # Maximal depth of deduction
     verbose = 0     # Level of logging output
     solver  = "AloeSolver"
+    learner = "ProgolLearner"
     
     def __init__(self, options=[]):
         # Here we introduce the user's options

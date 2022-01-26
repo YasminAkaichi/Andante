@@ -27,6 +27,15 @@ class Clause:
     
     def is_skomelized(self):
         return (self.head.is_skomelized() if self.head else True) and all([atom.is_skomelized() for atom in self.body])
+    
+    
+class Goal: 
+    pass
+
+class Literal:
+    def __init__(self, atom, sign):
+        self.atom = atom
+        self.sign = sign
 
 class Operator(ABC):
     def __init__(self, name, terms):
@@ -47,7 +56,8 @@ class Operator(ABC):
         return all([term.is_skomelized() for term in self])
     
 class Atom(ABC):
-    pass
+    def __hash__(self):      return hash(repr(self))
+    def __eq__(self, other): return repr(self) == repr(other)    
 
 class Term(ABC):
     def __hash__(self):      return hash(repr(self))

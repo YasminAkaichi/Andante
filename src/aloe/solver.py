@@ -6,18 +6,18 @@ from aloe.knowledge import Knowledge
 from aloe.clause import Clause, Operator
 
 class Solver(ABC):
-    @abstractmethod
-    def query(self, q, knowledge):
-        pass
-    
-    def solve(self, q, knowledge): return self.query(q, knowledge)
-
-class AloeSolver(Solver):
     def __init__(self, options=None):
         assert isinstance(options, Options) or options is None
-        self.options = options if options else Options()
-        
-    def query(self, q, knowledge):
+        self.options = options or Options()
+                
+    @abstractmethod
+    def query(self, q, knowledge, verbose=None):
+        pass
+    
+    def solve(self, *args, **options): return self.query(*args, **options)
+
+class AloeSolver(Solver):
+    def query(self, q, knowledge, verbose=None):
         """
         Launch a query
         Inputs: 
@@ -26,13 +26,13 @@ class AloeSolver(Solver):
         """
         assert isinstance(knowledge, Knowledge)
         assert isinstance(q, Clause)
+        self.verbose = verbose if verbose is not None else self.options.verbose
         if not q.is_unit():
             message = 'Query not implemented for non unit clauses\nClause: %s' % (clause)
             raise NotImplementedError(message)
         if q.head:
             atom = q.head 
             results = list(self._query([atom], knowledge))
-            print('R',results)
             success = len(results)>0
             return success, results
         else:
@@ -46,7 +46,7 @@ class AloeSolver(Solver):
         Checks the truth of an atom
         Takes a list of atoms as input
         """
-        verboseprint = print if self.options.verbose else lambda *a, **k: None
+        verboseprint = print if self.verbose else lambda *a, **k: None
         curr_state = AloeState(atoms)
         alternate_states = []
         count_h = 0
@@ -62,11 +62,12 @@ class AloeSolver(Solver):
             
             atom = curr_state.next_atom()
             atom = curr_state.var_bank.apply_subst(atom)
-            verboseprint('Atom', atom, atom.longname)
+            verboseprint('Atom', atom)
             
             # If a clause has not yet be matched to the atom
             if not curr_state.next_clause:
                 # 1. Get all clauses whose head matches the atom
+                verboseprint(atom.longname)
                 candidates = knowledge.match(atom)
                 verboseprint('Candidates', candidates)
                 if not candidates: 

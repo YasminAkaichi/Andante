@@ -8,13 +8,17 @@ from aloe.variablebank import VariableBank
 
 class Learner(ABC):
     def __init__(self, options=None):
+        assert isinstance(options, Options) or options is None
         self.options = options if options else Options()
-    
+        
     @abstractmethod
-    def induce(self, examples, modes, knowledge, solver):
+    def induce(self, examples, modes, knowledge, solver, verbose=None):
         pass
 
 def match_head(atom, modes):
+    """ 
+    Should be in aloe.mode
+    """
     if not atom.longname in modes.modeh:
         message = "There are no modes corresponding to '%s'" % (atom)
         raise Exception(message)
@@ -71,7 +75,8 @@ def generate_atom_from_InTerms(atom, InTerms, vb=None):
     if isinstance(atom, Type):
         if atom.prefix=='+':
             for skolem in InTerms:
-                yield Constant(skolem)
+                yield skolem
+                #yield Constant(skolem)
         else:
             yield vb.newVariable()
     elif isinstance(atom, Constant):
@@ -83,10 +88,14 @@ def generate_atom_from_InTerms(atom, InTerms, vb=None):
             
 def construct_atom(matom, b, subst, vb):
     if isinstance(matom, Type):
-        if matom.prefix=='+':
-            return b, set()
-        elif matom.prefix=='#':
+        if   matom.prefix=='#':
             return subst[b], set()
+        elif matom.prefix=='+':
+            skolem = b
+            if skolem not in vb.subst:
+                vb.subst[skolem] = vb.newVariable()
+            var = vb.subst[skolem]
+            return var, set()
         else: # matom.prefix=='-'
             skolem = subst[b]
             if skolem not in vb.subst:
@@ -103,6 +112,14 @@ def construct_atom(matom, b, subst, vb):
             children.append(child)
             InTerms.update(it)
         return matom.__class__(matom.name, children), InTerms
+    
+def get_variables(term):
+    if   isinstance(term, Variable):
+        return {term}
+    elif isinstance(term, Operator):
+        return set.union(*[get_variables(t) for t in term])
+    else:
+        return set()
             
 class ProgolLearner(Learner):
     """ 
@@ -130,26 +147,98 @@ class ProgolLearner(Learner):
             for modeb in modehandler.modeb4modeh(h.longname):
                 for b in generate_atom_from_InTerms(modeb.atom, InTerms):
                     q = Clause(b, [])
-                    print('Candidate:',q)
-                    success, subst_gen = solver.query(q, bckg)
-                    print(success,subst_gen)
-                    print()
+                    success, subst_gen = solver.query(q, bckg, verbose=0)
                     if not success: continue
                     for subst in itertools.islice(subst_gen, modeb.recall):
-                        b, it = construct_atom(modeb.atom, b, subst, vb)
+                        bclause, it = construct_atom(modeb.atom, b, subst, vb)
                         next_InTerms.update(it)
-                        bottom.body.append(b)
+                        if bclause not in bottom.body:
+                            print(bclause)
+                            bottom.body.append(bclause)
             InTerms = next_InTerms
         
         return bottom
+    
+    def build_hypothesis(self, examples, bottom_i, knowledge, solver):
+        options = self.options
+        verboseprint = print if self.verbose==1 else lambda *a, **k: None
         
+        class State:
+            def __init__(self, clause, vb=None, k=0):
+                self.clause = clause
+                self.localKnowledge = MultipleKnowledge(knowledge, LogicProgram([clause],options=options))
+                self.vb = vb if vb is not None else VariableBank()
+                self.k = k
+                
+                self.c = len(self.clause.body)
+                temp = [get_variables(b) for b in clause.body]
+                self.h = len(get_variables(clause.head) - set.union(*temp)) if temp else len(get_variables(clause.head))
+                self.h = min(1,self.h)
+                def solver_succeed(e):
+                    success, _ = solver.solve(e, self.localKnowledge, verbose=0)
+                    return success
+                self.p = len([1 for e in examples['pos'] if solver_succeed(e)])
+                self.n = len([1 for e in examples['neg'] if solver_succeed(e)])
+                self.g = self.p - self.c - self.h
+                self.f = self.g - self.n
+                
+            def copy(self): return State(self.clause.copy(), self.vb.copy(), self.k)
+            def __str__(self): return '[%2d,%2d,%2d,%2d,%2d,%2d] Clause(k=%d):%s' %(self.c,self.h,self.p,self.n,self.g,self.f, self.k, str(self.clause))
+            def __hash__(self): return hash(str(self))
+            def __eq__(self, other): return str(self)==str(other)
         
-    def induce(self, examples, modes, knowledge, solver):
+        def best(collec):
+            return max([s for s in collec if s.c<=self.options.c], key=lambda s: s.f)
+        
+        def prune(state):
+            if (state.n==0 and state.f>0) or state.g<=0 or state.c>self.options.c:
+                return True
+            else: return False
+        
+        def terminated(Closed, Open):
+            s = best(Closed)
+            if len(Open)==0:
+                return True
+            elif s.n==0 and s.f>0 and s.f>=best(Open).g:
+                return True
+            else: return False
+                
+        def rho(state):
+            for i in range(state.k, len(bottom_i.body)):
+                c = Clause(state.clause.head, state.clause.body+[bottom_i.body[i]])
+                s = State(c, state.vb.copy(), i+1)
+                yield s
+
+                
+        
+        s0 = State(Clause(bottom_i.head, []))
+        Open = {s0}
+        Closed = set()
+        for _ in range(100):
+            s = best(Open)
+            verboseprint(s)
+            Open.remove(s)
+            Closed.add(s)
+            
+            if not prune(s):
+                Open = (Open | set(list(rho(s)))) - Closed
+                
+            if terminated(Closed, Open):
+                return best(Closed)
+            
+            if not Open:
+                return None
+        
+    def induce(self, examples, modes, knowledge, solver, verbose=None):
+        self.verbose = verbose if verbose is not None else self.options.verbose
         e1 = examples['pos'][0]
         bottom_i = self.build_bottom_i(e1, modes, knowledge, solver)
-        print(e1)
-        print(bottom_i)
-        return bottom_i
+        C = self.build_hypothesis(examples, bottom_i, knowledge, solver)
+        print('Example considered:',e1)
+        print('Bottom_i',bottom_i)
+        print('Clause found', C)
+        return C
+    
         
         
         

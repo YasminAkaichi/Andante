@@ -1,5 +1,23 @@
 from aloe.clause import Clause, Constant, Variable, Operator
 
+def apply_subst(term, subst, deep=False):
+    """ 
+    Applies variable substitution 'subst' to term 'term'.
+    Variables that are not in 'subst' are returned as they are.
+    """
+    if   isinstance(term, Constant):
+        return term
+    elif isinstance(term, Variable):
+        if term in subst:
+            if deep: return apply_subst(subst[term], subst, deep=True)
+            else:    return subst[term]
+        else:        return term
+    elif isinstance(term, Operator):
+        f_name = term.name
+        f_args = [apply_subst(t, subst, deep=True) for t in f_args]
+        return term.__class__(f_name, f_args)
+
+
 class VariableBank:
     def __init__(self):
         self.variables = set()
@@ -14,6 +32,8 @@ class VariableBank:
     
     def update_subst(self, subst):
         self.subst.update(subst)
+        for key, value in self.subst.items():
+            self.subst[key] = apply_subst(value, subst, deep=True)
     
     @staticmethod
     def build_from_atom(atom):
@@ -29,6 +49,7 @@ class VariableBank:
         update_variables(atom)
         return vb
 
+    # Rename variable in ..
     def transform_clause(self, clause, subst=None):
         if subst is None: subst = dict()
         head = self.transform(clause.head, subst)

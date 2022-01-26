@@ -27,7 +27,7 @@ class AloeProgram:
         self.solver    = getattr(aloe.solver, self.options.solver)(options=self.options)
         self.modes     = modes     if modes     else ModeHandler(options=self.options)
         self.examples  = examples  if examples  else {'pos':[], 'neg':[]}
-        self.learner   = getattr(aloe.learner, self.options.learner)()
+        self.learner   = getattr(aloe.learner, self.options.learner)(options=self.options)
         
     @staticmethod
     def build_from_file(filename): 

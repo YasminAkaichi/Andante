@@ -47,12 +47,10 @@ class TreeBasedClauseCollection(ClauseCollection):
             
     def match(self, expr):
         name = expr.longname
-        print(name, self.collec)
         if name not in self.collec:
             return set()
         sets = []
         for term, term_dict in zip(expr, self.collec[name]):
-            print('Term',term)
             if   isinstance(term, Constant):
                 if term.value in term_dict:
                     sets.append(term_dict[term.value] | term_dict['Vars'])
@@ -62,7 +60,6 @@ class TreeBasedClauseCollection(ClauseCollection):
                 sets.append(self.clausesbyoperator[name])
             elif isinstance(term, Operator):
                 sets.append(term_dict['Funcs'].match(term))
-        print('Sets',sets)
         return set.intersection(*sets)
             
     def __repr__(self):

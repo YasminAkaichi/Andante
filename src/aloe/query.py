@@ -1,6 +1,7 @@
 from aloe.clause import Constant, Variable, Operator
 
 # Matching 2 atoms
+# unify atom1 with atom2, the head of a clause
 def learn_subst(atom1, atom2):    
     """
     Tries to match two atoms together and returns the corresponding substitution.
@@ -64,7 +65,8 @@ def _var_in_term(var, term):
         return term==var
     elif isinstance(term, Operator):
         return any([_var_in_term(var,t) for t in term])
-    
+
+#     
 def unify(subst):
     """ 
     Procedes to the unification of substitution. 
@@ -75,5 +77,7 @@ def unify(subst):
         n_term = _apply_subst(term, new_subst)
         if _var_in_term(var, n_term): # Fail to unify
             return None
-        new_subst[var] = n_term
+        new_subst[var] = n_term        
     return new_subst
+
+

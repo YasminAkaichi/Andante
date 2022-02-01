@@ -3,12 +3,12 @@ import bisect
 from parsimonious.grammar import Grammar
 from parsimonious.nodes import NodeVisitor
 from parsimonious.exceptions import ParseError, VisitationError
-from aloe.clause    import Clause, Predicate, Function, Variable, Constant
-from aloe.mode      import ModeHandler, Mode, Modeh, Modeb, Type
-from aloe.options   import Options
+from aloe.clause    import Clause, Predicate, CompoundTerm, Variable, Constant, Literal, Goal, Type
+from aloe.mode      import ModeCollection, Mode, Modeh, Modeb
+from aloe.options   import Options, SystemParameters
 from aloe.program   import AloeProgram
 from aloe.knowledge import LogicProgram
-from aloe.helpers   import red
+from aloe.utils     import red
 
 grammar = Grammar(
     r"""    
@@ -32,8 +32,8 @@ grammar = Grammar(
     body             = atom ("," atom)*
     atom             = "true" / "false" / predicate
     predicate        = predname "(" term ("," term)* ")"
-    term             = function / constant / variable 
-    function         = funcname "(" term ("," term)* ")"
+    term             = compoundterm / variable / constant 
+    compoundterm     = funcname "(" term ("," term)* ")"
     predname         = word
     funcname         = word
     constant         = value / value
@@ -47,10 +47,13 @@ grammar = Grammar(
     modeb     = "modeb(" recall "," matom ")."
     recall    = "*" / number
     matom     = predname "(" mterm ("," mterm)* ")" 
-    mfunction = funcname "(" mterm ("," mterm)* ")"
-    mterm     = type / mfunction / constant
+    mcompterm = funcname "(" mterm ("," mterm)* ")"
+    mterm     = type / mcompterm / constant
     type      = sign word
     sign      = ~"[+\-#]"
+    
+    goal      = literal ("," literal)* "."
+    literal   = "~"? atom 
     """
 )
 
@@ -122,10 +125,10 @@ class AloeVisitor(NodeVisitor):
         terms = [term1] + [term for _, term in opt_terms]
         return Predicate(predname, terms)
     
-    def visit_function(self, node, visited_children):
+    def visit_compoundterm(self, node, visited_children):
         funcname, _, term1, opt_terms, _ = visited_children
         terms = [term1] + [term for _, term in opt_terms]
-        return Function(funcname, terms)
+        return CompoundTerm(funcname, terms)
     
     def visit_term(self, node, visited_children):
         return visited_children[0]
@@ -160,22 +163,22 @@ class AloeVisitor(NodeVisitor):
     
     def visit_recall(self, node, visited_children):
         if node.text == '*':
-            return float('inf')
+            return SystemParameters.max_recall
         else:
             return int(node.text)
     
     def visit_matom(self, node, visited_children):
         return self.visit_predicate(node, visited_children)
     
-    def visit_mfunction(self, node, visited_children):
-        return self.visit_function(node, visited_children)
+    def visit_mcompterm(self, node, visited_children):
+        return self.visit_compoundterm(node, visited_children)
     
     def visit_mterm(self, node, visited_children):
         return visited_children[0]
     
     def visit_type(self, node, visited_children):
-        prefix, name = visited_children
-        return Type(prefix, name)
+        sign, name = visited_children
+        return Type(sign, name)
     
     def visit_sign(self, node, visited_children):
         return node.text
@@ -204,7 +207,7 @@ class AloeVisitor(NodeVisitor):
         for node_child, visited_child in zip(node, visited_children):
             header[node_child.children[0].expr_name].append(visited_child)
             
-        mhandler = ModeHandler(header['mode'], header['determination'])
+        mhandler = ModeCollection(header['mode'], header['determination'])
         options  = Options(header['set'])
         return {'modehandler':mhandler, 'options':options}
         
@@ -234,6 +237,18 @@ class AloeVisitor(NodeVisitor):
         _, attr, _, value, _ = visited_children
         return (attr, value)
     
+    def visit_goal(self, node, visited_children):
+        # literal ("," literal)+ "."
+        lit0, l_lit, _ = visited_children
+        literals = [lit0] + [lit for _, lit in l_lit]
+        return Goal(literals)
+    
+    def visit_literal(self, node, visited_children):
+        # "~"? atom 
+        _, atom = visited_children
+        if '~'==node.children[0].text: 
+            return Literal(atom, sign='-')
+        else: return Literal(atom, sign='+')
 
 class AloeParser:
     def __init__(self):
@@ -251,12 +266,17 @@ class AloeParser:
             
         return self.parse(orig_text)
             
-    def parse(self, orig_text):
+    def parse(self, string):
         """
         Parses aloe text
-        Input: orig_text: string containing the text to parse
+        Input: string: either a path to a file or a text to parse
         Ouput: list of Clause
         """
+        
+        # Case where string is the path to a file
+        try:    orig_text = open(string, 'r').read()            
+        except: orig_text = string
+        
         at = AloeText(orig_text)
         
         # Remove spaces and comments from text
@@ -310,6 +330,10 @@ class AloeParser:
                 raise Exception(message)
             except Exception as e:
                 raise e
+    
+    def parse_goal(self, text):
+        text = ''.join(text.split())
+        return self.parse_rule(text, 'goal')
     
     
 class AloeText:

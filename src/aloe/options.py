@@ -1,5 +1,8 @@
 from dataclasses import dataclass
 
+class SystemParameters:
+    max_recall = 100 # value from Progol (p.4 from tutorial4.4.pdf)
+
 @dataclass       
 class Options(object):
     i       = 2
@@ -8,6 +11,8 @@ class Options(object):
     verbose = 0     # Level of logging output
     solver  = "AloeSolver"
     learner = "ProgolLearner"
+    hmetric = "FnMetric"
+    maxclauses = 10
     
     def __init__(self, options=[]):
         # Here we introduce the user's options

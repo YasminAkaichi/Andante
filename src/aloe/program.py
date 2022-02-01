@@ -1,8 +1,8 @@
 import aloe.solver
 import aloe.learner
-from aloe.clause    import Clause
+from aloe.clause    import Goal
 from aloe.options   import Options
-from aloe.mode      import ModeHandler
+from aloe.mode      import ModeCollection
 from aloe.knowledge import Knowledge, LogicProgram
 
 
@@ -15,7 +15,7 @@ class AloeProgram:
             - knowledge: gathers all clauses (aloe.knowledge.Knowledge object)
             - examples:  dictionnary of positive and negative examples 
             - solver:    handles all queries (aloe.solver.Solver object)
-            - modes:     assembles modes and determinations (aloe.modes.ModeHandler object)
+            - modes:     assembles modes and determinations (aloe.modes.ModeCollection object)
             - learner:   handles inductive learning (aloe.learner.Learner object) 
             -B: background knowledge
             -E: examples
@@ -25,7 +25,7 @@ class AloeProgram:
         self.options   = options   if options   else Options()
         self.knowledge = knowledge if knowledge else LogicProgram(options=self.options)
         self.solver    = getattr(aloe.solver, self.options.solver)(options=self.options)
-        self.modes     = modes     if modes     else ModeHandler(options=self.options)
+        self.modes     = modes     if modes     else ModeCollection(options=self.options)
         self.examples  = examples  if examples  else {'pos':[], 'neg':[]}
         self.learner   = getattr(aloe.learner, self.options.learner)(options=self.options)
         
@@ -52,18 +52,16 @@ class AloeProgram:
         Launch a query to the aloe solver. 
         The query 'q' can be:
         - a string: the query will then first be parsed and then evaluated
-        - a clause
-        - a list of clauses
+        - a goal
         """
         assert isinstance(q, str) \
-            or isinstance(q, Clause) \
-            or isinstance(q, (tuple, list)) and all(isinstance(el, Clause) for el in q)
+            or isinstance(q, Goal)
         if isinstance(q, str):
             if not hasattr(self, 'parser'):
                 import aloe.parser
                 self.parser = aloe.parser.AloeParser()
-            q = list(self.parser.parse_clauses(q))
-        return list(self.solver.query(q_, self.knowledge) for q_ in q)
+            q = self.parser.parse_goal(q)
+        return self.solver.query(q, self.knowledge)
         
     def set(self, field, value): self.options[field] = value
         

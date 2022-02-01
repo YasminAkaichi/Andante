@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 from aloe.options import Options
-from aloe.variablebank import VariableBank
-from aloe.query import learn_subst, unify
+from aloe.substitution import Substitution
 from aloe.knowledge import Knowledge
-from aloe.clause import Clause, Operator
+from aloe.clause import Clause, Function, Goal, Literal, Atom
+from aloe.exceptions import SubstitutionError
 
 class Solver(ABC):
     def __init__(self, options=None):
@@ -21,106 +21,120 @@ class AloeSolver(Solver):
         """
         Launch a query
         Inputs: 
-        q: a clause
-        options: parameters for the query, see aloe.query
+        q: Goal, Literal, Atom
+        options: parameters for the query, see aloe.options
         """
         assert isinstance(knowledge, Knowledge)
-        assert isinstance(q, Clause)
+        
+        if isinstance(q, Atom):
+            q = Literal(q)
+        if isinstance(q, Literal):
+            q = Goal([q])
+        assert isinstance(q, Goal)
         self.verbose = verbose if verbose is not None else self.options.verbose
-        if not q.is_unit():
-            message = 'Query not implemented for non unit clauses\nClause: %s' % (clause)
-            raise NotImplementedError(message)
-        if q.head:
-            atom = q.head 
-            results = list(self._query([atom], knowledge))
-            success = len(results)>0
-            return success, results
-        else:
-            atom = q.body[0]
-            results = list(self._query([atom], knowledge))
-            success = len(results)>0
-            return not success, results
+        
+        # Initialisation
+        sigma = Substitution()
+        q  = sigma.rename_variables(q) # rename q and add variables to domain of sigma
+        
+        new_sigmas = [sigma]
+        for literal in q:
+            # TODO: take into account negative literals
+            sigmas = new_sigmas
+            new_sigmas = list()
+            for sigma in sigmas:
+                subst_list = list(self._query([literal.atom], knowledge, sigma))
+                new_sigmas.extend(subst_list)
             
-    def _query(self, atoms, knowledge):
+        return new_sigmas
+            
+    def _query(self, atoms, knowledge, sigma):
         """ 
         Checks the truth of an atom
         Takes a list of atoms as input
+        Output is a generator of VariableBank objects, one for each solution
         """
         verboseprint = print if self.verbose else lambda *a, **k: None
-        curr_state = AloeState(atoms)
+        
+        s = AloeState(atoms, sigma.copy())
         alternate_states = []
         count_h = 0
         while count_h < self.options.h:
-            verboseprint(count_h)
-            
-            if not curr_state.has_atoms():
-                yield curr_state.var_bank.subst
+            if not s.has_atoms():
+                yield s.sigma
                 if alternate_states:
-                    curr_state = alternate_states.pop()
+                    s = alternate_states.pop()
                 else:
                     return
+                
+            verboseprint('\nh', count_h)            
             
-            atom = curr_state.next_atom()
-            atom = curr_state.var_bank.apply_subst(atom)
+            atom = s.next_atom()            
+            atom = s.sigma.apply_subst(atom)
             verboseprint('Atom', atom)
             
             # If a clause has not yet be matched to the atom
-            if not curr_state.next_clause:
+            if not s.next_clause:
                 # 1. Get all clauses whose head matches the atom
-                verboseprint(atom.longname)
                 candidates = knowledge.match(atom)
                 verboseprint('Candidates', candidates)
                 if not candidates: 
                     if not alternate_states:
                         return
                     else:
-                        curr_state = alternate_states.pop()
+                        s = alternate_states.pop()
                         continue
 
                 # 2. Generate new atoms in state
                 c1, *c2n = candidates
-                curr_state.next_clause = c1
+                s.next_clause = c1
                 for c in reversed(c2n):
-                    s = curr_state.copy()
-                    s.next_clause = c
-                    s.atoms.append(atom)
-                    alternate_states.append(s)
+                    s_ = s.copy()
+                    s_.next_clause = c
+                    s_.atoms.append(atom)
+                    alternate_states.append(s_)
                     
                 verboseprint('Match', candidates)
                 
             # 3. 
             count_h  += 1
-            clause   = curr_state.next_clause
-            curr_state.next_clause = None
-            var_bank = curr_state.var_bank
-            clause   = var_bank.transform_clause(clause)
-            subst = learn_subst(atom, clause.head)
-            if subst:
-                subst = unify(subst)
-                            
+            clause   = s.next_clause
+            s.next_clause = None
+            clause   = s.sigma.rename_variables(clause)
+            
             verboseprint('Clause', clause)
-            verboseprint('Subst', subst)
-            if subst is None:
-                if not alternate_states:
-                    return
+            
+            # Unification of two atoms
+            try:
+                s.sigma.unify(atom, clause.head)
+            except SubstitutionError:
+                verboseprint('Unification failed.')
+                if not alternate_states: return
                 else:
                     curr_state = alternate_states.pop()
-                    continue                
-            
-            var_bank.update_subst(subst)
+                    continue       
+                    
+            verboseprint('Substitution', s.sigma)
+                    
             for b in reversed(clause.body):
-                curr_state.atoms.append(curr_state.var_bank.apply_subst(b))
-            verboseprint('Atoms', curr_state.atoms)
+                s.atoms.append(s.sigma.apply_subst(b))
+            verboseprint('Atoms', s.atoms)
             
 class AloeState:
-    def __init__(self, atoms, var_bank=None, next_clause=None):
-        self.var_bank = var_bank if var_bank is not None else VariableBank.build_from_atom(atoms[0])
+    def __init__(self, atoms, sigma=None, next_clause=None):
+        assert isinstance(atoms, list) and all(isinstance(atom, Atom) for atom in atoms)
+        assert sigma is None or isinstance(sigma, Substitution)
+        assert next_clause is None or isinstance(next_clause, Clause)
+        if not sigma:
+            sigma = Substitution()
+            sigma.rename_variables(atoms)
+        self.sigma = sigma
         self.atoms = atoms
         self.curr_atom = None
         self.next_clause = next_clause
         
     def copy(self):
-        return AloeState(self.atoms.copy(), self.var_bank.copy(), self.next_clause)
+        return AloeState(self.atoms.copy(), self.sigma.copy(), self.next_clause)
     
     def has_atoms(self):
         return len(self.atoms)>0
@@ -128,11 +142,3 @@ class AloeState:
     def next_atom(self):
         self.curr_atom = self.atoms.pop()
         return self.curr_atom
-
-    
-def print_class_in_depth(element):
-    print(element.__class__, element)
-    if isinstance(element, Operator):
-        for t in element:
-            print('Child -',end=' ')
-            print_class_in_depth(t)

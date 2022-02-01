@@ -5,7 +5,7 @@
 :- modeb(*,parent(+person,-person)).
 :- modeb(*,parent(-person,+person)).
 :- modeb(1,female(+person)).
-:- modeb(1,female(-person)).
+:- modeb(*,female(-person)).
 %
 :- determination(daughter/2,parent/2).
 :- determination(daughter/2,female/1).

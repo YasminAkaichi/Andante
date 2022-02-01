@@ -1,3 +1,12 @@
+from itertools import product
+def generate_variable_names():
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    for nchar in range(1,5):
+        for letters in product(alphabet, repeat=nchar):
+            name = ''.join(letters)
+            yield name
+
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'

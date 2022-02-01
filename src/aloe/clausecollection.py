@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from aloe.clause import Constant, Variable, Operator
+from aloe.clause import Constant, Variable, Function
 
 class ClauseCollection(ABC):
     @abstractmethod
@@ -13,17 +13,16 @@ class ClauseCollection(ABC):
 class TreeBasedClauseCollection(ClauseCollection):
     def __init__(self, clauses, operators=None):
         if operators is None:
-            self.headlessclauses = [clause for clause in clauses if not clause.head]
-            clauses = [clause for clause in clauses if clause.head]
             operators = [clause.head for clause in clauses]
         self.allclauses = set()
         self.clausesbyoperator = dict()
         self.collec = dict()
         for op, clause in zip(operators, clauses):
-            self.add(op, clause)
+            self.add(clause, op)
             
-    def add(self, func, clause):
-        fname = func.longname
+    def add(self, clause, func=None):
+        if func is None: func = clause.head
+        fname = func.name
         
         self.allclauses.add(clause)
         
@@ -40,13 +39,13 @@ class TreeBasedClauseCollection(ClauseCollection):
                 term_dict[term.value].add(clause)    
             elif isinstance(term, Variable):
                 term_dict['Vars'].add(clause)                        
-            elif isinstance(term, Operator):
+            elif isinstance(term, Function):
                 if 'Funcs' not in term_dict:
                     term_dict['Funcs'] = TreeBasedClauseCollection([],[])                       
-                term_dict['Funcs'].add(term,clause)
+                term_dict['Funcs'].add(clause, term)
             
     def match(self, expr):
-        name = expr.longname
+        name = expr.name
         if name not in self.collec:
             return set()
         sets = []
@@ -58,7 +57,7 @@ class TreeBasedClauseCollection(ClauseCollection):
                     sets.append(term_dict['Vars'])
             elif isinstance(term, Variable):
                 sets.append(self.clausesbyoperator[name])
-            elif isinstance(term, Operator):
+            elif isinstance(term, Function):
                 sets.append(term_dict['Funcs'].match(term))
         return set.intersection(*sets)
             

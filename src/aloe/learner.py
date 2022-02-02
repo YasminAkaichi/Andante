@@ -1,10 +1,11 @@
 import itertools
 from abc import ABC, abstractmethod
-from aloe.options import Options
+from aloe.options import Options, SystemParameters
 from aloe.knowledge import MultipleKnowledge, LogicProgram
 from aloe.clause import Clause, Constant, Variable, Function, Type
 from aloe.substitution import Substitution
 import aloe.hypothesis_metrics
+from sortedcontainers import SortedSet
 
 class Learner(ABC):
     def __init__(self, options=None):
@@ -60,8 +61,8 @@ class ProgolLearner(Learner):
         theta.unify(am, a)
         
         for v,t in theta.subst.items():
-            if type_subst[v].sign=="#": s[v] = t
-            else:                       s[v] = Variable(t.to_variable_name())
+            if type_subst[v].sign=="#": s.subst[v] = t
+            else:                       s.subst[v] = Variable(t.to_variable_name())
             if type_subst[v].sign=="+": InTerms.add(t)
         # s: {A/Paul, B/Georges}
         # InTerms: {paul}
@@ -92,8 +93,8 @@ class ProgolLearner(Learner):
                         
                         for v, t in itertools.chain(theta.subst.items(), theta_prime.subst.items()):
                             if v not in s: continue
-                            if s[v].sign=='#': theta_final[v] = t
-                            else:              theta_final[v] = Variable(t.to_variable_name())
+                            if s[v].sign=='#': theta_final.subst[v] = t
+                            else:              theta_final.subst[v] = Variable(t.to_variable_name())
                             if s[v].sign=='-': next_InTerms.add(t)
                         
                         b = theta_final.apply_subst(am)
@@ -137,22 +138,27 @@ class ProgolLearner(Learner):
         verboseprint = print if self.verbose==1 else lambda *a, **k: None                        
         
         nclause = 0
-        while examples['pos'] and nclause<self.options.maxclauses:
+        while examples['pos'] and nclause<SystemParameters.maxclauses:
             verboseprint('#examples: %2d pos, %2d neg' % (len(examples['pos']),len(examples['neg'])))
+            
+            # Select 1 example
             e1 = examples['pos'][0]
             verboseprint('Example considered:',e1)
+            
+            # Construct bottom_i
             bottom_i = self.build_bottom_i(e1, modes, knowledge, solver)
+            if SystemParameters.generic_name_for_variable:
+                bottom_i = Substitution.generic_name_for_variables(bottom_i)
             verboseprint('Bottom_i',bottom_i)
+            
+            # Build hypothesis
             C = self.build_hypothesis(examples, bottom_i, knowledge, solver)
             verboseprint('Clause found', C)
+            
+            # Add hypothesis to background knowledge
             knowledge.add(C)
-            examples['pos'] = [e for e in examples['pos'] if not solver.solve(e.head, knowledge, verbose=0)]
+            examples = {'pos':[e for e in examples['pos'] if not solver.succeeds_on(e.head, knowledge, verbose=0)],
+                        'neg':examples['neg']}
             
             verboseprint('\n'*2)
             nclause += 1
-            
-        return C
-    
-        
-        
-        

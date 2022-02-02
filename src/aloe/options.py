@@ -2,6 +2,8 @@ from dataclasses import dataclass
 
 class SystemParameters:
     max_recall = 100 # value from Progol (p.4 from tutorial4.4.pdf)
+    maxclauses = 100 # Maximum number of clause learned when inducing
+    generic_name_for_variable = True
 
 @dataclass       
 class Options(object):
@@ -10,9 +12,10 @@ class Options(object):
     h       = 30    # Maximal depth of deduction
     verbose = 0     # Level of logging output
     solver  = "AloeSolver"
+    
+    # Learning Options
     learner = "ProgolLearner"
     hmetric = "FnMetric"
-    maxclauses = 10
     
     def __init__(self, options=[]):
         # Here we introduce the user's options

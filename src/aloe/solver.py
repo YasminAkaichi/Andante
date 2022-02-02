@@ -9,12 +9,16 @@ class Solver(ABC):
     def __init__(self, options=None):
         assert isinstance(options, Options) or options is None
         self.options = options or Options()
-                
+            
     @abstractmethod
     def query(self, q, knowledge, verbose=None):
         pass
     
     def solve(self, *args, **options): return self.query(*args, **options)
+    
+    def succeeds_on(self, q, knowledge, verbose=None):
+        sigmas = self.query(q, knowledge, verbose=verbose)
+        return len(sigmas)>0
 
 class AloeSolver(Solver):
     def query(self, q, knowledge, verbose=None):
@@ -119,6 +123,19 @@ class AloeSolver(Solver):
             for b in reversed(clause.body):
                 s.atoms.append(s.sigma.apply_subst(b))
             verboseprint('Atoms', s.atoms)
+            
+    def succeeds_on(self, q, knowledge, verbose=None):
+        # For literals and atoms
+        if isinstance(q, Literal):
+            if q.sign=='+': return     self.succeeds_on(q.atom, knowledge, verbose=verbose)
+            else:           return not self.succeeds_on(q.atom, knowledge, verbose=verbose)
+        assert isinstance(q, Atom)
+        self.verbose = verbose if verbose is not None else self.options.verbose
+        sigma = Substitution()
+        q  = sigma.rename_variables(q)
+        output_gen = self._query([q], knowledge, sigma)
+        return next(output_gen, None) is not None
+
             
 class AloeState:
     def __init__(self, atoms, sigma=None, next_clause=None):

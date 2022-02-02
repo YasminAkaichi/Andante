@@ -1,5 +1,19 @@
 from aloe.clause import Clause, Constant, Variable, Function, Literal, Goal, Type
 from aloe.exceptions import SubstitutionError
+from aloe.utils import generate_variable_names
+
+class mySubst:
+    def __init__(self):
+        self.subst = dict()
+        self.var_names = generate_variable_names()
+
+    def __contains__(self, attr):
+        if attr not in self.subst:
+            self.subst[attr] = Variable(next(self.var_names))
+        return True
+
+    def __getitem__(self, attr):
+        return self.subst[attr]
 
 class Substitution:
     """
@@ -22,11 +36,7 @@ class Substitution:
         new_variables: True or False, if True, allows the creation of new variables
         """
         subst = subst if subst is not None else dict()
-        if   isinstance(x, Clause):
-            renamed_head =  self.rename_variables(x.head, subst, new_variables) if x.head else None
-            renamed_body = [self.rename_variables(atom,   subst, new_variables) for atom in x.body]
-            return x.__class__(renamed_head, renamed_body)
-        elif isinstance(x, Constant):
+        if   isinstance(x, Constant):
             return x
         elif isinstance(x, Type):
             return x
@@ -46,6 +56,10 @@ class Substitution:
         elif isinstance(x, Function):
             renamed_args = [self.rename_variables(arg, subst, new_variables) for arg in x]
             return x.__class__(x.functor, renamed_args)
+        elif isinstance(x, Clause):
+            renamed_head =  self.rename_variables(x.head, subst, new_variables) if x.head else None
+            renamed_body = [self.rename_variables(atom,   subst, new_variables) for atom in x.body]
+            return x.__class__(renamed_head, renamed_body)
         elif isinstance(x, Literal):
             return x.__class__(self.rename_variables(x.atom, subst, new_variables), x.sign)
         elif isinstance(x, Goal):
@@ -151,3 +165,10 @@ class Substitution:
         am = s.rename_variables(M.instantiate())
         s.unify(am, M.atom)
         return s, am
+
+    @staticmethod
+    def generic_name_for_variables(expr):            
+        sigma = Substitution()
+        expr = sigma.rename_variables(expr, subst=mySubst(), new_variables=False)
+        return expr
+        

@@ -1,6 +1,6 @@
 import aloe.solver
 import aloe.learner
-from aloe.clause    import Goal
+from aloe.clause    import Goal, Clause, Negation
 from aloe.options   import Options
 from aloe.mode      import ModeCollection
 from aloe.knowledge import Knowledge, LogicProgram
@@ -38,6 +38,11 @@ class AloeProgram:
     def build_from_text(text): 
         import aloe.parser
         return aloe.parser.AloeParser().parse(text)
+    
+    @staticmethod
+    def build_from_background(text):
+        import aloe.parser
+        return aloe.parser.AloeParser().parse(':-begin_bg.\n%s\n:-end_bg.' % (text))
         
     def __repr__(self):
         B = repr(self.knowledge)
@@ -54,19 +59,34 @@ class AloeProgram:
         - a string: the query will then first be parsed and then evaluated
         - a goal
         """
-        assert isinstance(q, str) \
-            or isinstance(q, Goal)
+        assert isinstance(q, (str, Goal))
         if isinstance(q, str):
             if not hasattr(self, 'parser'):
                 import aloe.parser
                 self.parser = aloe.parser.AloeParser()
-            q = self.parser.parse_goal(q)
-        return self.solver.query(q, self.knowledge)
-        
+            q = self.parser.parse_query(q)
+        sigmas = list(self.solver.query(q, self.knowledge))
+        return len(sigmas)>0, sigmas
+    
+    def verify(self, c):
+        """
+        Verify whether clause is true 
+        """
+        assert isinstance(c, (str, Clause))
+        if isinstance(c, str):
+            if not hasattr(self, 'parser'):
+                import aloe.parser
+                self.parser = aloe.parser.AloeParser()
+            cs = list(self.parser.parse_clauses(c))
+            c  = cs[0]
+        goal = Goal([Negation(Goal(c.body + [Negation(Goal([c.head]))]))])
+        return self.query(goal)
+    
     def set(self, field, value): self.options[field] = value
         
     def induce(self):
-        self.learner.induce(self.examples, self.modes, self.knowledge, self.solver)
+        return self.learner.induce(self.examples, self.modes, self.knowledge, self.solver)
+        
         
         
         

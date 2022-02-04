@@ -34,7 +34,8 @@ class ProgolLearner(Learner):
         """
         
         # 1. Add e_bar to the background knowledge
-        e_knowledge = LogicProgram([e], options=self.options)
+        # TODO inset a_bar
+        e_knowledge = LogicProgram([Clause(b,[]) for b in e.body], options=self.options)
         B = MultipleKnowledge(B, e_knowledge, options=self.options)
         
         # 2. Initialize InTerms and the bottom clause
@@ -72,7 +73,7 @@ class ProgolLearner(Learner):
         # 4. Modeb
         for i in range(self.options.i):
             next_InTerms = set()
-            for modeb in M.get_modeb(m):
+            for modeb in M.get_modeb_from_modeh(m):
                 
                 # For every possible substitution theta of variables corresponding 
                 # to +type by terms from the set InTerms
@@ -104,14 +105,14 @@ class ProgolLearner(Learner):
         
         return bottom
     
-    def build_hypothesis(self, examples, bottom_i, knowledge, solver):
+    def build_hypothesis(self, examples, modes, bottom_i, knowledge, solver):
         options = self.options
         verboseprint = print if self.verbose==1 else lambda *a, **k: None                
         
         HM = self.options.hmetric
         if not isinstance(HM, aloe.hypothesis_metrics.HypothesisMetric):
             HM = getattr(aloe.hypothesis_metrics, HM)
-        hm = HM(knowledge, examples, bottom_i, solver, options)
+        hm = HM(knowledge, examples, modes, bottom_i, solver, options)
         
         verboseprint('[  c,  h,  p,  n,  g,  f]')
         
@@ -138,6 +139,8 @@ class ProgolLearner(Learner):
         verboseprint = print if self.verbose==1 else lambda *a, **k: None                        
         
         nclause = 0
+        learned_knowledge = LogicProgram(options=knowledge.options)
+        whole_knowledge = MultipleKnowledge(knowledge, learned_knowledge)
         while examples['pos'] and nclause<SystemParameters.maxclauses:
             verboseprint('#examples: %2d pos, %2d neg' % (len(examples['pos']),len(examples['neg'])))
             
@@ -146,19 +149,23 @@ class ProgolLearner(Learner):
             verboseprint('Example considered:',e1)
             
             # Construct bottom_i
-            bottom_i = self.build_bottom_i(e1, modes, knowledge, solver)
+            bottom_i = self.build_bottom_i(e1, modes, whole_knowledge, solver)
             if SystemParameters.generic_name_for_variable:
                 bottom_i = Substitution.generic_name_for_variables(bottom_i)
             verboseprint('Bottom_i',bottom_i)
             
             # Build hypothesis
-            C = self.build_hypothesis(examples, bottom_i, knowledge, solver)
+            C = self.build_hypothesis(examples, modes, bottom_i, whole_knowledge, solver)
             verboseprint('Clause found', C)
             
             # Add hypothesis to background knowledge
-            knowledge.add(C)
-            examples = {'pos':[e for e in examples['pos'] if not solver.succeeds_on(e.head, knowledge, verbose=0)],
+            learned_knowledge.add(C)
+            examples = {'pos':[e for e in examples['pos'] if not solver.succeeds_on(e.head, whole_knowledge, verbose=0)],
                         'neg':examples['neg']}
             
             verboseprint('\n'*2)
             nclause += 1
+            
+        for c in learned_knowledge.clauses:
+            knowledge.add(c)
+        return learned_knowledge

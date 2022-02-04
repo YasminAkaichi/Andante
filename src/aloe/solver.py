@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from aloe.options import Options
 from aloe.substitution import Substitution
 from aloe.knowledge import Knowledge
-from aloe.clause import Clause, Function, Goal, Literal, Atom
+from aloe.clause import Clause, Function, Goal, Literal, Atom, Negation
 from aloe.exceptions import SubstitutionError
 
 class Solver(ABC):
@@ -21,36 +21,44 @@ class Solver(ABC):
         return len(sigmas)>0
 
 class AloeSolver(Solver):
-    def query(self, q, knowledge, verbose=None):
+    def query(self, q, knowledge, sigma=None, verbose=None):
         """
         Launch a query
         Inputs: 
-        q: Goal, Literal, Atom
+        q: Goal, Atom
         options: parameters for the query, see aloe.options
         """
         assert isinstance(knowledge, Knowledge)
         
-        if isinstance(q, Atom):
-            q = Literal(q)
-        if isinstance(q, Literal):
+        if isinstance(q, (Atom, Negation)):
             q = Goal([q])
         assert isinstance(q, Goal)
         self.verbose = verbose if verbose is not None else self.options.verbose
         
         # Initialisation
-        sigma = Substitution()
-        q  = sigma.rename_variables(q) # rename q and add variables to domain of sigma
+        sigma0 = sigma.copy() if sigma is not None else Substitution()
+        sigma0.add_variables(q) # add variables from q to domain of sigma
         
-        new_sigmas = [sigma]
-        for literal in q:
-            # TODO: take into account negative literals
-            sigmas = new_sigmas
-            new_sigmas = list()
-            for sigma in sigmas:
-                subst_list = list(self._query([literal.atom], knowledge, sigma))
-                new_sigmas.extend(subst_list)
+        generators = [iter([sigma0])] + [None for _ in range(len(q))]
+        i = 0
+        while i>=0:
+            sigma = next(generators[i],None)
+            if sigma is None:
+                i-=1 # backtrack
+                continue
+            if i==len(q):
+                yield sigma.remove_excess_variables(sigma0.variables)
+                continue
             
-        return new_sigmas
+            if isinstance(q[i], Atom):                
+                generators[i+1] = self._query([q[i]], knowledge, sigma)
+                i+=1
+            else: # isinstance(q[i], Negation)
+                success = self.succeeds_on(q[i].goal, knowledge, sigma=sigma, verbose=self.verbose)
+                if not success:
+                    generators[i+1] = iter([sigma])
+                    i+=1
+                # if success, nothing happens, the solution sigma is ignored
             
     def _query(self, atoms, knowledge, sigma):
         """ 
@@ -124,17 +132,22 @@ class AloeSolver(Solver):
                 s.atoms.append(s.sigma.apply_subst(b))
             verboseprint('Atoms', s.atoms)
             
-    def succeeds_on(self, q, knowledge, verbose=None):
+    def succeeds_on(self, q, knowledge, sigma=None, verbose=None):
         # For literals and atoms
-        if isinstance(q, Literal):
-            if q.sign=='+': return     self.succeeds_on(q.atom, knowledge, verbose=verbose)
-            else:           return not self.succeeds_on(q.atom, knowledge, verbose=verbose)
-        assert isinstance(q, Atom)
+        assert isinstance(q, (Atom, Goal, Negation))
+        if sigma is None:
+            sigma = Substitution()
+            sigma.add_variables(q)
+        else:
+            sigma = sigma.copy()
         self.verbose = verbose if verbose is not None else self.options.verbose
-        sigma = Substitution()
-        q  = sigma.rename_variables(q)
-        output_gen = self._query([q], knowledge, sigma)
-        return next(output_gen, None) is not None
+            
+        if   isinstance(q, Negation):
+            output_gen = self.query(q.goal, knowledge, sigma=sigma, verbose=verbose)
+            return next(output_gen, None) is None
+        else:
+            output_gen = self.query(q, knowledge, sigma=sigma, verbose=verbose)
+            return next(output_gen, None) is not None
 
             
 class AloeState:

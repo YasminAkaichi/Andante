@@ -28,7 +28,9 @@ class MultipleKnowledge(Knowledge):
         self.knowledges[0].add(clause, clause)
     
     def __repr__(self):
-        return 'K_beg'+'\n\n\n'.join([repr(k) for k in self.knowledges]) +'\nKend'
+        tab = '   '
+        tab_repr = [tab+repr(k).replace('\n','\n'+tab) for k in self.knowledges]
+        return 'MultipleKnowledge object\n'+'\n\n'.join(tab_repr)
     
 class LogicProgram(Knowledge):
     def __init__(self, clauses=None, options=None):
@@ -42,7 +44,10 @@ class LogicProgram(Knowledge):
     
     def add(self, clause):
         assert isinstance(clause, Clause)
+        self.clauses.append(clause)
         self.collection.add(clause)
         
     def __repr__(self):
-        return '\n'.join([str(clause) for clause in self.clauses])
+        tab = '   '
+        tab_repr = [tab+repr(c).replace('\n','\n'+tab) for c in self.clauses]
+        return 'LogicProgram object\n'+'\n'.join(tab_repr)

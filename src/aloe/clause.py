@@ -20,13 +20,38 @@ class Clause:
     def __eq__(self, other):
         return str(self)==str(other)
     
-class Goal: 
+    def apply(self, fun):
+        h = self.head.apply(fun)
+        b = [b.apply(fun) for b in self.body]
+        try: return Clause(h, b)
+        except AssertionError:
+            return None
+    
+class Goal(list): 
     """ A goal is a list of literals """
-    def __init__(self, literals):
-        assert isinstance(literals, list) and all((isinstance(l, Literal) for l in literals))
-        self.literals = literals
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        assert all((isinstance(l, (Atom, Negation)) for l in self))        
+
+    def apply(self, fun): 
+        try: return Goal(expr.apply(fun) for expr in self)
+        except AssertionError:
+            return None        
         
-    def __iter__(self): return iter(self.literals)
+    def __repr__(self): return ','.join(repr(expr) for expr in self)
+        
+class Negation:
+    """ Negation of a goal """
+    def __init__(self, goal):
+        assert isinstance(goal, Goal)
+        self.goal = goal
+        
+    def __repr__(self): return 'not(%s)' % repr(self.goal)
+        
+    def apply(self, fun): 
+        try: return Negation(self.goal.apply(fun))
+        except AssertionError:
+            return None        
 
 class Literal:
     """ Represents a literal, that is a positive or a negative atom. """
@@ -54,7 +79,11 @@ class Function(ABC):
     
     def __iter__(self): return iter(self.arguments)    
     def __repr__(self): return '%s(%s)' % (self.functor, ','.join([repr(arg) for arg in self.arguments]))
-
+    
+    def apply(self, fun):
+        args = [arg.apply(fun) for arg in self.arguments]
+        try:    return self.__class__(self.functor, args)
+        except: return None
     
 class Atom(ABC):
     """ Represents an atom in the first order logic framework """
@@ -83,6 +112,8 @@ class Constant(Term):
         """ Returns a valid unique variable name """
         if isinstance(self.value, str): return self.value.capitalize()
         else:                           return 'V' + str(self.value)
+        
+    def apply(self, fun): return fun(self)
     
 class Variable(Term):
     """ 
@@ -110,6 +141,9 @@ class Variable(Term):
         elif isinstance(expr, Literal):      return self.is_in(expr.atom)
         elif isinstance(expr, Goal):         return any(self.is_in(lit) for lit in expr)
         else: raise NotImplementedError(expr.__class__.__name__)
+            
+    def apply(self, fun): return fun(self)
+    
         
 class Type(Term):
     def __init__(self, sign, name):
@@ -118,3 +152,23 @@ class Type(Term):
         
     def __repr__(self):
         return self.sign+str(self.name)     
+    
+    def apply(self, fun): return fun(self)
+    
+#######################################################
+# Utility functions related to classes defined above
+#######################################################
+
+def extract_variables(expr):
+    variables = set()
+    fun = lambda expr: variables.add(expr) if isinstance(expr, Variable) else None
+    if isinstance(expr, (list, set)):
+        for x in expr:
+            variables.update(extract_variables(x))
+    else:
+        expr.apply(fun)
+    return variables
+    
+
+
+

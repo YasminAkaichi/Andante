@@ -1,4 +1,4 @@
-set(verbose,1).
+set(verbose,0).
 
 modeh(1,parent_of(+person,-person)).
 modeh(1,grandfather_of(+person,-person)).
@@ -15,21 +15,16 @@ determination(grandparent_of/2,parent_of/2).
 determination(parent_of/2,father_of/2).
 determination(parent_of/2,mother_of/2).
 
+
 %%%%%%%%%%%%%%%%%%%%%%
-% Type information
+% Background knowledge
 
 :- begin_bg.
-
 
 person(andrew).  person(bernard).  person(cathleen).  person(daphne).
 person(edith).  person(fred).  person(george).  person(john).
 person(louis).  person(oscar).  person(paul).  person(robert).
 person(stephen).  person(sylvia).  person(william). person(ada).
-
-
-%%%%%%%%%%%%%%%%%%%%%%
-% Background knowledge
-
 
 father_of(william,sylvia).
 father_of(oscar,louis).

@@ -1,6 +1,7 @@
 from abc import ABC
-from aloe.clause import Clause
+from aloe.clause import Clause, Type, extract_variables
 from aloe.knowledge import MultipleKnowledge, LogicProgram
+from aloe.substitution import Substitution
 
 class HypothesisMetric(ABC):
     def State(self, *args, **kwargs):
@@ -19,7 +20,7 @@ class HypothesisMetric(ABC):
         pass            
     
 class FnMetric(HypothesisMetric):
-    def __init__(self, B, E, bottom, solver, options):
+    def __init__(self, B, E, M, bottom, solver, options):
         """
         B: background knowledge
         E: set of examples
@@ -29,10 +30,51 @@ class FnMetric(HypothesisMetric):
         """
         self.B = B
         self.E = E
+        self.M = M
         self.bottom = bottom
         self.solver = solver
         self.options = options
         
+        self.build_d()
+        
+    def build_d(self):
+        s  = Substitution()
+        s.add_variables(self.bottom)
+
+        self.d = dict()
+                
+        # var (-type) -> list of var (+type) 
+        graph = {v:set() for v in s}
+        
+        # build graph        
+        for atom in self.bottom.body:
+            type_subst = s.get_type_subst(atom, self.M, body_atom=True)
+            minus_type = [key for key, value in type_subst.subst.items() if isinstance(value,Type) and value.sign=='-']
+            plus__type = [key for key, value in type_subst.subst.items() if isinstance(value,Type) and value.sign=='+']
+            for v in minus_type:
+                graph[v].update(plus__type)
+        type_subst = s.get_type_subst(self.bottom.head, self.M, body_atom=False)
+        
+        l0 = [key for key, value in type_subst.subst.items() if isinstance(value,Type) and value.sign=='-']
+        l = [l0]
+        for i, li in enumerate(l):
+            lnext = list()
+            for v in li:
+                self.d[v]=i
+                lnext.extend(v_ for v_ in graph[v] if v_ not in self.d)
+            if lnext:
+                l.append(lnext)
+        for var in s:
+            if var not in self.d:
+                self.d[var] = len(l)
+                
+    def d_of_clause(self, clause):
+        vars_in_head = extract_variables(clause.head)
+        vars_in_body = extract_variables(clause.body)
+        vars_of_interest = {var for var in vars_in_head if self.d[var]!=0} | vars_in_body
+        d_ = min(self.d[var] for var in vars_of_interest)
+        return d_
+                
     def State(self, *args, **kwargs):
         return self._State(self, *args, **kwargs)
     
@@ -65,7 +107,7 @@ class FnMetric(HypothesisMetric):
             # Metrics for the state
             # - c: the number of atoms in the body of C
             self.c = len(self.clause.body)
-            self.h = 0 # TODO
+            self.h = hm.d_of_clause(self.clause)
             self.p = len(self.E_cov['pos'])
             self.n = len(self.E_cov['neg'])
             self.g = self.p - self.c - self.h
@@ -100,4 +142,6 @@ class FnMetric(HypothesisMetric):
         for i in range(state.k, len(self.bottom.body)):
             c = Clause(state.clause.head, state.clause.body+[self.bottom.body[i]])
             s = self.State(c, i+1, E=state.E_cov)
-            yield s
+            # Added line, not in the paper
+            if s.c<=self.options.c:
+                yield s

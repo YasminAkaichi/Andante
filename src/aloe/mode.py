@@ -40,8 +40,18 @@ class ModeCollection:
             raise KeyError(expr)
         
         return self.modeh[name]
-        
+    
     def get_modeb(self, expr):
+        if   isinstance(expr, Atom):
+            name = expr.name
+        elif isinstance(expr, str):
+            name = expr
+        else:
+            raise KeyError(expr)
+        
+        return self.modeb[name]    
+        
+    def get_modeb_from_modeh(self, expr):
         if   isinstance(expr, Modeh):
             name = expr.atom_name
         elif isinstance(expr, Atom):

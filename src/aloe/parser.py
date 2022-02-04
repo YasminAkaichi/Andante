@@ -3,7 +3,7 @@ import bisect
 from parsimonious.grammar import Grammar
 from parsimonious.nodes import NodeVisitor
 from parsimonious.exceptions import ParseError, VisitationError
-from aloe.clause    import Clause, Predicate, CompoundTerm, Variable, Constant, Literal, Goal, Type
+from aloe.clause    import Clause, Predicate, CompoundTerm, Variable, Constant, Negation, Goal, Type
 from aloe.mode      import ModeCollection, Mode, Modeh, Modeb
 from aloe.options   import Options, SystemParameters
 from aloe.program   import AloeProgram
@@ -52,9 +52,11 @@ grammar = Grammar(
     type      = sign word
     sign      = ~"[+\-#]"
     
-    goal      = literal ("," literal)* "."
-    literal   = "~"? atom 
-    """
+    query     = goal "."
+    goal      = goal_unit ("," goal_unit)*
+    goal_unit = negation / atom
+    negation  = "not(" goal ")"
+    """ 
 )
 
 class AloeVisitor(NodeVisitor):
@@ -237,18 +239,21 @@ class AloeVisitor(NodeVisitor):
         _, attr, _, value, _ = visited_children
         return (attr, value)
     
+    def visit_query(self, node, visited_children):
+        return visited_children[0]
+
     def visit_goal(self, node, visited_children):
-        # literal ("," literal)+ "."
-        lit0, l_lit, _ = visited_children
-        literals = [lit0] + [lit for _, lit in l_lit]
-        return Goal(literals)
+        el0, l_e = visited_children
+        g = Goal((el0,))
+        g.extend(e for _, e in l_e)
+        return g
     
-    def visit_literal(self, node, visited_children):
-        # "~"? atom 
-        _, atom = visited_children
-        if '~'==node.children[0].text: 
-            return Literal(atom, sign='-')
-        else: return Literal(atom, sign='+')
+    def visit_goal_unit(self, node, visited_children):
+        return visited_children[0]
+    
+    def visit_negation(self, node, visited_children):
+        _, goal, _ = visited_children
+        return Negation(goal)
 
 class AloeParser:
     def __init__(self):
@@ -331,9 +336,9 @@ class AloeParser:
             except Exception as e:
                 raise e
     
-    def parse_goal(self, text):
+    def parse_query(self, text):
         text = ''.join(text.split())
-        return self.parse_rule(text, 'goal')
+        return self.parse_rule(text, 'query')
     
     
 class AloeText:

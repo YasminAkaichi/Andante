@@ -1,19 +1,6 @@
-from aloe.clause import Clause, Constant, Variable, Function, Literal, Goal, Type
+from aloe.clause import Clause, Constant, Variable, Function, Literal, Goal, Type, extract_variables
 from aloe.exceptions import SubstitutionError
 from aloe.utils import generate_variable_names
-
-class mySubst:
-    def __init__(self):
-        self.subst = dict()
-        self.var_names = generate_variable_names()
-
-    def __contains__(self, attr):
-        if attr not in self.subst:
-            self.subst[attr] = Variable(next(self.var_names))
-        return True
-
-    def __getitem__(self, attr):
-        return self.subst[attr]
 
 class Substitution:
     """
@@ -27,6 +14,48 @@ class Substitution:
         self.variables = set()
         self.tally = dict()
         self.subst = dict()
+        
+    def new_variable(self, symbol):
+        """ Creates a new variable with symbol=symbol """
+        if symbol not in self.tally:
+            self.tally[symbol] = 0
+            
+        while True:
+            var = Variable(symbol, self.tally[symbol])
+            if var not in self.variables:
+                break
+            self.tally[symbol] += 1
+            
+        self.variables.add(var)
+        self.tally[symbol] += 1
+        return var
+            
+    def add_variable(self, variable):
+        """ Adds a single variable to the domain of the substitution """
+        self.add_variables(variable)
+                
+    def add_variables(self, expr):
+        """ Adds all variables present in expr to the domain of the substitution """
+        self.variables.update(extract_variables(expr))
+        
+    def rename_variables(self, x, subst=None, new_variables=True):
+        subst = subst if subst is not None else dict()
+        
+        def fun(expr):
+            if   isinstance(x, (Constant, Type)):
+                return x
+            elif isinstance(x, Variable):
+                if x in subst: return subst[x]
+                else:
+                    if not new_variables:
+                        message = 'New variable needed and new_variables is set to False'
+                        raise Exception(message)
+                    var = self.new_variable(x.symbol)
+                    subst[x] = var
+                    return var
+            else: raise NotImplementedError('%s object cannot be renamed for now. (%s)' % (str(x.__class__.__name__), str(x)))
+                
+        return x.apply(fun)
         
     def rename_variables(self, x, subst=None, new_variables=True):
         """ 
@@ -46,11 +75,7 @@ class Substitution:
                 if not new_variables:
                     message = 'New variable needed and new_variables is set to False'
                     raise Exception(message)
-                if not x.symbol in self.tally:
-                    self.tally[x.symbol] = 0
-                var = Variable(x.symbol, self.tally[x.symbol])
-                self.variables.add(var)
-                self.tally[x.symbol] += 1
+                var = self.new_variable(x.symbol)
                 subst[x] = var
                 return var
         elif isinstance(x, Function):
@@ -64,7 +89,7 @@ class Substitution:
             return x.__class__(self.rename_variables(x.atom, subst, new_variables), x.sign)
         elif isinstance(x, Goal):
             return x.__class__([self.rename_variables(lit, subst, new_variables) for lit in x])
-        elif isinstance(x, list):
+        elif isinstance(x, list): # Careful that Goal object is also a list, do not push this statement up
             return [self.rename_variables(e, subst, new_variables) for e in x]
         else: raise NotImplementedError('%s object cannot be renamed for now. (%s)' % (str(x.__class__.__name__), str(x)))
 
@@ -76,7 +101,8 @@ class Substitution:
         return sigma
     
     def __contains__(self, var): return var in self.variables
-    def __iter__(self): return iter(self.variables)
+    def __iter__(self):          return iter(self.variables)
+    def __repr__(self):          return repr(self.subst)
 
     def __getitem__(self, key):
         if   key not in self.variables:
@@ -154,10 +180,19 @@ class Substitution:
             raise NotImplementedError(message)
             
     def apply_subst(self, expr):
+        def fun(expr):
+            if isinstance(expr, Variable): return self[expr]
+            else:                          return expr
         return self.rename_variables(expr, subst=self, new_variables=False)
             
-    def __repr__(self):
-        return repr(self.subst)
+    def get_type_subst(self, atom, M, body_atom=False):
+        if body_atom:
+            m = M.get_modeb(atom)        
+        else:
+            m = M.get_modeh(atom)
+        type_subst = self.copy()
+        type_subst.unify(atom, m.atom)
+        return type_subst
     
     @staticmethod
     def from_mode(M):
@@ -169,6 +204,30 @@ class Substitution:
     @staticmethod
     def generic_name_for_variables(expr):            
         sigma = Substitution()
-        expr = sigma.rename_variables(expr, subst=mySubst(), new_variables=False)
+        expr = sigma.rename_variables(expr, subst=_mySubst(), new_variables=False)
         return expr
+    
+    def remove_excess_variables(self, domain):
+        # Subst: maps from old variables to new ones
+        s = Substitution()
+        s.add_variables(domain)
+        for key in self.subst:
+            if key in domain:
+                s.add_variables(self[key])
+                s.subst[key] = self[key]
+        return s
+
+    
+class _mySubst:
+    def __init__(self):
+        self.subst = dict()
+        self.var_names = generate_variable_names()
+
+    def __contains__(self, attr):
+        if attr not in self.subst:
+            self.subst[attr] = Variable(next(self.var_names))
+        return True
+
+    def __getitem__(self, attr):
+        return self.subst[attr]
         

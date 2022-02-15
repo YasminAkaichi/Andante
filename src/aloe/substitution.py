@@ -1,6 +1,10 @@
 from aloe.clause import Clause, Constant, Variable, Function, Literal, Goal, Type, extract_variables
-from aloe.exceptions import SubstitutionError
 from aloe.utils import generate_variable_names
+
+class SubstitutionError(Exception):
+    def __init__(self, key, item):
+        message = 'Substitution {%s/%s} is not valid' % (str(key), str(item))
+        super().__init__(message)
 
 class Substitution:
     """

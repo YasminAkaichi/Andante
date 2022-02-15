@@ -17,6 +17,12 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-
+    
+    def green(text): return bcolors.OKGREEN + text + bcolors.ENDC
+    def red(text):   return bcolors.FAIL    + text + bcolors.ENDC
+    
+    def ipygreen(text): return r'\(\color{green} {' + text  + '}\)'
+    def ipyred(text):   return r'\(\color{red} {'   + text  + '}\)'
+    
 def red(text):
     return bcolors.BOLD + text + bcolors.ENDC

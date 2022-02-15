@@ -1,14 +1,12 @@
 from abc import ABC, abstractmethod
-from aloe.options import Options
-from aloe.substitution import Substitution
+from aloe.options import Options, ObjectWithTemporaryOptions
+from aloe.substitution import Substitution, SubstitutionError
 from aloe.knowledge import Knowledge
 from aloe.clause import Clause, Function, Goal, Literal, Atom, Negation
-from aloe.exceptions import SubstitutionError
 
-class Solver(ABC):
+class Solver(ObjectWithTemporaryOptions, ABC):
     def __init__(self, options=None):
-        assert isinstance(options, Options) or options is None
-        self.options = options or Options()
+        super().__init__(options)
             
     @abstractmethod
     def query(self, q, knowledge, verbose=None):
@@ -21,7 +19,7 @@ class Solver(ABC):
         return len(sigmas)>0
 
 class AloeSolver(Solver):
-    def query(self, q, knowledge, sigma=None, verbose=None):
+    def query(self, q, knowledge, sigma=None, **temp_options):
         """
         Launch a query
         Inputs: 
@@ -29,11 +27,11 @@ class AloeSolver(Solver):
         options: parameters for the query, see aloe.options
         """
         assert isinstance(knowledge, Knowledge)
-        
         if isinstance(q, (Atom, Negation)):
             q = Goal([q])
         assert isinstance(q, Goal)
-        self.verbose = verbose if verbose is not None else self.options.verbose
+        
+        self.add_temporary_options(**temp_options)
         
         # Initialisation
         sigma0 = sigma.copy() if sigma is not None else Substitution()
@@ -54,11 +52,13 @@ class AloeSolver(Solver):
                 generators[i+1] = self._query([q[i]], knowledge, sigma)
                 i+=1
             else: # isinstance(q[i], Negation)
-                success = self.succeeds_on(q[i].goal, knowledge, sigma=sigma, verbose=self.verbose)
+                success = self.succeeds_on(q[i].goal, knowledge, sigma=sigma)
                 if not success:
                     generators[i+1] = iter([sigma])
                     i+=1
                 # if success, nothing happens, the solution sigma is ignored
+                
+        self.rem_temporary_options()
             
     def _query(self, atoms, knowledge, sigma):
         """ 
@@ -66,8 +66,6 @@ class AloeSolver(Solver):
         Takes a list of atoms as input
         Output is a generator of VariableBank objects, one for each solution
         """
-        verboseprint = print if self.verbose else lambda *a, **k: None
-        
         s = AloeState(atoms, sigma.copy())
         alternate_states = []
         count_h = 0
@@ -79,17 +77,17 @@ class AloeSolver(Solver):
                 else:
                     return
                 
-            verboseprint('\nh', count_h)            
+            self.verboseprint('\nh', count_h)            
             
             atom = s.next_atom()            
             atom = s.sigma.apply_subst(atom)
-            verboseprint('Atom', atom)
+            self.verboseprint('Atom', atom)
             
             # If a clause has not yet be matched to the atom
             if not s.next_clause:
                 # 1. Get all clauses whose head matches the atom
                 candidates = knowledge.match(atom)
-                verboseprint('Candidates', candidates)
+                self.verboseprint('Candidates', candidates)
                 if not candidates: 
                     if not alternate_states:
                         return
@@ -106,7 +104,7 @@ class AloeSolver(Solver):
                     s_.atoms.append(atom)
                     alternate_states.append(s_)
                     
-                verboseprint('Match', candidates)
+                self.verboseprint('Match', candidates)
                 
             # 3. 
             count_h  += 1
@@ -114,40 +112,50 @@ class AloeSolver(Solver):
             s.next_clause = None
             clause   = s.sigma.rename_variables(clause)
             
-            verboseprint('Clause', clause)
+            self.verboseprint('Clause', clause)
             
             # Unification of two atoms
             try:
                 s.sigma.unify(atom, clause.head)
             except SubstitutionError:
-                verboseprint('Unification failed.')
+                self.verboseprint('Unification failed.')
                 if not alternate_states: return
                 else:
                     curr_state = alternate_states.pop()
                     continue       
                     
-            verboseprint('Substitution', s.sigma)
+            self.verboseprint('Substitution', s.sigma)
                     
             for b in reversed(clause.body):
                 s.atoms.append(s.sigma.apply_subst(b))
-            verboseprint('Atoms', s.atoms)
+            self.verboseprint('Atoms', s.atoms)
             
-    def succeeds_on(self, q, knowledge, sigma=None, verbose=None):
+    def succeeds_on(self, q, knowledge, sigma=None, **temp_options):
         # For literals and atoms
         assert isinstance(q, (Atom, Goal, Negation))
+        
+        self.add_temporary_options(**temp_options)
+        
         if sigma is None:
             sigma = Substitution()
             sigma.add_variables(q)
         else:
             sigma = sigma.copy()
-        self.verbose = verbose if verbose is not None else self.options.verbose
             
         if   isinstance(q, Negation):
-            output_gen = self.query(q.goal, knowledge, sigma=sigma, verbose=verbose)
-            return next(output_gen, None) is None
+            output_gen = self.query(q.goal, knowledge, sigma=sigma)
+            sol_exists = next(output_gen, None) is not None
+            success    = not sol_exists
         else:
-            output_gen = self.query(q, knowledge, sigma=sigma, verbose=verbose)
-            return next(output_gen, None) is not None
+            output_gen = self.query(q, knowledge, sigma=sigma)
+            sol_exists = next(output_gen, None) is not None
+            success    = sol_exists
+            
+        if sol_exists: # generator is not finished, we need to do the following manually
+            self.rem_temporary_options()
+        
+        self.rem_temporary_options()
+        return success
 
             
 class AloeState:

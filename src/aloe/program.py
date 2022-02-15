@@ -52,7 +52,7 @@ class AloeProgram:
         o = repr(self.options)
         return 'Background:\n%s\n\nExamples:\n%s\n\nModes:\n%s\n\noptions:\n%s' % (B,E,M,o)
         
-    def query(self, q):
+    def query(self, q, **temp_options):
         """
         Launch a query to the aloe solver. 
         The query 'q' can be:
@@ -65,10 +65,10 @@ class AloeProgram:
                 import aloe.parser
                 self.parser = aloe.parser.AloeParser()
             q = self.parser.parse_query(q)
-        sigmas = list(self.solver.query(q, self.knowledge))
+        sigmas = list(self.solver.query(q, self.knowledge, **temp_options))
         return len(sigmas)>0, sigmas
     
-    def verify(self, c):
+    def verify(self, c, **temp_options):
         """
         Verify whether clause is true 
         """
@@ -80,14 +80,15 @@ class AloeProgram:
             cs = list(self.parser.parse_clauses(c))
             c  = cs[0]
         goal = Goal([Negation(Goal(c.body + [Negation(Goal([c.head]))]))])
-        return self.query(goal)
+        return self.query(goal, **temp_options)
     
     def set(self, field, value): self.options[field] = value
         
-    def induce(self):
-        return self.learner.induce(self.examples, self.modes, self.knowledge, self.solver)
+    def induce(self, **temp_options):
+        return self.learner.induce(self.examples, self.modes, self.knowledge, self.solver, **temp_options)
         
-        
+    def display_logs(self, i=-1):
+        self.learner.logs[i].interact()
         
         
         

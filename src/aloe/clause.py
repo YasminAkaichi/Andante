@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
         
 class Clause:
+    """ Represents a horn clause in first order logic """
     def __init__(self, head, body):
         assert isinstance(head, Atom) or head is None
         assert isinstance(body, list) and all((isinstance(batom, Atom) for batom in body))
@@ -28,7 +29,10 @@ class Clause:
             return None
     
 class Goal(list): 
-    """ A goal is a list of literals """
+    """ 
+    Represents a goal as a list of atoms or negations 
+    Inherits from list
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         assert all((isinstance(l, (Atom, Negation)) for l in self))        
@@ -41,7 +45,7 @@ class Goal(list):
     def __repr__(self): return ','.join(repr(expr) for expr in self)
         
 class Negation:
-    """ Negation of a goal """
+    """ Represents the negation of a goal """
     def __init__(self, goal):
         assert isinstance(goal, Goal)
         self.goal = goal
@@ -65,6 +69,7 @@ class Function(ABC):
     Represents a function as the general form of a predicate and a CompoundTerm.
     Functions are composed of a functor and arguments.
     Arguments must be terms.
+    This is an abstract class
     """
     def __init__(self, functor, arguments):
         assert isinstance(functor, str)
@@ -91,13 +96,22 @@ class Atom(ABC):
     def __eq__(self, other): return repr(self) == repr(other)    
     
 class Term(ABC):
+    """ Represents a term in the first order logic framework """
     def __hash__(self):      return hash(repr(self))
     def __eq__(self, other): return repr(self) == repr(other)
 
-class Predicate(Atom, Function): pass
+class Predicate(Atom, Function): 
+    """ 
+    Represents a predicate in first order logic
+    Inherits from Atom and Function
+    """
+    pass
         
 class CompoundTerm(Term, Function):
-    """ This class represents compound terms as defined in the prolog framework """
+    """ 
+    This class represents compound terms as defined in the prolog framework 
+    Inherits from Term and Function
+    """
     pass
     
 class Constant(Term):
@@ -146,6 +160,9 @@ class Variable(Term):
     
         
 class Type(Term):
+    """ 
+    In progol, a term for a mode can be a type '+person' composed of a sign ('+', '-' or '#') and a name ('person')
+    """
     def __init__(self, sign, name):
         self.sign = sign
         self.name = name
@@ -160,6 +177,7 @@ class Type(Term):
 #######################################################
 
 def extract_variables(expr):
+    """ Returns as a set all Variables present in expr """
     variables = set()
     fun = lambda expr: variables.add(expr) if isinstance(expr, Variable) else None
     if isinstance(expr, (list, set)):

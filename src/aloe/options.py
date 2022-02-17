@@ -20,7 +20,7 @@ class Options(object):
     hmetric = "FnMetric"
     update_knowledge = True
     
-    keep_logs = False
+    logging = False
     
     def __init__(self, options=[]):
         # Here we introduce the user's options

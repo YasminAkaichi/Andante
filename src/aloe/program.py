@@ -4,7 +4,7 @@ from aloe.clause    import Goal, Clause, Negation
 from aloe.options   import Options
 from aloe.mode      import ModeCollection
 from aloe.knowledge import Knowledge, LogicProgram
-
+import pandas
 
 class AloeProgram:
     def __init__(self, options=None, knowledge=None, modes=None, examples=None):
@@ -66,7 +66,18 @@ class AloeProgram:
                 self.parser = aloe.parser.AloeParser()
             q = self.parser.parse_query(q)
         sigmas = list(self.solver.query(q, self.knowledge, **temp_options))
-        return len(sigmas)>0, sigmas
+        
+        if not sigmas:
+            return False, []
+        else:
+            data = dict()
+            for sigma in sigmas:
+                for var, value in sigma.subst.items():
+                    if var not in data:
+                        data[var] = list()
+                    data[var].append(value)
+            pandas_out = pandas.DataFrame(data=data, columns=[var for var in data])
+            return True, pandas_out
     
     def verify(self, c, **temp_options):
         """

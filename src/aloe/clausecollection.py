@@ -7,6 +7,10 @@ class ClauseCollection(ABC):
         pass
     
     @abstractmethod
+    def remove(self, clause):
+        pass
+    
+    @abstractmethod
     def match(self, atom):
         pass
 
@@ -43,6 +47,30 @@ class TreeBasedClauseCollection(ClauseCollection):
                 if 'Funcs' not in term_dict:
                     term_dict['Funcs'] = TreeBasedClauseCollection([],[])                       
                 term_dict['Funcs'].add(clause, term)
+                
+    def remove(self, clause, func=None):
+        if clause not in self.allclauses:
+            return
+        if func is None: func = clause.head
+        fname = func.name
+        
+        self.allclauses.remove(clause)
+        self.clausesbyoperator[fname].remove(clause)
+        
+        for term, term_dict in zip(func, self.collec[fname]):
+            if isinstance(term, Constant):
+                term_dict[term.value].remove(clause)
+                if not term_dict[term.value]:
+                    del term_dict[term.value]
+            elif isinstance(term, Variable):
+                term_dict['Vars'].remove(clause)                        
+            elif isinstance(term, Function):
+                term_dict['Funcs'].remove(clause, term)        
+                
+        if not self.clausesbyoperator[fname]:
+            del self.clausesbyoperator[fname]
+            del self.collec[fname]
+                
             
     def match(self, expr):
         name = expr.name

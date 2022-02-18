@@ -4,6 +4,8 @@ from aloe.options import Options
 from aloe.clause  import Atom, Clause
 from aloe.clausecollection import TreeBasedClauseCollection
 
+from collections.abc import Iterable
+
 class Knowledge(ABC):
     @abstractmethod
     def match(self, atom):
@@ -11,6 +13,10 @@ class Knowledge(ABC):
     
     @abstractmethod
     def add(self, clause):
+        pass
+    
+    @abstractmethod
+    def remove(self, clause):
         pass
     
     @abstractmethod
@@ -23,16 +29,26 @@ class MultipleKnowledge(Knowledge):
         self.options = options if options is not None else Options()
         self.knowledges = knowledges
         
+    @property
+    def clauses(self):
+        return [c for c in k.clauses for k in self.knowledges]
+        
     def match(self, atom):
         x = [k.match(atom) for k in self.knowledges]
         return set.union(*x)
     
-    def add(self, clause):
-        assert isinstance(clause, Clause)
-        self.knowledges[0].add(clause, clause)
+    def add(self, x):
+        if   isinstance(x, Knowledge):
+            self.knowledges.append(x)
+        else:
+            self.knowledges[0].add(x)
+    
+    def remove(self, x):
+        for k in self.knowledges:
+            k.remove(x)
     
     def __repr__(self):
-        tab = '   '
+        tab = ' '*3
         tab_repr = [tab+repr(k).replace('\n','\n'+tab) for k in self.knowledges]
         return 'MultipleKnowledge object\n'+'\n\n'.join(tab_repr)
     
@@ -49,10 +65,27 @@ class LogicProgram(Knowledge):
         assert isinstance(atom, Atom)
         return self.collection.match(atom)
     
-    def add(self, clause):
-        assert isinstance(clause, Clause)
-        self.clauses.append(clause)
-        self.collection.add(clause)
+    def add(self, x):
+        assert isinstance(x, (Clause, Knowledge, Iterable))
+        if   isinstance(x, Clause):
+            assert isinstance(x, Clause)
+            self.clauses.append(x)
+            self.collection.add(x)
+        elif isinstance(x, Knowledge):
+            for c in x.clauses:
+                self.add(c)
+        else:# isinstance(x, Iterable):
+            for c in x:
+                self.add(c)
+        
+    def remove(self, x):
+        assert isinstance(x, (Iterable, Clause))
+        if isinstance(x, Clause):
+            x = [x]            
+        x_ = set(x)
+        self.clauses = [c for c in self.clauses if c not in x_]
+        for c in x:
+            self.collection.remove(c)
         
     def __repr__(self):
         tab = '   '

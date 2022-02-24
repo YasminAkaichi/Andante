@@ -8,13 +8,24 @@ DEFAULT_LAYOUT = {'height':'auto', 'width':'auto'}
 TEXT_LAYOUT = {'height': '400px', 'width':'99%'}
 
 class QueryInterface:
-    def __init__(self, **options):
-        self.ap = AloeProgram(options=options)
-        self.parser = AloeParser()
+    def __init__(self, ap=None, **options):
         self.text_clauses = {'all':set(), 'facts':set(), 'rules':set()}
+        self.parser = AloeParser()
+        
+        if ap is None:
+            self.ap = AloeProgram(options=options)
+        else:
+            self.ap = ap
+            for field, value in options.items():
+                self.ap.set(field, value)
+            for c in self.ap.knowledge.clauses:
+                c = str(c)
+                self.text_clauses['all'].add(c)
+                self.text_clauses['rules' if ':-' in c else 'facts'].add(c)
+
         self.build_widgets()
 
-    def update(self, clauses, category):
+    def update(self, clauses, category='all'):
         if isinstance(clauses, str):
             at = AloeText(clauses)
             at.preprocess()
@@ -71,7 +82,9 @@ class QueryInterface:
         self.text_widget = {category:widgets.Textarea(placeholder='Type %s here' % ('clauses' if category=='all' else category), 
                                                       layout=TEXT_LAYOUT,
                                                      ) for category in ['all', 'facts', 'rules']}
-        self.category_text_widget = widgets.HBox([self.text_widget[self.category_widget.value]])
+        #self.category_text_widget = widgets.HBox([self.text_widget[self.category_widget.value]])
+        self.category_text_widget = widgets.HBox([])
+        self.switch_category(self.category_widget.value)
         
         self.knowledge_widget = widgets.VBox([self.category_widget, self.category_text_widget])
         

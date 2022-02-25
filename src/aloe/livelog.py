@@ -68,36 +68,28 @@ class LearningLog(LiveLog):
     def _query_tab(self, options, old_knowledge, learned_knowledge):
         from aloe.program import AloeProgram
         from aloe.knowledge import MultipleKnowledge
+        from aloe.queryinterface import QueryInterface
         
-        query_output_widget = widgets.Output(layout={'border': '1px solid black'})
-
-        knowledge_widget = widgets.ToggleButtons(
-            options=[('Old knowledge', old_knowledge), 
-                     ('New knowledge', MultipleKnowledge(old_knowledge, learned_knowledge, options=options))],
+        new_knowledge = MultipleKnowledge(old_knowledge, learned_knowledge, options=options)
+        
+        self.knowledge_widget = widgets.ToggleButtons(
+            options=[('Old knowledge', QueryInterface(AloeProgram(options=options, knowledge=old_knowledge))), 
+                     ('New knowledge', QueryInterface(AloeProgram(options=options, knowledge=new_knowledge)))],
             index=1,
             button_style='info',
             tooltips=['Knowledge before learning', 'Knowledge after learning'],
         )
-        self.ap = AloeProgram(options=options, knowledge=knowledge_widget.value)
-        def knowledge_change(info):
-            if info['type'] == 'change' and info['name'] == 'value':
-                self.ap.knowledge = info['new']
-        knowledge_widget.observe(knowledge_change)
-        
-        query_widget = widgets.Textarea(
-            placeholder='Your query',
-        )
-        launch_query_widget = widgets.Button(description='Launch query')
-        def launch_query(button):
-            query_output_widget.clear_output()
-            with query_output_widget:
-                success, df = self.ap.query(query_widget.value)
-                print(success)
-                if success and len(df):
-                        print(df)
-        launch_query_widget.on_click(launch_query)
-        
-        tab = widgets.VBox([knowledge_widget, query_widget, launch_query_widget, query_output_widget])
+        for _, qi in self.knowledge_widget.options:
+            qi.disable_knowledge_editability()
+
+        def knowledge_change():
+            self.qi_widget.children = [self.knowledge_widget.value.widget]
+            
+        self.qi_widget = widgets.HBox([])
+        knowledge_change()
+        self.knowledge_widget.observe(lambda info: knowledge_change() if info['type']=='change' and info['name']=='value' else None)
+                
+        tab = widgets.VBox([self.knowledge_widget, self.qi_widget])
         return tab
         
     def _iterations_details(self, data_iterations):

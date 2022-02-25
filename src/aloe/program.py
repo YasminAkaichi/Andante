@@ -71,12 +71,14 @@ class AloeProgram:
             return False, []
         else:
             data = dict()
-            for sigma in sigmas:
+            all_var = set()
+            for i, sigma in enumerate(sigmas):
+                data[i] = list()
                 for var, value in sigma.subst.items():
-                    if var not in data:
-                        data[var] = list()
-                    data[var].append(value)
-            pandas_out = pandas.DataFrame(data=data, columns=[var for var in data])
+                    data[i].append(value)
+                    all_var.add(var)
+                    
+            pandas_out = pandas.DataFrame(data=data, index=all_var)
             return True, pandas_out
     
     def verify(self, c, **temp_options):

@@ -31,7 +31,7 @@ class MultipleKnowledge(Knowledge):
         
     @property
     def clauses(self):
-        return [c for c in k.clauses for k in self.knowledges]
+        return [c for k in self.knowledges for c in k.clauses]
         
     def match(self, atom):
         x = [k.match(atom) for k in self.knowledges]

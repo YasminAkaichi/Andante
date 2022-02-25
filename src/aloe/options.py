@@ -37,11 +37,16 @@ class Options(object):
             raise AttributeError(message)
             
     def __repr__(self):
-        return '\n'.join(['%s: %s' % (attr, str(getattr(self, attr))) for attr in self.__dir__() if attr[:1]!='_' and attr!='copy'])
+        return '\n'.join(['%s: %s' % (attr, str(getattr(self, attr))) for attr in self])
 
     def __setitem__(self, key, value): setattr(self, key, value)        
     def __getitem__(self, key): return getattr(self, key)    
     def copy(self): return copy.copy(self)
+    
+    def __iter__(self):
+        for attr in self.__dir__():
+            if attr[:1]!='_' and attr!='copy':
+                yield attr
     
     
 class ObjectWithTemporaryOptions(ABC):

@@ -15,7 +15,9 @@ class AndateInterface:
         self.parser = AloeParser()
         self.ap = ap if ap is not None else AloeProgram(options=options)
         
-        self.query_interface = QueryInterface(ap, **options).widget
+        self.qi = QueryInterface(ap, **options)
+        
+        self.query_interface = self.qi.widget
         self.build_details_interface()
         
         self.widget = widgets.Tab()
@@ -56,6 +58,8 @@ class AndateInterface:
                                              widgets.Textarea(placeholder='Insert determinations', layout=MODE_LAYOUT)])
         modehb_widget = widgets.HBox([modeh_widget, modeb_widget])
         modes_widget = widgets.VBox([modehb_widget, determination_widget])
+        
+        self.memory = {}
         
         def save_options():
             for w in all_options_widget:

@@ -53,14 +53,32 @@ class LearningLog(LiveLog):
         #return widgets.interact(lambda e: self.interactions_widget[e], e=self.eg_widget)
         
     def build_widget(self):
-        self.widget = widgets.Tab()
-        
         iterations_widget = self._iterations_details(self.data['Iterations'])
         query_tab = self._query_tab(self.data['Options'], self.data['Knowledge'], self.data['Learned knowledge'])
         
-        self.widget.children = [iterations_widget, query_tab]
-        for i, title in enumerate(['Iteration details', 'Query tab']):
-            self.widget.set_title(i, title)
+        self.togglebutton = widgets.ToggleButtons(
+            options=[('Induction details', 1), ('Challenge new knowledge', 2)],
+            layout={'height':'auto', 'width':'auto'},
+        )
+        
+        self.widget1 = widgets.VBox(
+            [self.togglebutton, iterations_widget]
+        )
+        h = widgets.HBox([self.togglebutton, self.knowledge_widget])
+        h.layout.justify_content='space-between'
+        self.widget2 = widgets.VBox(
+            [h, query_tab]
+        )            
+        
+        self.widget = widgets.VBox([self.widget1])
+        
+        
+        self.togglebutton.observe(lambda x: toggle() if x['type']=='change' and x['name']=='value' else None)
+        def toggle():
+            if self.togglebutton.value==1:
+                self.widget.children = [self.widget1]
+            else: #self.togglebutton.value==2:
+                self.widget.children = [self.widget2]
         
     def _learning_info_tab(self, data):
         pass
@@ -89,7 +107,7 @@ class LearningLog(LiveLog):
         knowledge_change()
         self.knowledge_widget.observe(lambda info: knowledge_change() if info['type']=='change' and info['name']=='value' else None)
                 
-        tab = widgets.VBox([self.knowledge_widget, self.qi_widget])
+        tab = self.qi_widget
         return tab
         
     def _iterations_details(self, data_iterations):

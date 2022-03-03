@@ -18,18 +18,39 @@ class ModeCollection:
         # input: f/2 -> {f/2, d/3, k/2}
         self.determinations = dict()
         for (deterh, l_deterb) in determinations:
-            # Check for error in mode declarations vs determinations
-            if deterh not in self.modeh:
-                raise Exception("%s present in declaration(%s,%s) does not correspond to any modeh." 
-                                % (deterh,deterh,','.join(l_deterb)))
             for deterb in l_deterb:
-                if deterb not in self.modeb:
-                    raise Exception("%s present in declaration(%s,%s) does not correspond to any modeb." 
-                                    % (deterh,deterh,','.join(l_deterb)))
-
-            if not deterh in self.determinations:
-                self.determinations[deterh] = set()
-            self.determinations[deterh].update(l_deterb)
+                self.add_determination(deterh, deterb)
+            
+    def add_determination(self, deterh, deterb):
+        if deterh not in self.modeh:
+            raise Exception("Determination error: %s does not correspond to any modeh." % (deterh,))
+        if deterb not in self.modeb:
+            raise Exception("Determination error: %s does not correspond to any modeb." % (deterb,))
+        if not deterh in self.determinations:
+            self.determinations[deterh] = set()
+        self.determinations[deterh].add(deterb)
+        
+    def add(self, item):
+        if   isinstance(item, Modeh):
+            self.modeh[item.atom_name]=item
+        elif isinstance(item, Modeb):
+            self.modeb[item.atom_name]=item
+        else: # determination
+            deterh, l_deterb = item
+            for deterb in l_deterb:
+                self.add_determination(deterh, deterb)
+                
+    def remove(self, item):
+        if   isinstance(item, Modeh):
+            del self.modeh[item.atom_name]
+        elif isinstance(item, Modeb):
+            del self.modeb[item.atom_name]
+        else: # determination
+            deterh, l_deterb = item
+            for deterb in l_deterb:
+                self.determinations[deterh].remove(deterb)
+            if not self.determinations[deterh]:
+                del self.determinations[deterh]
             
     def get_modeh(self, expr):
         if   isinstance(expr, Atom):

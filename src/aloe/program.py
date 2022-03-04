@@ -99,9 +99,7 @@ class AloeProgram:
         
     def induce(self, **temp_options):
         return self.learner.induce(self.examples, self.modes, self.knowledge, self.solver, **temp_options)
-        
-    def display_logs(self, i=-1):
-        self.learner.logs[i].interact()
+
         
         
         

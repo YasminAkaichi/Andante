@@ -5,7 +5,7 @@ from aloe.knowledge import MultipleKnowledge, LogicProgram
 from aloe.clause import Clause, Constant, Variable, Function, Type
 from aloe.substitution import Substitution
 import aloe.hypothesis_metrics
-from aloe.livelog import LearningLog
+from aloe.livelog import LiveLog
 from sortedcontainers import SortedSet
 
 class Learner(ObjectWithTemporaryOptions, ABC):
@@ -34,7 +34,7 @@ class ProgolLearner(Learner):
     def add_log(self):
         """ Create new log """
         if self.options.logging:
-            self.logs.append(LearningLog())
+            self.logs.append(LiveLog())
             
     def beg_child(self, *args, **kwargs):
         if self.options.logging: return self.logs[-1].beg_child(*args, **kwargs)

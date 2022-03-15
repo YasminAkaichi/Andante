@@ -340,6 +340,12 @@ class AloeParser:
         text = ''.join(text.split())
         return self.parse_rule(text, 'query')
     
+    def parse_example_generator(self, text):
+        h, b = text.split(':-')
+        head = parse_rule(h.replace(' ', ''), 'atom')
+        body = []
+        for b_ in b.split('')
+    
     
 class AloeText:
     def __init__(self, orig_text):

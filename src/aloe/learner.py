@@ -128,7 +128,8 @@ class ProgolLearner(Learner):
                             if s[v].sign=='-': next_InTerms.add(t)
                         
                         b = theta_final.apply_subst(am)
-                        bottom.body.append(b)
+                        if b not in bottom.body:
+                            bottom.body.append(b)
                         
             InTerms = next_InTerms
         
@@ -145,12 +146,14 @@ class ProgolLearner(Learner):
         Closed = set()
         for _ in range(100):
             s = hm.best(Open)
-            self.add_eventlog(s.clause, s)
             Open.remove(s)
             Closed.add(s)
             
             if not hm.prune(s):
-                Open = (Open | set(list(hm.rho(s)))) - Closed
+                for s_new in hm.rho(s):
+                    if s_new not in Open and s_new not in Closed:
+                        self.add_eventlog(s_new.clause, s_new)
+                        Open.add(s_new)
                 
             if hm.terminated(Closed, Open):
                 return hm.best(Closed).clause

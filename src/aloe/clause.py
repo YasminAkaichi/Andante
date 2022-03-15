@@ -106,7 +106,7 @@ class Predicate(Atom, Function):
     Inherits from Atom and Function
     """
     pass
-        
+
 class CompoundTerm(Term, Function):
     """ 
     This class represents compound terms as defined in the prolog framework 
@@ -171,6 +171,15 @@ class Type(Term):
         return self.sign+str(self.name)     
     
     def apply(self, fun): return fun(self)
+    
+    
+class MathematicalExpression(Atom):
+    def __init__(self, formula, code):
+        self.formula = formula
+        self.code = code
+        pass
+    
+    def __repr__(self): return self.formula
     
 #######################################################
 # Utility functions related to classes defined above

@@ -177,9 +177,11 @@ class MathematicalExpression(Atom):
     def __init__(self, formula, code):
         self.formula = formula
         self.code = code
-        pass
     
     def __repr__(self): return self.formula
+    
+    def __eval__(self, **kwargs):
+        return eval(self.code, kwargs)
     
 #######################################################
 # Utility functions related to classes defined above

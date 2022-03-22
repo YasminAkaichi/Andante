@@ -1,5 +1,5 @@
 from aloe.program import AloeProgram
-from aloe.parser  import AloeParser, AloeText
+from aloe.parser  import AloeParser
 from aloe.knowledge import Knowledge, MultipleKnowledge
 from aloe.collections import OrderedSet
 from aloe.utils import bcolors

@@ -30,19 +30,14 @@ class AloeProgram:
         self.learner   = getattr(aloe.learner, self.options.learner)(options=self.options)
         
     @staticmethod
-    def build_from_file(filename): 
+    def build_from(aloefile): 
         import aloe.parser
-        return aloe.parser.AloeParser().parse_file(filename)
+        return aloe.parser.AloeParser().parse(aloefile, 'aloefile')
     
-    @staticmethod
-    def build_from_text(text): 
-        import aloe.parser
-        return aloe.parser.AloeParser().parse(text)
     
     @staticmethod
     def build_from_background(text):
-        import aloe.parser
-        return aloe.parser.AloeParser().parse(':-begin_bg.\n%s\n:-end_bg.' % (text))
+        return AloeProgram.build_from(':-begin_bg.\n%s\n:-end_bg.' % (text))
         
     def __repr__(self):
         B = repr(self.knowledge)
@@ -64,7 +59,7 @@ class AloeProgram:
             if not hasattr(self, 'parser'):
                 import aloe.parser
                 self.parser = aloe.parser.AloeParser()
-            q = self.parser.parse_query(q)
+            q = self.parser.parse(q, 'query')
         sigmas = list(self.solver.query(q, self.knowledge, **temp_options))
         
         if not sigmas:
@@ -90,8 +85,7 @@ class AloeProgram:
             if not hasattr(self, 'parser'):
                 import aloe.parser
                 self.parser = aloe.parser.AloeParser()
-            cs = list(self.parser.parse_clauses(c))
-            c  = cs[0]
+            c = self.parser.parse(c)
         goal = Goal([Negation(Goal(c.body + [Negation(Goal([c.head]))]))])
         return self.query(goal, **temp_options)
     

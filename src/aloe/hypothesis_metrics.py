@@ -34,28 +34,31 @@ class FnMetric(HypothesisMetric):
         self.bottom = bottom
         self.solver = solver
         self.options = options
+
+        self.subst  = Substitution()
+        self.subst.add_variables(self.bottom)
         
         self.build_d()
         
     def build_d(self):
-        s  = Substitution()
-        s.add_variables(self.bottom)
 
         self.d = dict()
                 
         # var (-type) -> list of var (+type) 
-        graph = {v:set() for v in s}
+        graph = {v:set() for v in self.subst}
         
-        # build graph        
+        # build graph  
         for atom in self.bottom.body:
-            type_subst = s.get_type_subst(atom, self.M, body_atom=True)
+            type_subst = self.subst.get_type_subst(atom, self.M, body_atom=True)
             minus_type = [key for key, value in type_subst.subst.items() if isinstance(value,Type) and value.sign=='-']
             plus__type = [key for key, value in type_subst.subst.items() if isinstance(value,Type) and value.sign=='+']
             for v in minus_type:
                 graph[v].update(plus__type)
-        type_subst = s.get_type_subst(self.bottom.head, self.M, body_atom=False)
+        type_subst = self.subst.get_type_subst(self.bottom.head, self.M, body_atom=False)
         
         l0 = [key for key, value in type_subst.subst.items() if isinstance(value,Type) and value.sign=='-']
+        self.InVars = set(key for key, value in type_subst.subst.items() if isinstance(value,Type) and value.sign=='+')
+        
         l = [l0]
         for i, li in enumerate(l):
             lnext = list()
@@ -64,7 +67,7 @@ class FnMetric(HypothesisMetric):
                 lnext.extend(v_ for v_ in graph[v] if v_ not in self.d)
             if lnext:
                 l.append(lnext)
-        for var in s:
+        for var in self.subst:
             if var not in self.d:
                 self.d[var] = len(l)
                 
@@ -103,6 +106,9 @@ class FnMetric(HypothesisMetric):
             self.k = k
             self.E = E if E is not None else hm.E
             self.E_cov = {label:[e for e in self.E[label] if hm.solver.succeeds_on(e.head, self.B, verbose=0)] for label in self.E}
+            
+            self.InVars = extract_variables(self.clause.body) | self.hm.InVars
+            self.str_id = '%s %d' % (str(self.clause), self.k)
 
             # Metrics for the state
             # - c: the number of atoms in the body of C
@@ -119,8 +125,8 @@ class FnMetric(HypothesisMetric):
         def __str__(self): 
             s = '[%3d,%3d,%3d,%3d,%3d,%3d]' % self.metrics
             return '%s %s' % (s, str(self.clause))
-        def __hash__(self): return hash(str(self))
-        def __eq__(self, other): return str(self)==str(other)
+        def __hash__(self): return hash(self.str_id)
+        def __eq__(self, other): return self.str_id==other.str_id
 
     def best(self, collec):
         return max([s for s in collec if s.c<=self.options.c], key=lambda s: s.f)
@@ -140,8 +146,28 @@ class FnMetric(HypothesisMetric):
 
     def rho(self, state):
         for i in range(state.k, len(self.bottom.body)):
-            c = Clause(state.clause.head, state.clause.body+[self.bottom.body[i]])
-            s = self.State(c, i+1, E=state.E_cov)
-            # Added line, not in the paper
-            if s.c<=self.options.c:
-                yield s
+            atom_i  = self.bottom.body[i]
+            type_subst = self.subst.get_type_subst(atom_i, self.M, body_atom=True)
+            in_vars = [key for key, value in type_subst.subst.items() if isinstance(value,Type) and value.sign=='+']
+            if all(var in state.InVars for var in in_vars):                
+                c = Clause(state.clause.head, state.clause.body+[atom_i])
+                s = self.State(c, i+1, E=state.E_cov)
+                # Added line, not in the paper
+                if s.c<=self.options.c:
+                    yield s
+                    
+    def rho(self, state):
+        # Added line, not in the paper
+        if state.k>=len(self.bottom.body) or state.c==self.options.c:
+            return
+        
+        yield self.State(state.clause, state.k+1, E=state.E_cov)
+        
+        atom_k = self.bottom.body[state.k]
+        type_subst = self.subst.get_type_subst(atom_k, self.M, body_atom=True)
+        in_vars = [key for key, value in type_subst.subst.items() if isinstance(value,Type) and value.sign=='+']
+        if all(var in state.InVars for var in in_vars):                
+            c = Clause(state.clause.head, state.clause.body+[atom_k])
+            s = self.State(c, state.k+1, E=state.E_cov)
+            yield s               
+                    

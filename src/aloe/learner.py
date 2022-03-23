@@ -5,7 +5,7 @@ from aloe.knowledge import MultipleKnowledge, LogicProgram
 from aloe.clause import Clause, Constant, Variable, Function, Type
 from aloe.substitution import Substitution
 import aloe.hypothesis_metrics
-from aloe.livelogs import LearningLog
+from aloe.livelog import LiveLog
 from sortedcontainers import SortedSet
 
 class Learner(ObjectWithTemporaryOptions, ABC):
@@ -33,8 +33,14 @@ class ProgolLearner(Learner):
         
     def add_log(self):
         """ Create new log """
-        if self.options.keep_logs:
-            self.logs.append(LearningLog())
+        if self.options.logging:
+            self.logs.append(LiveLog())
+            
+    def beg_child(self, *args, **kwargs):
+        if self.options.logging: return self.logs[-1].beg_child(*args, **kwargs)
+            
+    def end_child(self, *args, **kwargs):
+        if self.options.logging: return self.logs[-1].end_child(*args, **kwargs)
     
     def add_eventlog(self, event_name, value, display_fun=str):
         """ 
@@ -42,7 +48,7 @@ class ProgolLearner(Learner):
         Print the eventlog to the screen (only if self.options.verboseprint > 1)
         """
         self.verboseprint('%s: %s' % (event_name, display_fun(value)))
-        if self.options.keep_logs:
+        if self.options.logging:
             self.logs[-1].add_eventlog(event_name, value)
         
     def build_bottom_i(self, e, M, B, solver):
@@ -122,7 +128,8 @@ class ProgolLearner(Learner):
                             if s[v].sign=='-': next_InTerms.add(t)
                         
                         b = theta_final.apply_subst(am)
-                        bottom.body.append(b)
+                        if b not in bottom.body:
+                            bottom.body.append(b)
                         
             InTerms = next_InTerms
         
@@ -139,12 +146,14 @@ class ProgolLearner(Learner):
         Closed = set()
         for _ in range(100):
             s = hm.best(Open)
-            self.add_eventlog('State', s)            
             Open.remove(s)
             Closed.add(s)
             
             if not hm.prune(s):
-                Open = (Open | set(list(hm.rho(s)))) - Closed
+                for s_new in hm.rho(s):
+                    if s_new not in Open and s_new not in Closed:
+                        self.add_eventlog(s_new.clause, s_new)
+                        Open.add(s_new)
                 
             if hm.terminated(Closed, Open):
                 return hm.best(Closed).clause
@@ -155,17 +164,25 @@ class ProgolLearner(Learner):
     def induce(self, examples, modes, knowledge, solver, **temp_options):
         self.add_temporary_options(**temp_options)
         
+        log_options = self.options.copy()
+        self.add_temporary_options(verbose=0)
         self.add_log()
+        self.add_eventlog('Knowledge', knowledge.copy())
+        self.add_eventlog('Modes', modes)
+        self.add_eventlog('Options', log_options)
+        self.rem_temporary_options()
         
+        self.beg_child('Iterations')
         nclause = 0
         learned_knowledge = LogicProgram(options=knowledge.options)
         whole_knowledge = MultipleKnowledge(knowledge, learned_knowledge)
-        while examples['pos'] and nclause<SystemParameters.maxclauses:
-            display_examples = lambda E: '%dp/%dn' % (len(E['pos']), len(E['neg']))
-            self.add_eventlog('Examples', examples, display_examples)            
-            
+        while examples['pos'] and nclause<SystemParameters.maxclauses:            
             # Select 1 example
             e1 = examples['pos'][0]
+            
+            self.beg_child(e1)
+            display_examples = lambda E: '%dp/%dn' % (len(E['pos']), len(E['neg']))
+            self.add_eventlog('Examples', examples, display_examples)            
             self.add_eventlog('Current example', e1)
             
             # Construct bottom_i
@@ -175,7 +192,9 @@ class ProgolLearner(Learner):
             self.add_eventlog('Bottom_i',bottom_i)
             
             # Build hypothesis
+            self.beg_child('States')
             C = self.build_hypothesis(examples, modes, bottom_i, whole_knowledge, solver)
+            self.end_child()
             self.add_eventlog('Clause', C)
             
             # Add hypothesis to background knowledge
@@ -185,7 +204,10 @@ class ProgolLearner(Learner):
             
             nclause += 1
             self.verboseprint('')
+            self.end_child()
+        self.end_child()    
         
+        self.add_eventlog('Learned knowledge', learned_knowledge)    
         if self.options.update_knowledge:
             for c in learned_knowledge.clauses:
                 knowledge.add(c)

@@ -9,31 +9,33 @@ from aloe.options   import Options, SystemParameters
 from aloe.program   import AloeProgram
 from aloe.knowledge import LogicProgram
 from aloe.utils     import red
+import parser
 
 grammar = Grammar(
     r"""    
-    aloefile         = header? background pos_ex? neg_ex?
-    header           = hclause+
+    aloefile         = ws header? ws background ws pos_ex? ws neg_ex? ws
+    header           =                       (hclause ws)+
+    background       = ":-" ws "begin_bg"     ws "." ws (bclause ws)+ ws ":-" ws "end_bg" ws "."
+    pos_ex           = ":-" ws "begin_in_pos" ws "." ws (pclause ws)+ ws ":-" ws "end_in_pos" ws "."
+    neg_ex           = ":-" ws "begin_in_neg" ws "." ws (nclause ws)+ ws ":-" ws "end_in_neg" ws "."
     hclause          = mode / determination / set
-    background       = ":-begin_bg." bclause+ ":-end_bg."
     bclause          = hornclause
-    pos_ex           = ":-begin_in_pos." pclause+ ":-end_in_pos."
     pclause          = hornclause
-    neg_ex           = ":-begin_in_neg." nclause+ ":-end_in_neg."
     nclause          = hornclause
+    ws = ~"\s*"
 
-    determination = "determination(" predname "/" number ("," predname "/" number)+ ")."    
-    set           = "set(" word "," value ")."
+    determination = "determination" ws "(" ws predname ws "/" ws number ws ("," ws predname ws "/" ws number ws)+ ")" ws "."    
+    set           = "set" ws "(" ws word ws "," ws value ws ")" ws "."
     
     hornclause       = headlessclause / definiteclause
-    headlessclause   =       ":-" body   "."
-    definiteclause   = head (":-" body)? "."
+    headlessclause   =          ":-" ws body   ws "."
+    definiteclause   = head ws (":-" ws body)? ws "."
     head             = atom
-    body             = atom ("," atom)*
-    atom             = "true" / "false" / predicate
-    predicate        = predname "(" term ("," term)* ")"
+    body             = atom ws ("," ws atom ws)*
+    atom             = "true" / "false" / predicate / equation
+    predicate        = predname ws "(" ws term ws ("," ws term ws)* ")"
     term             = compoundterm / variable / constant 
-    compoundterm     = funcname "(" term ("," term)* ")"
+    compoundterm     = funcname ws "(" ws term ws ("," ws term ws)* ")"
     predname         = word
     funcname         = word
     constant         = value / value
@@ -43,19 +45,27 @@ grammar = Grammar(
     number           = ~"\d+"
 
     mode      = modeh / modeb
-    modeh     = "modeh(" recall "," matom ")."
-    modeb     = "modeb(" recall "," matom ")."
+    modeh     = "modeh" ws "(" ws recall ws "," ws matom ws ")" ws "."
+    modeb     = "modeb" ws "(" ws recall ws "," ws matom ws ")" ws "."
     recall    = "*" / number
-    matom     = predname "(" mterm ("," mterm)* ")" 
-    mcompterm = funcname "(" mterm ("," mterm)* ")"
+    matom     = predname ws "(" ws mterm ws ("," ws mterm ws)* ")" 
+    mcompterm = funcname ws "(" ws mterm ws ("," ws mterm ws)* ")"
     mterm     = type / mcompterm / constant
     type      = sign word
     sign      = ~"[+\-#]"
     
-    query     = goal "."
-    goal      = goal_unit ("," goal_unit)*
+    query     = goal ws "."
+    goal      = goal_unit ws ("," ws goal_unit ws)*
     goal_unit = negation / atom
-    negation  = "not(" goal ")"
+    negation  = "not" ws "(" ws goal ws ")"
+    
+    equation       = not_equation / combi_equation / operation
+    not_equation   = "not" ws "(" ws equation ws ")"
+    combi_equation = ("and" / "or" / "xor") ws "(" ws equation ws "," ws equation ws ")"
+    operation      = (variable / number) ws ("<" / "=" / ">" / "=<" / "=>") ws (variable / number)
+    
+    generator = (modee ws)* (hornclause ws)*
+    modee = "mode" ws atom "."
     """ 
 )
 
@@ -100,36 +110,36 @@ class AloeVisitor(NodeVisitor):
         return visited_children[0]
     
     def visit_headlessclause(self, node, visited_children):
-        _, body, _ = visited_children
+        _, _, body, _, _ = visited_children
         if len(body)==1:
             return Clause(None, body[0])
         else:
             return Clause(None, body)
     
     def visit_definiteclause(self, node, visited_children):
-        head, optional_body, _ = visited_children
+        head, _, optional_body, _, _ = visited_children
         if optional_body:
-            _, body = optional_body[0]
+            _, _, body = optional_body[0]
             return Clause(head, body)
         else:
             return Clause(head, [])
     
     def visit_body(self, node, visited_children):
-        atom1, opt_atoms = visited_children
-        atoms = [atom1] + [atom for _, atom in opt_atoms]
+        atom1, _, opt_atoms = visited_children
+        atoms = [atom1] + [atom for _, _, atom, _ in opt_atoms]
         return atoms
     
     def visit_atom(self, node, visited_children):
         return visited_children[0]
     
     def visit_predicate(self, node, visited_children):
-        predname, _, term1, opt_terms, _ = visited_children
-        terms = [term1] + [term for _, term in opt_terms]
+        predname, _, _, _, term1, _, opt_terms, _ = visited_children
+        terms = [term1] + [term for _, _, term, _ in opt_terms]
         return Predicate(predname, terms)
     
     def visit_compoundterm(self, node, visited_children):
-        funcname, _, term1, opt_terms, _ = visited_children
-        terms = [term1] + [term for _, term in opt_terms]
+        funcname, _, _, _, term1, _, opt_terms, _ = visited_children
+        terms = [term1] + [term for _, _, term, _ in opt_terms]
         return CompoundTerm(funcname, terms)
     
     def visit_term(self, node, visited_children):
@@ -149,18 +159,17 @@ class AloeVisitor(NodeVisitor):
 
     def visit_number(self, node, visited_children):
         return int(node.text)
-    
         
     # 2. For modes    
     def visit_mode(self, node, visited_children):
         return visited_children[0]
 
     def visit_modeh(self, node, visited_children):
-        _, recall, _, atom, _ = visited_children
+        _, _, _, _, recall, _, _, _, atom, _, _, _, _ = visited_children
         return Modeh(recall, atom)
 
     def visit_modeb(self, node, visited_children):
-        _, recall, _, atom, _ = visited_children
+        _, _, _, _, recall, _, _, _, atom, _, _, _, _ = visited_children
         return Modeb(recall, atom)
     
     def visit_recall(self, node, visited_children):
@@ -188,7 +197,7 @@ class AloeVisitor(NodeVisitor):
     
     # 3. For aloe file as a whole
     def visit_aloefile(self, node, visited_children):
-        opt_header, background, opt_pos_ex, opt_neg_ex = visited_children
+        _, opt_header, _, background, _, opt_pos_ex, _, opt_neg_ex, _ = visited_children
         if opt_header:
             header = opt_header[0]
             modehandler, options = header['modehandler'], header['options']
@@ -206,8 +215,8 @@ class AloeVisitor(NodeVisitor):
     
     def visit_header(self, node, visited_children):
         header = {'mode':list(), 'determination':list(), 'set':list()}
-        for node_child, visited_child in zip(node, visited_children):
-            header[node_child.children[0].expr_name].append(visited_child)
+        for node_child, (visited_child, _) in zip(node, visited_children):
+            header[node_child.children[0].children[0].expr_name].append(visited_child)
             
         mhandler = ModeCollection(header['mode'], header['determination'])
         options  = Options(header['set'])
@@ -217,194 +226,107 @@ class AloeVisitor(NodeVisitor):
         return visited_children[0]
 
     def visit_background(self, node, visited_children):
-        _, bclauses, _ = visited_children
+        bclauses = [c for c, _ in visited_children[6]]
         return LogicProgram(bclauses)
     
     def visit_pos_ex(self, node, visited_children):
-        _, pclauses, _ = visited_children
+        pclauses = [c for c, _ in visited_children[6]]
         return pclauses
     
     def visit_neg_ex(self, node, visited_children):
-        _, nclauses, _ = visited_children
+        nclauses = [c for c, _ in visited_children[6]]
         return nclauses
     
     def visit_determination(self, node, visited_children):
         #     determination = "determination(" predname "/" number ("," predname "/" number)+ ")."    
-        _, modeh_name, _, modeh_nargs, l_modeb, _ = visited_children
+        _, _, _, _, modeh_name, _, _, _, modeh_nargs, _, l_modeb, _, _, _ = visited_children
         deterh = '%s/%d'%(modeh_name, modeh_nargs)
-        l_deterb = ['%s/%d'%(modeb_name, modeb_nargs) for _, modeb_name, _, modeb_nargs in l_modeb]
+        l_deterb = ['%s/%d'%(modeb_name, modeb_nargs) for _, _, modeb_name, _, _, _, modeb_nargs, _ in l_modeb]
         return (deterh, l_deterb)
         
     def visit_set(self, node, visited_children):
-        _, attr, _, value, _ = visited_children
+        _, _, _, _, attr, _, _, _, value, _, _, _, _ = visited_children
         return (attr, value)
     
     def visit_query(self, node, visited_children):
         return visited_children[0]
 
     def visit_goal(self, node, visited_children):
-        el0, l_e = visited_children
+        el0, _, l_e = visited_children
         g = Goal((el0,))
-        g.extend(e for _, e in l_e)
+        g.extend(e for _, _, e, _ in l_e)
         return g
     
     def visit_goal_unit(self, node, visited_children):
         return visited_children[0]
     
     def visit_negation(self, node, visited_children):
-        _, goal, _ = visited_children
+        _, _, _, _, goal, _, _ = visited_children
         return Negation(goal)
+    
+    def visit_equation(self, node, visited_children):
+        return visited_children
+    
+    def visit_generator(self, node, visited_children):
+        l_modee, l_clauses = visited_children
+        example_modes = [x for x, _ in l_modee]
+        knowledge = LogicProgram([x for x, _ in l_clauses])
+        return knowledge, example_modes
+    
+    def visit_modee(self, node, visited_children):
+        _, _, atom, _ = visited_children
+        return atom
+
 
 class AloeParser:
     def __init__(self):
         self.grammar = grammar
         self.visitor = AloeVisitor()
-        
-    def parse_file(self, filepath):
+
+    def parse(self, string, rule='hornclause'):
         """
-        Parses aloe files
-        Input: filepath: path to the file to parse
-        Ouput: list of Clause
+        Parses input 'string'
+        Input: 
+            string: either a path to a file or a text to parse
+            rule:   rule on which to parse the text
+        Ouput: Object from aloe.clause
         """
-        with open(filepath, 'r') as file:
-            orig_text = file.read()
-            
-        return self.parse(orig_text)
-            
-    def parse(self, string):
-        """
-        Parses aloe text
-        Input: string: either a path to a file or a text to parse
-        Ouput: list of Clause
-        """
+        string = string.strip()
         
         # Case where string is the path to a file
-        try:    orig_text = open(string, 'r').read()            
-        except: orig_text = string
-        
-        at = AloeText(orig_text)
-        
-        # Remove spaces and comments from text
-        at.preprocess()
-        
-        # Build nchar2lign function
-        at.build_nchar2lign()
-        
-        # Remove line breaks
-        at.remove_linebreaks()
+        try:    
+            full_text = open(string, 'r').read()            
+            filename  = string
+        except: 
+            full_text = string
+            filename  = ""
+            
+        text_no_comments = re.sub(r'%.*\n', '\n', full_text)
         
         try:
-            program = self.parse_rule(at.text,'aloefile')
+            tree   = self.grammar[rule].parse(text_no_comments)
+            output = self.visitor.visit(tree)
+            return output
         except ParseError as e:
-            line    = at.nchar2lign(e.pos)
-            c1, c2  = at.nchar2clause(e.pos)
-            message = 'Error:\n%2d. %s%s' % (line,c1,red(c2))
-            raise Exception(message)
+            message = 'Failed to parse rule <%s>' % e.expr.as_rule()
+            raise SyntaxError(message, (filename, e.line(), e.column(), full_text))
         except VisitationError as e:
             message = 'Error in the code when visiting the parsed tree. This should not happen. Please report it.'
-            raise Exception(message)
-        except Exception as e:
-            raise e
+            raise Exception(message)            
+        
+    def parse_several(self, string, rule='hornclause'):
+        new_rule = 'l_%s' % rule
+        if not new_rule in self.grammar:
+            rules, _ = self.grammar._expressions_from_rules('%s = (%s ws)*' % (new_rule, rule), self.grammar)
+            self.grammar.update(rules)
             
-        return program
+            def visit_new_rule(node, visited_children):
+                return [child for child, _ in visited_children]
+            setattr(self.visitor, 'visit_%s' % new_rule, visit_new_rule) 
         
-                        
-    def parse_rule(self, text, rule_name):
-        """
-        Parses aloe expression
-        Input: text: string representing the expression to parse
-        Ouput: ouput: the expression parsed and transformed 
-        """
-        self.grammar.default_rule = self.grammar[rule_name]        
-        tree   = self.grammar.parse(text)
-        output = self.visitor.visit(tree)
-        return output
-    
-    def parse_clauses(self, text):
-        at = AloeText(text)
-        at.preprocess()
-        clauses = at.get_clauses()
-        for clause in clauses:            
-            try:
-                yield self.parse_rule(clause,'hornclause')
-            except ParseError as e:
-                message = 'Parsing error\nClause:%s' % (str(clause))
-                raise Exception(message)
-            except VisitationError as e:
-                message = 'Error in the code when visiting the parsed tree. This should not happen. Please report it.'
-                raise Exception(message)
-            except Exception as e:
-                raise e
-    
-    def parse_query(self, text):
-        text = ''.join(text.split())
-        return self.parse_rule(text, 'query')
-    
-    
-class AloeText:
-    def __init__(self, orig_text):
-        self.orig_text = orig_text
-        self.text = orig_text
-        
-    def preprocess(self):
-        """ Spaces and comments are removed from file """
-        # Remove all spaces
-        self.text = self.text.replace(' ','')
-        # Remove all comments
-        self.text = re.sub(r'%.*\n', '\n', self.text)
-        
-    def remove_linebreaks(self):
-        self.text = self.text.replace('\n','')
-        
-    def build_nchar2lign(self):
-        """
-        For 'text' build a correspondance between the character count and the lign in text
-        """
-        # self._correspondance:
-        #    -- ['lign'][i]:    lign number
-        #    -- ['numchar'][i]: cumulative number of characters before lign ['lign'][i] is finished
-        self._correspondance = {'lign':list(), 'numchar':list()}
-        
-        char_count = 0 # count for the number of characters
-        for l, line in enumerate(self.text.split("\n"), 1):
-            if line:
-                char_count += len(line)
-                self._correspondance['lign'].append(l)
-                self._correspondance['numchar'].append(char_count)
-                
-    def nchar2lign(self, nchar):
-        """
-        Searches in self._correspondance to which lign corresponds the 'nchar'-th character
-        """
-        if not hasattr(self, '_correspondance'):
-            raise Exception("build_nchar2lign needs to be called before using this method")
+        return self.parse(string, rule=new_rule)
 
-        if nchar>=len(self.text):
-            raise Exception("nchar is bigger than the size of the text. nchar=%d and len(text)=%d" % (nchar, len(self.text)))
-
-        i = bisect.bisect_right(self._correspondance['numchar'],nchar)        
-        return self._correspondance['lign'][i]
-    
-    def nchar2clause(self, nchar):
-        beg = 0
-        for i in range(nchar,-1,-1):
-            if self.text[i]=='.':
-                beg = i+1
-                break
-        end = len(self.text)
-        for i in range(nchar,len(self.text)):
-            if self.text[i]=='.':
-                end = i+1
-                break
-        return self.text[beg:i], self.text[i:end]
-        
-    def get_clauses(self):
-        """ Split text into clauses """
-        # Remove linebreaks from text
-        text = self.text.replace('\n','')
-        
-        # Split text in a list of clauses (split on ".")
-        text = text.replace('.','.\n')
-        clauses = text.split('\n')[:-1]        
-        
+    def split_on_dots(self, text):
+        text = re.sub(r'%.*\n', '\n', text)
+        clauses = [c.strip()+'.' for c in text.split('.') if c]
         return clauses

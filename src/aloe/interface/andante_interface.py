@@ -40,7 +40,7 @@ class AndateInterface:
         self.parser = AloeParser()
         self.ap = ap if ap is not None else AloeProgram(options=options)
         
-        self.qi = QueryInterface(ap, **options)
+        self.qi = QueryInterface(self.ap, **options)
         self.di = DetailsInterface(self)
         self.iis = []
         self.induction_count = 0
@@ -85,25 +85,26 @@ class DetailsInterface:
         self.old_details['modeb'].update(str(m) for _, m in self.ap.modes.modeb.items())
         self.old_details['determination'].update('determination(%s,%s).' % (modeh, modeb) for modeh in self.ap.modes.determinations for modeb in self.ap.modes.determinations[modeh])
         
+    def get_detail(self, category):
+        displayed_text = getattr(self, category+'_widget').children[1].value
+        return self.parser.split_on_dots(displayed_text)
+        
     def update_details(self):
         to_remove = dict()
         to_add = dict()
         for category in DETAILS_CATEGORIES:
-            at = AloeText(getattr(self, category+'_widget').children[1].value)
-            at.preprocess()
-            new = OrderedSet()
-            new.update(at.get_clauses())
+            new = OrderedSet(self.get_detail(category))
             old = self.old_details[category]
             
-            to_remove[category] = [self.parser.parse_rule(c, PARSER_CATEGORIES[category]) for c in old if c not in new]
-            to_add[category]    = [self.parser.parse_rule(c, PARSER_CATEGORIES[category]) for c in new if c not in old]
+            to_remove[category] = [self.parser.parse(c, PARSER_CATEGORIES[category]) for c in old if c not in new]
+            to_add[category]    = [self.parser.parse(c, PARSER_CATEGORIES[category]) for c in new if c not in old]
             
             self.old_details[category] = new
         
         for e in to_add['pos_examples']:
-            self.ap.examples['pos'].add(e)
+            self.ap.examples['pos'].append(e)
         for e in to_add['neg_examples']:
-            self.ap.examples['neg'].add(e)
+            self.ap.examples['neg'].append(e)
         for c in itertools.chain(to_add['modeh'], to_add['modeb'], to_add['determination']):
             self.ap.modes.add(c)
 
@@ -137,11 +138,6 @@ class DetailsInterface:
                 self.widget.children[1].right_sidebar.children = [option_widget]
         details_toggle_button.observe(lambda info: fun(info['new']) if info['type']=='change' and info['name']=='value' else None)
         
-        def update_modeh(text):
-            text = AloeText(text)
-            text.preprocess()
-            all_modeh = set(text.get_clauses())
-                            
         v = lambda x: '\n'.join([c for c in x])
         self.modeh_widget = VBox([Label('Modeh'),
                                      Textarea(placeholder='Insert modeh atoms', layout=MODE_LAYOUT)])
@@ -233,9 +229,7 @@ class QueryInterface:
         if clauses is None:
             clauses = self.text_widget[category].value
         if isinstance(clauses, str):
-            at = AloeText(clauses)
-            at.preprocess()
-            clauses = at.get_clauses()
+            clauses = self.parser.split_on_dots(clauses)
         
         depr_clauses = [c for c in self._clauses[category] if c not in set(clauses)]
         new__clauses = [c for c in clauses if c not in self._clauses[category]]
@@ -243,12 +237,12 @@ class QueryInterface:
         for c in depr_clauses:
             self._clauses[ALL].remove(c)
             self._clauses[get_category(c)].remove(c)
-            self.ap.knowledge.remove(self.parser.parse_rule(c, 'hornclause'))
+            self.ap.knowledge.remove(self.parser.parse(c, 'hornclause'))
             
         for c in new__clauses:
             self._clauses[ALL].add(c)
             self._clauses[get_category(c)].add(c)
-            self.ap.knowledge.add(self.parser.parse_rule(c, 'hornclause'))
+            self.ap.knowledge.add(self.parser.parse(c, 'hornclause'))
             
     def update_clauses_widget(self, category=None):
         category = category if category is not None else self.current_category()

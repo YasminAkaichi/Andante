@@ -1,5 +1,13 @@
 import collections
 class OrderedSet(collections.OrderedDict, collections.MutableSet):
+    def __init__(self, *args, **kwargs):
+        if len(args)>1:
+            raise TypeError("OrderedSet expected at most 1 argument, got %d" % len(args))
+        if kwargs:
+            raise TypeError("__init__() takes no keyword arguments")
+            
+        super().__init__()
+        self.update(*args)
 
     def update(self, *args, **kwargs):
         if kwargs:

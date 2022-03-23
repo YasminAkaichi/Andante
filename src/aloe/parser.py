@@ -13,30 +13,29 @@ import parser
 
 grammar = Grammar(
     r"""    
-    aloefile         = wss header? wss background wss pos_ex? wss neg_ex? wss
-    header           =                       (hclause wss)+
-    background       = ":-" ss "begin_bg"     ss "." wss (bclause wss)+ wss ":-" ss "end_bg" ss "."
-    pos_ex           = ":-" ss "begin_in_pos" ss "." wss (pclause wss)+ wss ":-" ss "end_in_pos" ss "."
-    neg_ex           = ":-" ss "begin_in_neg" ss "." wss (nclause wss)+ wss ":-" ss "end_in_neg" ss "."
+    aloefile         = ws header? ws background ws pos_ex? ws neg_ex? ws
+    header           =                       (hclause ws)+
+    background       = ":-" ws "begin_bg"     ws "." ws (bclause ws)+ ws ":-" ws "end_bg" ws "."
+    pos_ex           = ":-" ws "begin_in_pos" ws "." ws (pclause ws)+ ws ":-" ws "end_in_pos" ws "."
+    neg_ex           = ":-" ws "begin_in_neg" ws "." ws (nclause ws)+ ws ":-" ws "end_in_neg" ws "."
     hclause          = mode / determination / set
     bclause          = hornclause
     pclause          = hornclause
     nclause          = hornclause
-    wss = ~"\s*"
-    ss  = ~" *"
+    ws = ~"\s*"
 
-    determination = "determination" ss "(" ss predname ss "/" ss number ss ("," ss predname ss "/" ss number ss)+ ")" ss "."    
-    set           = "set" ss "(" ss word ss "," ss value ss ")" ss "."
+    determination = "determination" ws "(" ws predname ws "/" ws number ws ("," ws predname ws "/" ws number ws)+ ")" ws "."    
+    set           = "set" ws "(" ws word ws "," ws value ws ")" ws "."
     
     hornclause       = headlessclause / definiteclause
-    headlessclause   =          ":-" ss body   ss "."
-    definiteclause   = head ss (":-" ss body)? ss "."
+    headlessclause   =          ":-" ws body   ws "."
+    definiteclause   = head ws (":-" ws body)? ws "."
     head             = atom
-    body             = atom ss ("," ss atom ss)*
+    body             = atom ws ("," ws atom ws)*
     atom             = "true" / "false" / predicate / equation
-    predicate        = predname ss "(" ss term ss ("," ss term ss)* ")"
+    predicate        = predname ws "(" ws term ws ("," ws term ws)* ")"
     term             = compoundterm / variable / constant 
-    compoundterm     = funcname ss "(" ss term ss ("," ss term ss)* ")"
+    compoundterm     = funcname ws "(" ws term ws ("," ws term ws)* ")"
     predname         = word
     funcname         = word
     constant         = value / value
@@ -46,24 +45,27 @@ grammar = Grammar(
     number           = ~"\d+"
 
     mode      = modeh / modeb
-    modeh     = "modeh" ss "(" ss recall ss "," ss matom ss ")" ss "."
-    modeb     = "modeb" ss "(" ss recall ss "," ss matom ss ")" ss "."
+    modeh     = "modeh" ws "(" ws recall ws "," ws matom ws ")" ws "."
+    modeb     = "modeb" ws "(" ws recall ws "," ws matom ws ")" ws "."
     recall    = "*" / number
-    matom     = predname ss "(" ss mterm ss ("," ss mterm ss)* ")" 
-    mcompterm = funcname ss "(" ss mterm ss ("," ss mterm ss)* ")"
+    matom     = predname ws "(" ws mterm ws ("," ws mterm ws)* ")" 
+    mcompterm = funcname ws "(" ws mterm ws ("," ws mterm ws)* ")"
     mterm     = type / mcompterm / constant
     type      = sign word
     sign      = ~"[+\-#]"
     
-    query     = goal wss "."
-    goal      = goal_unit ss ("," wss goal_unit ss)*
+    query     = goal ws "."
+    goal      = goal_unit ws ("," ws goal_unit ws)*
     goal_unit = negation / atom
-    negation  = "not" ss "(" ss goal ss ")"
+    negation  = "not" ws "(" ws goal ws ")"
     
     equation       = not_equation / combi_equation / operation
-    not_equation   = "not" ss "(" ss equation ss ")"
-    combi_equation = ("and" / "or" / "xor") ss "(" ss equation ss "," ss equation ss ")"
-    operation      = (variable / number) ("<" / "=" / ">" / "=<" / "=>") (variable / number)
+    not_equation   = "not" ws "(" ws equation ws ")"
+    combi_equation = ("and" / "or" / "xor") ws "(" ws equation ws "," ws equation ws ")"
+    operation      = (variable / number) ws ("<" / "=" / ">" / "=<" / "=>") ws (variable / number)
+    
+    generator = (modee ws)* (hornclause ws)*
+    modee = "mode" ws atom "."
     """ 
 )
 
@@ -157,11 +159,6 @@ class AloeVisitor(NodeVisitor):
 
     def visit_number(self, node, visited_children):
         return int(node.text)
-    
-    def visit_wss(self, node, visited_children):
-        return node.text    
-    def visit_ss(self, node, visited_children):
-        return node.text
         
     # 2. For modes    
     def visit_mode(self, node, visited_children):
@@ -269,6 +266,16 @@ class AloeVisitor(NodeVisitor):
     
     def visit_equation(self, node, visited_children):
         return visited_children
+    
+    def visit_generator(self, node, visited_children):
+        l_modee, l_clauses = visited_children
+        example_modes = [x for x, _ in l_modee]
+        knowledge = LogicProgram([x for x, _ in l_clauses])
+        return knowledge, example_modes
+    
+    def visit_modee(self, node, visited_children):
+        _, _, atom, _ = visited_children
+        return atom
 
 
 class AloeParser:
@@ -284,6 +291,7 @@ class AloeParser:
             rule:   rule on which to parse the text
         Ouput: Object from aloe.clause
         """
+        string = string.strip()
         
         # Case where string is the path to a file
         try:    
@@ -309,8 +317,16 @@ class AloeParser:
     def parse_several(self, string, rule='hornclause'):
         new_rule = 'l_%s' % rule
         if not new_rule in self.grammar:
-            rules, _ = self.grammar._expressions_from_rules('%s = %s*' % (new_rule, rule), {})
+            rules, _ = self.grammar._expressions_from_rules('%s = (%s ws)*' % (new_rule, rule), self.grammar)
             self.grammar.update(rules)
-            setattr(self.visitor, 'visit_%s' % new_rule, lambda obj, node, visited_children: visited_children) 
+            
+            def visit_new_rule(node, visited_children):
+                return [child for child, _ in visited_children]
+            setattr(self.visitor, 'visit_%s' % new_rule, visit_new_rule) 
         
         return self.parse(string, rule=new_rule)
+
+    def split_on_dots(self, text):
+        text = re.sub(r'%.*\n', '\n', text)
+        clauses = [c.strip()+'.' for c in text.split('.') if c]
+        return clauses

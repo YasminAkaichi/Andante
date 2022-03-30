@@ -2,7 +2,7 @@ import aloe.solver
 import aloe.learner
 from aloe.clause    import Goal, Clause, Negation, Variable, extract_variables
 from aloe.options   import Options
-from aloe.mode      import ModeCollection
+from aloe.mode      import ModeCollection, Modeh
 from aloe.knowledge import Knowledge, LogicProgram, MultipleKnowledge
 from aloe.substitution import Substitution
 from aloe.utils import generate_variable_names
@@ -102,15 +102,18 @@ class AloeProgram:
         
         """
         if isinstance(text, str):
-            new_knowledge, example_modes = self.parser.parse(text, 'generator')
+            new_knowledge, lmodes = self.parser.parse(text, 'generator')
+            for mode in lmodes:
+                self.modes.add(mode)
         
         examples = {'pos':[], 'neg':[]}
         knowledge = MultipleKnowledge(self.knowledge, new_knowledge)
         
-        for mode in example_modes:
+        for modeh in [x for x in lmodes if isinstance(x, Modeh)]:
+            matom = modeh.atom
             generator = generate_variable_names()
-            template = mode.__class__(mode.functor, [Variable(next(generator)) for _ in mode.arguments])
-            mapping = {var:str(x) for var, x in zip(template.arguments, mode.arguments)}
+            template = matom.__class__(matom.functor, [Variable(next(generator)) for _ in matom.arguments])
+            mapping = {var:t.name for var, t in zip(template.arguments, matom.arguments)}
             #mapping = {var:mapping[repr(var)] for var in extract_variables(clause.head)}
 
             T = dict()

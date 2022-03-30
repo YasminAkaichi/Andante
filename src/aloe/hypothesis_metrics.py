@@ -122,14 +122,15 @@ class FnMetric(HypothesisMetric):
             self.metrics = (self.c,self.h,self.p,self.n,self.g,self.f)
             
         def copy(self): return self.hm.State(self.clause.copy(), self.k, self.E_cov)
+        def __repr__(self): return self.str_id
         def __str__(self): 
             s = '[%3d,%3d,%3d,%3d,%3d,%3d]' % self.metrics
             return '%s %s' % (s, str(self.clause))
         def __hash__(self): return hash(self.str_id)
         def __eq__(self, other): return self.str_id==other.str_id
 
-    def best(self, collec):
-        return max([s for s in collec if s.c<=self.options.c], key=lambda s: s.f)
+    def best(self, collec, key=lambda s: s.f):
+        return max([s for s in collec if s.c<=self.options.c], key=key)
 
     def prune(self, state):
         if (state.n==0 and state.f>0) or state.g<=0 or state.c>self.options.c:
@@ -140,21 +141,10 @@ class FnMetric(HypothesisMetric):
         s = self.best(Closed)
         if len(Open)==0:
             return True
-        elif s.n==0 and s.f>0 and s.f>=self.best(Open).g:
+        elif s.n==0 and s.f>0 and s.f>=self.best(Open, key=lambda s: s.g).g:
             return True
         else: return False
 
-    def rho(self, state):
-        for i in range(state.k, len(self.bottom.body)):
-            atom_i  = self.bottom.body[i]
-            type_subst = self.subst.get_type_subst(atom_i, self.M, body_atom=True)
-            in_vars = [key for key, value in type_subst.subst.items() if isinstance(value,Type) and value.sign=='+']
-            if all(var in state.InVars for var in in_vars):                
-                c = Clause(state.clause.head, state.clause.body+[atom_i])
-                s = self.State(c, i+1, E=state.E_cov)
-                # Added line, not in the paper
-                if s.c<=self.options.c:
-                    yield s
                     
     def rho(self, state):
         # Added line, not in the paper
@@ -169,5 +159,5 @@ class FnMetric(HypothesisMetric):
         if all(var in state.InVars for var in in_vars):                
             c = Clause(state.clause.head, state.clause.body+[atom_k])
             s = self.State(c, state.k+1, E=state.E_cov)
-            yield s               
+            yield s 
                     

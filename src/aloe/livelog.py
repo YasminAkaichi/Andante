@@ -20,7 +20,8 @@ class LiveLog:
         self.pointer = self.pointer.parent
         
     def add_eventlog(self, event_id, value):
-        self.data[event_id] = value
+        if event_id not in self.data:
+            self.data[event_id] = value
         
     def __repr__(self):
         header = self.__class__.__name__        

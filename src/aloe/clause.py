@@ -215,8 +215,6 @@ class Expression:
     
     def apply(self, fun): return fun(self)
 
-    
-    
 class Comparison(Expression, Statement):
     pass
     
@@ -234,6 +232,9 @@ class Assignment(Comparison):
             else:
                 subst[self.var] = Constant(self.expression.evaluate(subst, variable_assignment=variable_assignment))
                 return True
+            
+    def apply(self, fun):
+        return self.__class__(self.var.apply(fun), self.expression.apply(fun))
     
 #######################################################
 # Utility functions related to classes defined above

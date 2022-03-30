@@ -66,7 +66,7 @@ class LogicProgram(Knowledge):
         return self.collection.match(atom)
     
     def add(self, x):
-        assert isinstance(x, (Clause, Knowledge, Iterable))
+        assert isinstance(x, (Clause, Knowledge, Iterable)), "Clause, Knowledge or Iterable expected, got: %s" % x.__class__.__name__
         if   isinstance(x, Clause):
             assert isinstance(x, Clause)
             self.clauses.append(x)

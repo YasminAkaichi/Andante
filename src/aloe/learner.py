@@ -7,6 +7,7 @@ from aloe.substitution import Substitution
 import aloe.hypothesis_metrics
 from aloe.livelog import LiveLog
 from sortedcontainers import SortedSet
+from aloe.collections import OrderedSet
 
 class Learner(ObjectWithTemporaryOptions, ABC):
     def __init__(self, options=None):
@@ -20,6 +21,10 @@ class Learner(ObjectWithTemporaryOptions, ABC):
 class LearningHistory:
     def __init__(self, options):
         self.options = options
+        
+def fun(state_set):
+    for s in state_set:
+        print(s, 'k', s.k)
         
 class ProgolLearner(Learner):
     """ 
@@ -142,8 +147,8 @@ class ProgolLearner(Learner):
         hm = HM(knowledge, examples, modes, bottom_i, solver, self.options)
         
         s0 = hm.State(Clause(bottom_i.head, []))
-        Open = {s0}
-        Closed = set()
+        Open = OrderedSet({s0})
+        Closed = OrderedSet()
         for _ in range(100):
             s = hm.best(Open)
             Open.remove(s)
@@ -156,7 +161,9 @@ class ProgolLearner(Learner):
                         Open.add(s_new)
                 
             if hm.terminated(Closed, Open):
-                return hm.best(Closed).clause
+                sbest = hm.best(Closed)
+                c = sbest.clause
+                return c
             
             if not Open:
                 return None            

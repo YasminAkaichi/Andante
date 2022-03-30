@@ -1,5 +1,6 @@
 from aloe.clause import Function, Constant, Variable, Term, Atom, Type
-from aloe.utils  import generate_variable_names
+from aloe.utils import generate_variable_names
+from aloe.collections  import OrderedSet
 
 class ModeCollection:
     def __init__(self, modes=None, determinations=None, options=None):
@@ -27,7 +28,7 @@ class ModeCollection:
         if deterb not in self.modeb:
             raise Exception("Determination error: %s does not correspond to any modeb." % (deterb,))
         if not deterh in self.determinations:
-            self.determinations[deterh] = set()
+            self.determinations[deterh] = OrderedSet()
         self.determinations[deterh].add(deterb)
         
     def add(self, item):

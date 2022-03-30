@@ -42,7 +42,7 @@ grammar = Grammar(
     constant         = value / value
     value            = number / word
     word             = ~"[a-z]\w*"
-    variable         = ~"[A-Z]\w*"
+    variable         = ~"[A-Z]\w*" ~"\d*"
     number           = ~"\d+"
 
     mode      = modeh / modeb
@@ -60,14 +60,13 @@ grammar = Grammar(
     goal_unit = negation / atom
     negation  = "not" ws "(" ws goal ws ")"
     
-    generator = (modee ws)* (hornclause ws)*
-    modee = "mode" ws atom "."
+    generator = ((mode / determination) ws)* (hornclause ws)*
     
-    statement        = not_statement / combi_statement / assignment / comparison 
+    statement        = not_statement / combi_statement  / comparison / assignment
     not_statement    = "not" ws "(" ws statement ws ")"
     combi_statement  = ("all" / "any") ws "(" ws statement ws ("," ws statement ws)+ ")"
     comparison       = expression ws comparison_symbol ws expression
-    comparison_symbol = "<" / ">" / "=<" / "=>" / "!=" / "=="
+    comparison_symbol = "<=" / ">=" / "<" / ">" / "!=" / "=="
     assignment       = variable ws "=" ws expression
     expression       = ~"[^<>=!,\.\)]*"    
     """ 
@@ -153,7 +152,13 @@ class AloeVisitor(NodeVisitor):
         return Constant(visited_children[0])
     
     def visit_variable(self, node, visited_children):
-        return Variable(node.text)
+        symbol_node, tally_node = node.children
+        symbol = symbol_node.text
+        if tally_node.text:
+            tally_id = int(tally_node.text)
+        else:
+            tally_id = 0
+        return Variable(symbol, tally_id)
     
     def visit_value(self, node, visited_children):
         return visited_children[0]
@@ -269,14 +274,11 @@ class AloeVisitor(NodeVisitor):
         return Negation(goal)
     
     def visit_generator(self, node, visited_children):
-        l_modee, l_clauses = visited_children
-        example_modes = [x for x, _ in l_modee]
+        """ generator = ((mode / determination) ws)* (hornclause ws)* """
+        l_modes, l_clauses = visited_children
+        lmodes = [x for (x,), _ in l_modes]
         knowledge = LogicProgram([x for x, _ in l_clauses])
-        return knowledge, example_modes
-    
-    def visit_modee(self, node, visited_children):
-        _, _, atom, _ = visited_children
-        return atom
+        return knowledge, lmodes
 
     # 4. For statements
     def visit_statement(self, node, visited_children):

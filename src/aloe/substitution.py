@@ -1,5 +1,6 @@
-from aloe.clause import Clause, Constant, Variable, Function, Literal, Goal, Type, extract_variables
-from aloe.utils import generate_variable_names
+from aloe.clause import Clause, Constant, Variable, Function, Literal, Goal, Type, extract_variables, Expression
+from aloe.utils import generate_variable_names, multiple_replace
+import re
 
 class SubstitutionError(Exception):
     def __init__(self, key, item):
@@ -18,6 +19,12 @@ class Substitution:
         self.variables = set()
         self.tally = dict()
         self.subst = dict()
+        
+        from aloe.parser import AloeParser
+        self.parser = AloeParser()
+        
+    def items(self):
+        return self.subst.items()
         
     def new_variable(self, symbol):
         """ Creates a new variable with symbol=symbol """
@@ -46,56 +53,33 @@ class Substitution:
         subst = subst if subst is not None else dict()
         
         def fun(expr):
-            if   isinstance(x, (Constant, Type)):
-                return x
-            elif isinstance(x, Variable):
-                if x in subst: return subst[x]
+            if   isinstance(expr, (Constant, Type)):
+                return expr
+            elif isinstance(expr, Variable):
+                if expr in subst: return subst[expr]
                 else:
                     if not new_variables:
                         message = 'New variable needed and new_variables is set to False'
                         raise Exception(message)
-                    var = self.new_variable(x.symbol)
-                    subst[x] = var
+                    var = self.new_variable(expr.symbol)
+                    subst[expr] = var
                     return var
-            else: raise NotImplementedError('%s object cannot be renamed for now. (%s)' % (str(x.__class__.__name__), str(x)))
+            elif isinstance(expr, Expression):
+                variable_regex = r'[A-Z]\w*\d*'
+
+                sub = dict()
+                for varname in re.findall(variable_regex, expr.source):
+                    var = self.parser.parse(varname, 'variable')
+                    sub[str(var)] = str(var.apply(fun))
+                
+                new_source = multiple_replace(sub, expr.source)
+                return expr.__class__(new_source)
+                    
+            else: 
+                raise NotImplementedError('%s object cannot be renamed for now. (%s)' % (str(expr.__class__.__name__), str(expr)))
                 
         return x.apply(fun)
         
-    def rename_variables(self, x, subst=None, new_variables=True):
-        """ 
-        Renames all variables in x. 
-        x: Clause, Constant, Type, Variable, Function, Literal or Goal
-        subst: prior substitution information
-        new_variables: True or False, if True, allows the creation of new variables
-        """
-        subst = subst if subst is not None else dict()
-        if   isinstance(x, Constant):
-            return x
-        elif isinstance(x, Type):
-            return x
-        elif isinstance(x, Variable):
-            if x in subst: return subst[x]
-            else:
-                if not new_variables:
-                    message = 'New variable needed and new_variables is set to False'
-                    raise Exception(message)
-                var = self.new_variable(x.symbol)
-                subst[x] = var
-                return var
-        elif isinstance(x, Function):
-            renamed_args = [self.rename_variables(arg, subst, new_variables) for arg in x]
-            return x.__class__(x.functor, renamed_args)
-        elif isinstance(x, Clause):
-            renamed_head =  self.rename_variables(x.head, subst, new_variables) if x.head else None
-            renamed_body = [self.rename_variables(atom,   subst, new_variables) for atom in x.body]
-            return x.__class__(renamed_head, renamed_body)
-        elif isinstance(x, Literal):
-            return x.__class__(self.rename_variables(x.atom, subst, new_variables), x.sign)
-        elif isinstance(x, Goal):
-            return x.__class__([self.rename_variables(lit, subst, new_variables) for lit in x])
-        elif isinstance(x, list): # Careful that Goal object is also a list, do not push this statement up
-            return [self.rename_variables(e, subst, new_variables) for e in x]
-        else: raise NotImplementedError('%s object cannot be renamed for now. (%s)' % (str(x.__class__.__name__), str(x)))
 
     def copy(self):
         sigma = Substitution()

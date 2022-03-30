@@ -172,16 +172,69 @@ class Type(Term):
     
     def apply(self, fun): return fun(self)
     
+
     
-class MathematicalExpression(Atom):
-    def __init__(self, formula, code):
-        self.formula = formula
-        self.code = code
+#######################################################
+# Classes related to explicit mathematical expressions
+#######################################################    
     
-    def __repr__(self): return self.formula
+class Statement(Atom, ABC):
+    def __init__(self, args):
+        self.arguments = args
     
-    def __eval__(self, **kwargs):
-        return eval(self.code, kwargs)
+    @abstractmethod
+    def evaluate(self, subst, variable_assignment=True):
+        pass
+    
+    def apply(self, fun):
+        args = [arg.apply(fun) for arg in self.arguments]
+        try:    return self.__class__(self.functor, args)
+        except: return None    
+        
+class Not(Statement):
+    def evaluate(self, subst, variable_assignment=True):
+        arg, = self.arguments
+        return not arg.evaluate(subst, variable_assignment=False)
+        
+class All(Statement):
+    def evaluate(self, subst, variable_assignment=True):
+        return all(arg.evaluate(subst, variable_assignment=variable_assignment) for arg in self.arguments)
+        
+class Any(Statement):
+    def evaluate(self, subst, variable_assignment=True):
+        return any(arg.evaluate(subst, variable_assignment=False) for arg in self.arguments)
+    
+class Expression:
+    def __init__(self, source):
+        self.source = source
+        self.code = compile(source, '<string>', 'eval')
+    
+    def evaluate(self, subst, variable_assignment=True):
+        subst = {str(var):(val.value if isinstance(val, Constant) else str(val)) for var, val in subst.items()}
+        return eval(self.code, subst)
+    
+    def apply(self, fun): return fun(self)
+
+class Comparison(Expression, Statement):
+    pass
+    
+class Assignment(Comparison):
+    def __init__(self, var, expression):
+        self.var = var
+        self.expression = expression
+        
+    def evaluate(self, subst, variable_assignment=True):
+        if self.var in subst:
+            return str(subst[self.var]) == str(self.expression.evaluate(subst, variable_assignment=variable_assignment))
+        else:
+            if not variable_assignment:
+                raise Exception('Cannot assign value to variable %s' % str(self.var))
+            else:
+                subst[self.var] = Constant(self.expression.evaluate(subst, variable_assignment=variable_assignment))
+                return True
+            
+    def apply(self, fun):
+        return self.__class__(self.var.apply(fun), self.expression.apply(fun))
     
 #######################################################
 # Utility functions related to classes defined above
@@ -197,6 +250,9 @@ def extract_variables(expr):
     else:
         expr.apply(fun)
     return variables
+
+
+
     
 
 

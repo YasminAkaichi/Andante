@@ -10,9 +10,9 @@ class SystemParameters:
 @dataclass       
 class Options(object):
     i       = 2
-    c       = 2     # Maximal body size for new clauses
-    h       = 1000    # Maximal depth of deduction
-    verbose = 0     # Level of logging output
+    c       = 2        # Maximal body size for new clauses
+    h       = 10000    # Maximal depth of deduction
+    verbose = 0        # Level of logging output
     solver  = "AloeSolver"
     
     # Learning Options

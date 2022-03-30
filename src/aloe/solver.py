@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from aloe.options import Options, ObjectWithTemporaryOptions
 from aloe.substitution import Substitution, SubstitutionError
 from aloe.knowledge import Knowledge
-from aloe.clause import Clause, Function, Goal, Literal, Atom, Negation
+from aloe.clause import Clause, Function, Goal, Literal, Atom, Negation, Statement
 
 class Solver(ObjectWithTemporaryOptions, ABC):
     def __init__(self, options=None):
@@ -82,6 +82,16 @@ class AloeSolver(Solver):
             atom = s.next_atom()            
             atom = s.sigma.apply_subst(atom)
             self.verboseprint('Atom', atom)
+            
+            if isinstance(atom, Statement):
+                if not atom.evaluate(s.sigma):
+                    if not alternate_states:
+                        return
+                    else:
+                        s = alternate_states.pop()
+                        continue
+                else:
+                    continue
             
             # If a clause has not yet be matched to the atom
             if not s.next_clause:

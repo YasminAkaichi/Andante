@@ -4,6 +4,7 @@ from parsimonious.grammar import Grammar
 from parsimonious.nodes import NodeVisitor
 from parsimonious.exceptions import ParseError, VisitationError
 from aloe.clause    import Clause, Predicate, CompoundTerm, Variable, Constant, Negation, Goal, Type
+from aloe.clause    import Not, Any, All, Comparison, Assignment, Expression
 from aloe.mode      import ModeCollection, Mode, Modeh, Modeb
 from aloe.options   import Options, SystemParameters
 from aloe.program   import AloeProgram
@@ -32,7 +33,7 @@ grammar = Grammar(
     definiteclause   = head ws (":-" ws body)? ws "."
     head             = atom
     body             = atom ws ("," ws atom ws)*
-    atom             = "true" / "false" / predicate / equation
+    atom             = "true" / "false" / predicate / statement
     predicate        = predname ws "(" ws term ws ("," ws term ws)* ")"
     term             = compoundterm / variable / constant 
     compoundterm     = funcname ws "(" ws term ws ("," ws term ws)* ")"
@@ -41,7 +42,7 @@ grammar = Grammar(
     constant         = value / value
     value            = number / word
     word             = ~"[a-z]\w*"
-    variable         = ~"[A-Z]\w*"
+    variable         = ~"[A-Z]\w*" ~"\d*"
     number           = ~"\d+"
 
     mode      = modeh / modeb
@@ -59,13 +60,15 @@ grammar = Grammar(
     goal_unit = negation / atom
     negation  = "not" ws "(" ws goal ws ")"
     
-    equation       = not_equation / combi_equation / operation
-    not_equation   = "not" ws "(" ws equation ws ")"
-    combi_equation = ("and" / "or" / "xor") ws "(" ws equation ws "," ws equation ws ")"
-    operation      = (variable / number) ws ("<" / "=" / ">" / "=<" / "=>") ws (variable / number)
+    generator = ((mode / determination) ws)* (hornclause ws)*
     
-    generator = (modee ws)* (hornclause ws)*
-    modee = "mode" ws atom "."
+    statement        = not_statement / combi_statement  / comparison / assignment
+    not_statement    = "not" ws "(" ws statement ws ")"
+    combi_statement  = ("all" / "any") ws "(" ws statement ws ("," ws statement ws)+ ")"
+    comparison       = expression ws comparison_symbol ws expression
+    comparison_symbol = "<=" / ">=" / "<" / ">" / "!=" / "=="
+    assignment       = variable ws "=" ws expression
+    expression       = ~"[^<>=!,\.\)]*"    
     """ 
 )
 
@@ -149,7 +152,13 @@ class AloeVisitor(NodeVisitor):
         return Constant(visited_children[0])
     
     def visit_variable(self, node, visited_children):
-        return Variable(node.text)
+        symbol_node, tally_node = node.children
+        symbol = symbol_node.text
+        if tally_node.text:
+            tally_id = int(tally_node.text)
+        else:
+            tally_id = 0
+        return Variable(symbol, tally_id)
     
     def visit_value(self, node, visited_children):
         return visited_children[0]
@@ -264,19 +273,40 @@ class AloeVisitor(NodeVisitor):
         _, _, _, _, goal, _, _ = visited_children
         return Negation(goal)
     
-    def visit_equation(self, node, visited_children):
-        return visited_children
-    
     def visit_generator(self, node, visited_children):
-        l_modee, l_clauses = visited_children
-        example_modes = [x for x, _ in l_modee]
+        """ generator = ((mode / determination) ws)* (hornclause ws)* """
+        l_modes, l_clauses = visited_children
+        lmodes = [x for (x,), _ in l_modes]
         knowledge = LogicProgram([x for x, _ in l_clauses])
-        return knowledge, example_modes
-    
-    def visit_modee(self, node, visited_children):
-        _, _, atom, _ = visited_children
-        return atom
+        return knowledge, lmodes
 
+    # 4. For statements
+    def visit_statement(self, node, visited_children):
+        choice, = visited_children
+        return choice
+    
+    def visit_not_statement(self, node, visited_children):
+        _, _, _, _, eq, _, _ = visited_children
+        return Not(eq)
+        
+    def visit_combi_statement(self, node, visited_children):
+        _, _, _, _, arg1, _, l_arg, _ = visited_children
+        args = [arg1] + [arg for _, _, arg, _ in l_arg]
+        combi = node.children[0].text
+        if combi=='all':
+            return All(args)
+        else: # combi=='any'
+            return Any(args)
+    
+    def visit_comparison(self, node, visited_children):
+        return Comparison(node.text)
+    
+    def visit_assignment(self, node, visited_children):
+        var, _, _, _, expression = visited_children
+        return Assignment(var, expression)
+    
+    def visit_expression(self, node, visited_children):
+        return Expression(node.text)
 
 class AloeParser:
     def __init__(self):

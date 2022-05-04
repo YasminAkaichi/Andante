@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from aloe.options import Options, ObjectWithTemporaryOptions
 from aloe.substitution import Substitution, SubstitutionError
 from aloe.knowledge import Knowledge
-from aloe.clause import Clause, Function, Goal, Literal, Atom, Negation, Statement
+from aloe.clause import Clause, Function, Goal, Literal, Atom, Negation, Comparison, Is
 
 class Solver(ObjectWithTemporaryOptions, ABC):
     def __init__(self, options=None):
@@ -80,10 +80,10 @@ class AloeSolver(Solver):
             self.verboseprint('\nh', count_h)            
             
             atom = s.next_atom()            
-            atom = s.sigma.apply_subst(atom)
+            atom = s.sigma.substitute(atom)
             self.verboseprint('Atom', atom)
             
-            if isinstance(atom, Statement):
+            if isinstance(atom, (Comparison, Is)):
                 if not atom.evaluate(s.sigma):
                     if not alternate_states:
                         return
@@ -137,7 +137,7 @@ class AloeSolver(Solver):
             self.verboseprint('Substitution', s.sigma)
                     
             for b in reversed(clause.body):
-                s.atoms.append(s.sigma.apply_subst(b))
+                s.atoms.append(s.sigma.substitute(b))
             self.verboseprint('Atoms', s.atoms)
             
     def succeeds_on(self, q, knowledge, sigma=None, **temp_options):

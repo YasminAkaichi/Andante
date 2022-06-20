@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 from aloe.options import Options
-from aloe.clause  import Atom, Clause
+from aloe.logic_concept  import Atom, Clause
 from aloe.clausecollection import TreeBasedClauseCollection
 
 from collections.abc import Iterable

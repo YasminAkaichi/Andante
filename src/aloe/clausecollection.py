@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from aloe.clause import Constant, Variable, Function
+from aloe.logic_concept import Constant, Variable, Function
 
 class ClauseCollection(ABC):
     @abstractmethod

@@ -1,6 +1,6 @@
 import aloe.solver
 import aloe.learner
-from aloe.clause    import Goal, Clause, Negation, Variable, extract_variables
+from aloe.logic_concept    import Goal, Clause, Negation, Variable, extract_variables
 from aloe.options   import Options
 from aloe.mode      import ModeCollection, Modeh
 from aloe.knowledge import Knowledge, LogicProgram, MultipleKnowledge

@@ -2,7 +2,7 @@ import itertools
 from abc import ABC, abstractmethod
 from aloe.options import Options, SystemParameters, ObjectWithTemporaryOptions
 from aloe.knowledge import MultipleKnowledge, LogicProgram
-from aloe.clause import Clause, Constant, Variable, Function, Type
+from aloe.logic_concept import Clause, Constant, Variable, Function, Type
 from aloe.substitution import Substitution
 import aloe.hypothesis_metrics
 from aloe.livelog import LiveLog

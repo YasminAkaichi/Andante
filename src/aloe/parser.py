@@ -7,8 +7,8 @@ import bisect
 from parsimonious.grammar import Grammar
 from parsimonious.nodes import NodeVisitor
 from parsimonious.exceptions import ParseError, VisitationError
-from aloe.clause    import Clause, Predicate, CompoundTerm, Variable, Constant, Negation, Goal, Type, List
-from aloe.clause    import ArithmeticComparison, UnificationComparison, BasicArithmeticExpression, TrigoExpression, Is, ParenthesisArithmeticExpression
+from aloe.logic_concept    import Clause, Predicate, CompoundTerm, Variable, Constant, Negation, Goal, Type, List
+from aloe.logic_concept    import ArithmeticComparison, UnificationComparison, BasicArithmeticExpression, TrigoExpression, Is, ParenthesisArithmeticExpression
 from aloe.mode      import ModeCollection, Mode, Modeh, Modeb
 from aloe.options   import Options, SystemParameters
 from aloe.program   import AloeProgram

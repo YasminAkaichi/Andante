@@ -7,7 +7,7 @@ import bisect
 from parsimonious.grammar import Grammar
 from parsimonious.nodes import NodeVisitor
 from parsimonious.exceptions import ParseError, VisitationError
-from aloe.clause    import Clause, Predicate, CompoundTerm, Variable, Constant, Negation, Goal, Type
+from aloe.clause    import Clause, Predicate, CompoundTerm, Variable, Constant, Negation, Goal, Type, List
 from aloe.clause    import ArithmeticComparison, UnificationComparison, BasicArithmeticExpression, TrigoExpression, Is, ParenthesisArithmeticExpression
 from aloe.mode      import ModeCollection, Mode, Modeh, Modeb
 from aloe.options   import Options, SystemParameters
@@ -70,6 +70,7 @@ grammar = Grammar(
     constant_word    = word   / word
     value            = number / word
 
+    list = "[" __ (term __ ("," __ term __)* ("|" __ (variable / list))? )? __ "]" 
 
             #-----------------------------------------------------#
             #                 Grammar wrt modes                   #
@@ -86,6 +87,7 @@ grammar = Grammar(
     sign      = ~"[+\-#]"
     
     generator = ((mode / determination) __)* (hornclause __)*
+    
     
             #-----------------------------------------------------#
             #                Grammar wrt queries                  #
@@ -285,6 +287,23 @@ class AloeVisitor(NodeVisitor):
     visit_constant_word   = visit_constant
     visit_value           = visit_choice
     
+    def visit_list(self, node, visited_children):
+        """
+        list = "[" __ (term __ ("," __ term __)* ("|" __ (variable / list))? )? __ "]" 
+        opt1 = term __ ("," __ term __)* ("|" __ (variable / list))? 
+        """
+        _, _, opt1, _, _ = visited_children
+        if not opt1:
+            return List([])
+        t0, _, l_t, opt2 = opt1[0]
+        elements1 = [t0] + [t for _, _, t, _ in l_t]
+        if not opt2:
+            elements2 = None
+        else:
+            _, _, (elements2, ) = opt2[0]
+        return List(elements1, elements2)
+        
+        
         
             #-----------------------------------------------------#
             #                 Grammar wrt modes                   #

@@ -1,4 +1,4 @@
-from aloe.clause import Clause, Constant, Variable, Function, Literal, Goal, Type, extract_variables
+from aloe.clause import Clause, Constant, Variable, Function, Goal, Type, extract_variables
 from aloe.utils import generate_variable_names, multiple_replace
 import re
 

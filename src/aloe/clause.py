@@ -15,11 +15,8 @@ class Clause:
         elif self.head:   return '%s :- %s.' % (head_repr, body_repr)
         else:             return ':- %s.'   % (body_repr)
         
-    def __hash__(self):
-        return hash(str(self))
-        
-    def __eq__(self, other):
-        return str(self)==str(other)
+    def __hash__(self):      return hash(str(self))
+    def __eq__(self, other): return str(self)==str(other)
     
     def apply(self, fun):
         h = self.head.apply(fun)
@@ -37,12 +34,12 @@ class Goal(list):
         super().__init__(*args, **kwargs)
         assert all((isinstance(l, (Atom, Negation)) for l in self))        
 
+    def __repr__(self): return ','.join(repr(expr) for expr in self)        
+
     def apply(self, fun): 
         try: return Goal(expr.apply(fun) for expr in self)
         except AssertionError:
             return None        
-        
-    def __repr__(self): return ','.join(repr(expr) for expr in self)
         
 class Negation:
     """ Represents the negation of a goal """
@@ -57,12 +54,14 @@ class Negation:
         except AssertionError:
             return None        
 
+'''        
 class Literal:
     """ Represents a literal, that is a positive or a negative atom. """
     def __init__(self, atom, sign='+'):
         assert isinstance(atom, Atom) and sign in ('+','-')
         self.atom = atom
         self.sign = sign    
+        '''
     
 class Function(ABC):
     """ 
@@ -99,6 +98,9 @@ class Term(ABC):
     """ Represents a term in the first order logic framework """
     def __hash__(self):      return hash(str(self))
     def __eq__(self, other): return str(self) == str(other)
+    
+    @abstractmethod
+    def unify(self, other, subst): pass
 
 class Predicate(Atom, Function): 
     """ 
@@ -112,7 +114,16 @@ class CompoundTerm(Term, Function):
     This class represents compound terms as defined in the prolog framework 
     Inherits from Term and Function
     """
-    pass
+    def unify(self, other, subst):
+        if   isinstance(other, Variable):
+            other.unify(self, subst)
+        elif (
+            (isinstance(self, other.__class__) or isinstance(other, self.__class__)) and \
+            self.functor == other.functor
+        ):
+            for self_arg, other_arg in zip(self.arguments, other.arguments):
+                self_arg.unify(other_arg, subst)
+        else: raise UnificationException(self, other)
     
 class Constant(Term):
     """ A constant is represented by its value that can be a int, float or a string """
@@ -131,6 +142,16 @@ class Constant(Term):
     
     def evaluate(self, subst): return self.value
     
+    def unify(self, other, subst):
+        if   isinstance(other, Variable):
+            other.unify(self, subst)
+        elif (
+            (isinstance(self, other.__class__) or isinstance(other, self.__class__)) and \
+            self == other
+        ):
+            return
+        else: raise UnificationException(self, other)
+            
 class Variable(Term):
     """ 
     This class represents variables in the first order logic framework
@@ -162,8 +183,10 @@ class Variable(Term):
             return subst[self]
         else:
             raise Exception('Variable is not instantiated')
-    
-        
+
+    def unify(self, other, subst):
+        subst[self] = other
+            
 class Type(Term):
     """ 
     In progol, a term for a mode can be a type '+person' composed of a sign ('+', '-' or '#') and a name ('person')
@@ -177,7 +200,17 @@ class Type(Term):
     
     def apply(self, fun): return fun(self)
     
+    def unify(self, other, subst):
+        if   isinstance(other, Variable):
+            other.unify(self, subst)
+        elif (
+            (isinstance(self, other.__class__) or isinstance(other, self.__class__)) and \
+            self == other
+        ):
+            return
+        else: raise UnificationException(self, other)
 
+            
     
 #######################################################
 # Classes related to explicit mathematical expressions
@@ -351,6 +384,66 @@ class Is(Atom):
             except: return False
         
     def __repr__(self): return '%s is %s' % (repr(self.arg1), repr(self.arg2))
+
+
+    
+#######################################################
+# Utility functions related to classes defined above
+#######################################################
+
+
+class UnificationException(Exception):
+    def __init__(self, term1, term2):
+        message = 'Cannot unify terms <%s> and <%s>' % (str(term1), str(term2))
+        super().__init__(message)
+
+
+class List(Term):
+    " [a, b, c | B] "
+    def __init__(self, e1, e2=None):
+        self.elements1 = e1
+        self.elements2 = e2
+    
+    def apply(self, fun):
+        try:    
+            e1 = [e.apply(fun) for e in self.elements1]
+            e2 = self.elements2.apply(fun) if self.elements2 is not None else None
+            return self.__class__(e1, e2)
+        except: return None
+
+    def __repr__(self): 
+        s1 = ', '.join(repr(e) for e in self.elements1)
+        if self.elements2 is None:
+            return '[%s]' % (s1)
+        else:
+            s2 = repr(self.elements2)
+            return '[%s | %s]' % (s1, s2)
+        
+    def unify(self, other, subst):
+        if   isinstance(other, Variable):
+            other.unify(self, subst)
+        elif (
+            isinstance(self, other.__class__) or isinstance(other, self.__class__)
+        ):
+            if len(self.elements1) > len(other.elements1):
+                other.unify(self, subst)
+                return
+            for i in range(len(self.elements1)):
+                self.elements1[i].unify(other.elements1[i], subst)
+            
+            if len(self.elements1) < len(other.elements1):
+                new_other = List(other.elements1[len(self.elements1):], other.elements2)
+            else:
+                new_other = other.elements2
+                
+            if self.elements2 is None:
+                if new_other is None:
+                    return
+                else:
+                    raise UnificationException(self.elements2, new_other)
+            else:
+                self.elements2.unify(new_other, subst)
+        
 
     
 #######################################################

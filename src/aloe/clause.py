@@ -1,7 +1,28 @@
 from abc import ABC, abstractmethod
+
+class LogicConcept(ABC):
+    """ Class representing all logic concepts. """
+    @abstractmethod
+    def apply(self, fun):
+        """ Applies the function :meth:`fun` to all sub-LogicConcepts if any.
         
-class Clause:
-    """ Represents a horn clause in first order logic """
+        sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+        Ex: 
+            - Clauses have Atoms as sub-LogicConcepts
+            - Predicates have Terms as sub-LogicConcepts
+            - Variables have no sub-LogicConcepts
+        
+        Parameters:
+            - fun (function): the function to apply.
+            
+        Returns:
+            - ``None`` or a new :class:`LogicConcept` on which :param:`fun` has been applied.
+        """
+        pass
+    
+    
+class Clause(LogicConcept):
+    """ Represents a horn clause in first order logic. """
     def __init__(self, head, body):
         assert isinstance(head, Atom) or head is None
         assert isinstance(body, list) and all((isinstance(batom, Atom) for batom in body))
@@ -25,11 +46,8 @@ class Clause:
         except AssertionError:
             return None
     
-class Goal(list): 
-    """ 
-    Represents a goal as a list of atoms or negations 
-    Inherits from list
-    """
+class Goal(list, LogicConcept): 
+    """ Represents a goal as a list of atoms or negations. """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         assert all((isinstance(l, (Atom, Negation)) for l in self))        
@@ -41,7 +59,7 @@ class Goal(list):
         except AssertionError:
             return None        
         
-class Negation:
+class Negation(LogicConcept):
     """ Represents the negation of a goal """
     def __init__(self, goal):
         assert isinstance(goal, Goal)
@@ -53,22 +71,14 @@ class Negation:
         try: return Negation(self.goal.apply(fun))
         except AssertionError:
             return None        
-
-'''        
-class Literal:
-    """ Represents a literal, that is a positive or a negative atom. """
-    def __init__(self, atom, sign='+'):
-        assert isinstance(atom, Atom) and sign in ('+','-')
-        self.atom = atom
-        self.sign = sign    
-        '''
     
-class Function(ABC):
+class Function(LogicConcept, ABC):
     """ 
     Represents a function as the general form of a predicate and a CompoundTerm.
-    Functions are composed of a functor and arguments.
-    Arguments must be terms.
-    This is an abstract class
+    
+    Attributes:
+        - functor (str): name of the function.
+        - arguments (:class:`list` of :class:`Term`): arguments of the function
     """
     def __init__(self, functor, arguments):
         assert isinstance(functor, str)
@@ -89,12 +99,12 @@ class Function(ABC):
         try:    return self.__class__(self.functor, args)
         except: return None
     
-class Atom(ABC):
+class Atom(LogicConcept, ABC):
     """ Represents an atom in the first order logic framework """
     def __hash__(self):      return hash(str(self))
     def __eq__(self, other): return str(self) == str(other)    
     
-class Term(ABC):
+class Term(LogicConcept, ABC):
     """ Represents a term in the first order logic framework """
     def __hash__(self):      return hash(str(self))
     def __eq__(self, other): return str(self) == str(other)
@@ -104,15 +114,13 @@ class Term(ABC):
 
 class Predicate(Atom, Function): 
     """ 
-    Represents a predicate in first order logic
-    Inherits from Atom and Function
+    Represents a predicate in first order logic.
     """
     pass
 
 class CompoundTerm(Term, Function):
     """ 
-    This class represents compound terms as defined in the prolog framework 
-    Inherits from Term and Function
+    This class represents compound terms as defined in the prolog framework.
     """
     def unify(self, other, subst):
         if   isinstance(other, Variable):
@@ -279,7 +287,7 @@ class UnificationComparison(Comparison):
             return unification_symbol_table[self.symbol](str(self.arg1), str(self.arg2))
     
     
-class ArithmeticExpression(ABC):
+class ArithmeticExpression(LogicConcept, ABC):
     @abstractmethod
     def evaluate(self, subst):
         pass

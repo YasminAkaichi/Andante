@@ -351,7 +351,9 @@ class AloeVisitor(NodeVisitor):
             #                Grammar wrt queries                  #
             #-----------------------------------------------------#
    
-    visit_query = visit_choice
+    def visit_query(self, node, visited_children):
+        goal, _, _ = visited_children
+        return goal
 
     def visit_goal(self, node, visited_children):
         el0, _, l_e = visited_children

@@ -2,7 +2,7 @@ import itertools
 from abc import ABC, abstractmethod
 from aloe.options import Options, SystemParameters, ObjectWithTemporaryOptions
 from aloe.knowledge import MultipleKnowledge, LogicProgram
-from aloe.clause import Clause, Constant, Variable, Function, Type
+from aloe.logic_concept import Clause, Constant, Variable, Function, Type
 from aloe.substitution import Substitution
 import aloe.hypothesis_metrics
 from aloe.livelog import LiveLog
@@ -101,7 +101,7 @@ class ProgolLearner(Learner):
             if type_subst[v].sign=="#": s.subst[v] = t
             else:                       s.subst[v] = Variable(t.to_variable_name())
             if type_subst[v].sign=="+": InTerms.add(t)
-        h = s.apply_subst(am)
+        h = s.substitute(am)
         bottom.head = h
 
         # 4. Modeb
@@ -116,7 +116,7 @@ class ProgolLearner(Learner):
                 for skolems in itertools.product(InTerms, repeat=len(in_var)):
                     theta = s.copy()
                     theta.subst = {v:skolem for v, skolem in zip(in_var, skolems)}
-                    q = theta.apply_subst(am)
+                    q = theta.substitute(am)
 
                     # Repeat a maximum of recall times
                     Theta_prime = solver.query(q, B, verbose=0)
@@ -132,7 +132,7 @@ class ProgolLearner(Learner):
                             else:              theta_final.subst[v] = Variable(t.to_variable_name())
                             if s[v].sign=='-': next_InTerms.add(t)
                         
-                        b = theta_final.apply_subst(am)
+                        b = theta_final.substitute(am)
                         if b not in bottom.body:
                             bottom.body.append(b)
                         

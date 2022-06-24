@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>aloe package &mdash; Andante  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Andante
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="aloe.html">aloe package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Andante</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>aloe package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/aloe - Copy.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="aloe-package">
+<h1>aloe package<a class="headerlink" href="#aloe-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="aloe-logic-concept-module">
+<h2>aloe.logic_concept module<a class="headerlink" href="#aloe-logic-concept-module" title="Permalink to this heading"></a></h2>
+<span class="target" id="module-aloe.logic_concept"></span><dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.ArithmeticComparison">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">ArithmeticComparison</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.ArithmeticComparison" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.Comparison" title="aloe.logic_concept.Comparison"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comparison</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.ArithmeticComparison.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.ArithmeticComparison.evaluate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.ArithmeticExpression">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">ArithmeticExpression</span></span><a class="headerlink" href="#aloe.logic_concept.ArithmeticExpression" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.ArithmeticExpression.apply">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.ArithmeticExpression.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id1"><span class="problematic" id="id2">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.ArithmeticExpression.evaluate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.ArithmeticExpression.evaluate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.Atom">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">Atom</span></span><a class="headerlink" href="#aloe.logic_concept.Atom" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Represents an atom in the first order logic framework</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.BasicArithmeticExpression">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">BasicArithmeticExpression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expr2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.BasicArithmeticExpression" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.ArithmeticExpression" title="aloe.logic_concept.ArithmeticExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArithmeticExpression</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.BasicArithmeticExpression.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.BasicArithmeticExpression.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id3"><span class="problematic" id="id4">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.BasicArithmeticExpression.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.BasicArithmeticExpression.evaluate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.Clause">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">Clause</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">head</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Clause" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a></p>
+<p>Represents a horn clause in first order logic.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Clause.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Clause.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id5"><span class="problematic" id="id6">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.Comparison">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">Comparison</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Comparison" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.Atom" title="aloe.logic_concept.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">Atom</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Comparison.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Comparison.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id7"><span class="problematic" id="id8">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Comparison.evaluate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Comparison.evaluate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.CompoundTerm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">CompoundTerm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">functor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.CompoundTerm" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.Term" title="aloe.logic_concept.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">Term</span></code></a>, <a class="reference internal" href="aloe.html#aloe.logic_concept.Function" title="aloe.logic_concept.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a></p>
+<p>This class represents compound terms as defined in the prolog framework.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.CompoundTerm.unify">
+<span class="sig-name descname"><span class="pre">unify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.CompoundTerm.unify" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.Constant">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">Constant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Constant" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.Term" title="aloe.logic_concept.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">Term</span></code></a></p>
+<p>A constant is represented by its value that can be a int, float or a string</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Constant.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Constant.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id9"><span class="problematic" id="id10">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Constant.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Constant.evaluate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Constant.to_variable_name">
+<span class="sig-name descname"><span class="pre">to_variable_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Constant.to_variable_name" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a valid unique variable name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Constant.unify">
+<span class="sig-name descname"><span class="pre">unify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Constant.unify" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.Function">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">Function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">functor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Function" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Represents a function as the general form of a predicate and a CompoundTerm.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><ul class="simple">
+<li><p>functor (str): name of the function.</p></li>
+<li><p>arguments (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <a class="reference internal" href="aloe.html#aloe.logic_concept.Term" title="aloe.logic_concept.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">Term</span></code></a>): arguments of the function</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Function.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Function.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id11"><span class="problematic" id="id12">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.logic_concept.Function.arity">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">arity</span></span><a class="headerlink" href="#aloe.logic_concept.Function.arity" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.logic_concept.Function.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#aloe.logic_concept.Function.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.Goal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">Goal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Goal" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>, <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a></p>
+<p>Represents a goal as a list of atoms or negations.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Goal.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Goal.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id13"><span class="problematic" id="id14">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.Is">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">Is</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Is" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.Atom" title="aloe.logic_concept.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">Atom</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Is.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Is.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id15"><span class="problematic" id="id16">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Is.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Is.evaluate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.List">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">List</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.List" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.Term" title="aloe.logic_concept.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">Term</span></code></a></p>
+<p>[a, b, c | B]</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.List.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.List.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id17"><span class="problematic" id="id18">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.List.unify">
+<span class="sig-name descname"><span class="pre">unify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.List.unify" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.LogicConcept">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">LogicConcept</span></span><a class="headerlink" href="#aloe.logic_concept.LogicConcept" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Class representing all logic concepts.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.LogicConcept.apply">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.LogicConcept.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id19"><span class="problematic" id="id20">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.Negation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">Negation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Negation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a></p>
+<p>Represents the negation of a goal</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Negation.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Negation.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id21"><span class="problematic" id="id22">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.ParenthesisArithmeticExpression">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">ParenthesisArithmeticExpression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.ParenthesisArithmeticExpression" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.ArithmeticExpression" title="aloe.logic_concept.ArithmeticExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArithmeticExpression</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.ParenthesisArithmeticExpression.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.ParenthesisArithmeticExpression.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id23"><span class="problematic" id="id24">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.ParenthesisArithmeticExpression.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.ParenthesisArithmeticExpression.evaluate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.Predicate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">Predicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">functor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Predicate" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.Atom" title="aloe.logic_concept.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">Atom</span></code></a>, <a class="reference internal" href="aloe.html#aloe.logic_concept.Function" title="aloe.logic_concept.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a></p>
+<p>Represents a predicate in first order logic.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.Term">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">Term</span></span><a class="headerlink" href="#aloe.logic_concept.Term" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Represents a term in the first order logic framework</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Term.unify">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Term.unify" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.TrigoExpression">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">TrigoExpression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.TrigoExpression" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.ArithmeticExpression" title="aloe.logic_concept.ArithmeticExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArithmeticExpression</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.TrigoExpression.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.TrigoExpression.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id25"><span class="problematic" id="id26">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.TrigoExpression.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.TrigoExpression.evaluate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.Type">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">Type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sign</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Type" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.Term" title="aloe.logic_concept.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">Term</span></code></a></p>
+<p>In progol, a term for a mode can be a type ‘+person’ composed of a sign (‘+’, ‘-’ or ‘#’) and a name (‘person’)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Type.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Type.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id27"><span class="problematic" id="id28">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Type.unify">
+<span class="sig-name descname"><span class="pre">unify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Type.unify" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.UnificationComparison">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">UnificationComparison</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.UnificationComparison" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.Comparison" title="aloe.logic_concept.Comparison"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comparison</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.UnificationComparison.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.UnificationComparison.evaluate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="aloe.logic_concept.UnificationException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">UnificationException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.UnificationException" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.logic_concept.Variable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">Variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tally_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Variable" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.logic_concept.Term" title="aloe.logic_concept.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">Term</span></code></a></p>
+<p>This class represents variables in the first order logic framework
+Variable objects are distinguished by 
+- a symbol: a string (Ex: ‘A’, ‘Father’)
+- a tally id: a integer
+There can be several Variable objects with the same symbol. To distinguish among them, we use a tally id.
+A negative tally id means that the Variable object doesn’t belong to a tally</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Variable.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Variable.apply" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">fun()</span></code> to all sub-LogicConcepts if any.</p>
+<p>sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
+Ex:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Clauses have Atoms as sub-LogicConcepts</p></li>
+<li><p>Predicates have Terms as sub-LogicConcepts</p></li>
+<li><p>Variables have no sub-LogicConcepts</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>fun (function): the function to apply.</p></li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> or a new <a class="reference internal" href="aloe.html#aloe.logic_concept.LogicConcept" title="aloe.logic_concept.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogicConcept</span></code></a> on which <a href="#id29"><span class="problematic" id="id30">:param:`fun`</span></a> has been applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Variable.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Variable.evaluate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Variable.is_in">
+<span class="sig-name descname"><span class="pre">is_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Variable.is_in" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.logic_concept.Variable.unify">
+<span class="sig-name descname"><span class="pre">unify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.Variable.unify" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aloe.logic_concept.extract_variables">
+<span class="sig-prename descclassname"><span class="pre">aloe.logic_concept.</span></span><span class="sig-name descname"><span class="pre">extract_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.logic_concept.extract_variables" title="Permalink to this definition"></a></dt>
+<dd><p>Returns as a set all Variables present in expr</p>
+</dd></dl>
+
+</section>
+<section id="module-aloe.clausecollection">
+<span id="aloe-clausecollection-module"></span><h2>aloe.clausecollection module<a class="headerlink" href="#module-aloe.clausecollection" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.clausecollection.ClauseCollection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.clausecollection.</span></span><span class="sig-name descname"><span class="pre">ClauseCollection</span></span><a class="headerlink" href="#aloe.clausecollection.ClauseCollection" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.clausecollection.ClauseCollection.add">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clause</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.clausecollection.ClauseCollection.add" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.clausecollection.ClauseCollection.match">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.clausecollection.ClauseCollection.match" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.clausecollection.ClauseCollection.remove">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clause</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.clausecollection.ClauseCollection.remove" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.clausecollection.TreeBasedClauseCollection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.clausecollection.</span></span><span class="sig-name descname"><span class="pre">TreeBasedClauseCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clauses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.clausecollection.TreeBasedClauseCollection" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.clausecollection.ClauseCollection" title="aloe.clausecollection.ClauseCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseCollection</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.clausecollection.TreeBasedClauseCollection.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clause</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.clausecollection.TreeBasedClauseCollection.add" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.clausecollection.TreeBasedClauseCollection.match">
+<span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.clausecollection.TreeBasedClauseCollection.match" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.clausecollection.TreeBasedClauseCollection.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clause</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.clausecollection.TreeBasedClauseCollection.remove" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aloe.collections">
+<span id="aloe-collections-module"></span><h2>aloe.collections module<a class="headerlink" href="#module-aloe.collections" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.collections.OrderedSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.collections.</span></span><span class="sig-name descname"><span class="pre">OrderedSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.collections.OrderedSet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">OrderedDict</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">MutableSet</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.collections.OrderedSet.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.collections.OrderedSet.add" title="Permalink to this definition"></a></dt>
+<dd><p>Add an element.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.collections.OrderedSet.difference">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">difference</span></span><a class="headerlink" href="#aloe.collections.OrderedSet.difference" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.collections.OrderedSet.difference_update">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">difference_update</span></span><a class="headerlink" href="#aloe.collections.OrderedSet.difference_update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.collections.OrderedSet.discard">
+<span class="sig-name descname"><span class="pre">discard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.collections.OrderedSet.discard" title="Permalink to this definition"></a></dt>
+<dd><p>Remove an element.  Do not raise an exception if absent.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.collections.OrderedSet.intersection">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">intersection</span></span><a class="headerlink" href="#aloe.collections.OrderedSet.intersection" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.collections.OrderedSet.intersection_update">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">intersection_update</span></span><a class="headerlink" href="#aloe.collections.OrderedSet.intersection_update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.collections.OrderedSet.issubset">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">issubset</span></span><a class="headerlink" href="#aloe.collections.OrderedSet.issubset" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.collections.OrderedSet.issuperset">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">issuperset</span></span><a class="headerlink" href="#aloe.collections.OrderedSet.issuperset" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.collections.OrderedSet.symmetric_difference">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">symmetric_difference</span></span><a class="headerlink" href="#aloe.collections.OrderedSet.symmetric_difference" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.collections.OrderedSet.symmetric_difference_update">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">symmetric_difference_update</span></span><a class="headerlink" href="#aloe.collections.OrderedSet.symmetric_difference_update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.collections.OrderedSet.union">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">union</span></span><a class="headerlink" href="#aloe.collections.OrderedSet.union" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.collections.OrderedSet.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <span class="optional">]</span><em class="sig-param"><span class="n"><span class="pre">**F</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None.</span>&#160; <span class="pre">Update</span> <span class="pre">D</span> <span class="pre">from</span> <span class="pre">dict/iterable</span> <span class="pre">E</span> <span class="pre">and</span> <span class="pre">F.</span></span></span><a class="headerlink" href="#aloe.collections.OrderedSet.update" title="Permalink to this definition"></a></dt>
+<dd><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aloe.hypothesis_metrics">
+<span id="aloe-hypothesis-metrics-module"></span><h2>aloe.hypothesis_metrics module<a class="headerlink" href="#module-aloe.hypothesis_metrics" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.FnMetric">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.hypothesis_metrics.</span></span><span class="sig-name descname"><span class="pre">FnMetric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.hypothesis_metrics.FnMetric" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.hypothesis_metrics.HypothesisMetric" title="aloe.hypothesis_metrics.HypothesisMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">HypothesisMetric</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.FnMetric.State">
+<span class="sig-name descname"><span class="pre">State</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.hypothesis_metrics.FnMetric.State" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.FnMetric.best">
+<span class="sig-name descname"><span class="pre">best</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key=&lt;function</span> <span class="pre">FnMetric.&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.hypothesis_metrics.FnMetric.best" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.FnMetric.build_d">
+<span class="sig-name descname"><span class="pre">build_d</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.hypothesis_metrics.FnMetric.build_d" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.FnMetric.d_of_clause">
+<span class="sig-name descname"><span class="pre">d_of_clause</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clause</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.hypothesis_metrics.FnMetric.d_of_clause" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.FnMetric.prune">
+<span class="sig-name descname"><span class="pre">prune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.hypothesis_metrics.FnMetric.prune" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.FnMetric.rho">
+<span class="sig-name descname"><span class="pre">rho</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.hypothesis_metrics.FnMetric.rho" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.FnMetric.terminated">
+<span class="sig-name descname"><span class="pre">terminated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Closed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Open</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.hypothesis_metrics.FnMetric.terminated" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.HypothesisMetric">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.hypothesis_metrics.</span></span><span class="sig-name descname"><span class="pre">HypothesisMetric</span></span><a class="headerlink" href="#aloe.hypothesis_metrics.HypothesisMetric" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.HypothesisMetric.State">
+<span class="sig-name descname"><span class="pre">State</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.hypothesis_metrics.HypothesisMetric.State" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.HypothesisMetric.best">
+<span class="sig-name descname"><span class="pre">best</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.hypothesis_metrics.HypothesisMetric.best" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.HypothesisMetric.prune">
+<span class="sig-name descname"><span class="pre">prune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.hypothesis_metrics.HypothesisMetric.prune" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.HypothesisMetric.rho">
+<span class="sig-name descname"><span class="pre">rho</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.hypothesis_metrics.HypothesisMetric.rho" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.hypothesis_metrics.HypothesisMetric.terminated">
+<span class="sig-name descname"><span class="pre">terminated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Closed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Open</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.hypothesis_metrics.HypothesisMetric.terminated" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aloe.knowledge">
+<span id="aloe-knowledge-module"></span><h2>aloe.knowledge module<a class="headerlink" href="#module-aloe.knowledge" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.knowledge.Knowledge">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.knowledge.</span></span><span class="sig-name descname"><span class="pre">Knowledge</span></span><a class="headerlink" href="#aloe.knowledge.Knowledge" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.knowledge.Knowledge.add">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clause</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.Knowledge.add" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.knowledge.Knowledge.copy">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.Knowledge.copy" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.knowledge.Knowledge.match">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.Knowledge.match" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.knowledge.Knowledge.remove">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clause</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.Knowledge.remove" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.knowledge.LogicProgram">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.knowledge.</span></span><span class="sig-name descname"><span class="pre">LogicProgram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clauses</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.LogicProgram" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.knowledge.Knowledge" title="aloe.knowledge.Knowledge"><code class="xref py py-class docutils literal notranslate"><span class="pre">Knowledge</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.knowledge.LogicProgram.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.LogicProgram.add" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.knowledge.LogicProgram.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.LogicProgram.copy" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.knowledge.LogicProgram.match">
+<span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.LogicProgram.match" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.knowledge.LogicProgram.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.LogicProgram.remove" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.knowledge.MultipleKnowledge">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.knowledge.</span></span><span class="sig-name descname"><span class="pre">MultipleKnowledge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">knowledges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.MultipleKnowledge" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.knowledge.Knowledge" title="aloe.knowledge.Knowledge"><code class="xref py py-class docutils literal notranslate"><span class="pre">Knowledge</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.knowledge.MultipleKnowledge.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.MultipleKnowledge.add" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.knowledge.MultipleKnowledge.clauses">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clauses</span></span><a class="headerlink" href="#aloe.knowledge.MultipleKnowledge.clauses" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.knowledge.MultipleKnowledge.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.MultipleKnowledge.copy" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.knowledge.MultipleKnowledge.match">
+<span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.MultipleKnowledge.match" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.knowledge.MultipleKnowledge.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.knowledge.MultipleKnowledge.remove" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aloe.learner">
+<span id="aloe-learner-module"></span><h2>aloe.learner module<a class="headerlink" href="#module-aloe.learner" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.learner.Learner">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.learner.</span></span><span class="sig-name descname"><span class="pre">Learner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.learner.Learner" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.options.ObjectWithTemporaryOptions" title="aloe.options.ObjectWithTemporaryOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectWithTemporaryOptions</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.learner.Learner.induce">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">induce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">examples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knowledge</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">temp_options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.learner.Learner.induce" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.learner.LearningHistory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.learner.</span></span><span class="sig-name descname"><span class="pre">LearningHistory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.learner.LearningHistory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.learner.ProgolLearner">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.learner.</span></span><span class="sig-name descname"><span class="pre">ProgolLearner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.learner.ProgolLearner" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.learner.Learner" title="aloe.learner.Learner"><code class="xref py py-class docutils literal notranslate"><span class="pre">Learner</span></code></a></p>
+<p>Inductive logic learner as described by S. Muggleton in ‘Inverse entailment and progol.’ 1995
+available at <a class="reference external" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.31.1630&amp;rep=rep1&amp;type=pdf">http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.31.1630&amp;rep=rep1&amp;type=pdf</a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.learner.ProgolLearner.add_eventlog">
+<span class="sig-name descname"><span class="pre">add_eventlog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_fun=&lt;class</span> <span class="pre">'str'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.learner.ProgolLearner.add_eventlog" title="Permalink to this definition"></a></dt>
+<dd><p>Add an eventlog to the last log (only if self.options.keep_logs is true)
+Print the eventlog to the screen (only if self.options.verboseprint &gt; 1)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.learner.ProgolLearner.add_log">
+<span class="sig-name descname"><span class="pre">add_log</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.learner.ProgolLearner.add_log" title="Permalink to this definition"></a></dt>
+<dd><p>Create new log</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.learner.ProgolLearner.beg_child">
+<span class="sig-name descname"><span class="pre">beg_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.learner.ProgolLearner.beg_child" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.learner.ProgolLearner.build_bottom_i">
+<span class="sig-name descname"><span class="pre">build_bottom_i</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.learner.ProgolLearner.build_bottom_i" title="Permalink to this definition"></a></dt>
+<dd><p>For better understanding, read this function along Fig.1. ‘Algorithm for constructing bottom’ 
+in page 14 of document tutorial4.4.pdf 
+Inputs:
+- e: a single example (Clause object)
+- M: the set of all modes (ModeCollection object)
+- B: the background knowledge (Knowledge object)
+- solver: the engine to verify expressions (Solver object)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.learner.ProgolLearner.build_hypothesis">
+<span class="sig-name descname"><span class="pre">build_hypothesis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">examples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottom_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knowledge</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.learner.ProgolLearner.build_hypothesis" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.learner.ProgolLearner.end_child">
+<span class="sig-name descname"><span class="pre">end_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.learner.ProgolLearner.end_child" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.learner.ProgolLearner.induce">
+<span class="sig-name descname"><span class="pre">induce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">examples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knowledge</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">temp_options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.learner.ProgolLearner.induce" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aloe.learner.fun">
+<span class="sig-prename descclassname"><span class="pre">aloe.learner.</span></span><span class="sig-name descname"><span class="pre">fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state_set</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.learner.fun" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-aloe.livelog">
+<span id="aloe-livelog-module"></span><h2>aloe.livelog module<a class="headerlink" href="#module-aloe.livelog" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.livelog.LiveLog">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.livelog.</span></span><span class="sig-name descname"><span class="pre">LiveLog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.livelog.LiveLog" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.livelog.LiveLog.add_eventlog">
+<span class="sig-name descname"><span class="pre">add_eventlog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.livelog.LiveLog.add_eventlog" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.livelog.LiveLog.beg_child">
+<span class="sig-name descname"><span class="pre">beg_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_to_child</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.livelog.LiveLog.beg_child" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.livelog.LiveLog.data">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#aloe.livelog.LiveLog.data" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.livelog.LiveLog.end_child">
+<span class="sig-name descname"><span class="pre">end_child</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.livelog.LiveLog.end_child" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aloe.mode">
+<span id="aloe-mode-module"></span><h2>aloe.mode module<a class="headerlink" href="#module-aloe.mode" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.mode.Mode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.mode.</span></span><span class="sig-name descname"><span class="pre">Mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recall</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.mode.Mode" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.mode.Mode.atom_arity">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">atom_arity</span></span><a class="headerlink" href="#aloe.mode.Mode.atom_arity" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.mode.Mode.atom_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">atom_name</span></span><a class="headerlink" href="#aloe.mode.Mode.atom_name" title="Permalink to this definition"></a></dt>
+<dd><p>Determination form of a mode
+Ex: Input: modeh(<a href="#id31"><span class="problematic" id="id32">*</span></a>,parent_of(+person,-person)) (as a Mode object)</p>
+<blockquote>
+<div><p>Ouput: ‘parent_of/2’ (string)</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.mode.Mode.instantiate">
+<span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.mode.Mode.instantiate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.mode.ModeCollection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.mode.</span></span><span class="sig-name descname"><span class="pre">ModeCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">determinations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.mode.ModeCollection" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.mode.ModeCollection.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.mode.ModeCollection.add" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.mode.ModeCollection.add_determination">
+<span class="sig-name descname"><span class="pre">add_determination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deterh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deterb</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.mode.ModeCollection.add_determination" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.mode.ModeCollection.get_modeb">
+<span class="sig-name descname"><span class="pre">get_modeb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.mode.ModeCollection.get_modeb" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.mode.ModeCollection.get_modeb_from_modeh">
+<span class="sig-name descname"><span class="pre">get_modeb_from_modeh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.mode.ModeCollection.get_modeb_from_modeh" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.mode.ModeCollection.get_modeh">
+<span class="sig-name descname"><span class="pre">get_modeh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.mode.ModeCollection.get_modeh" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.mode.ModeCollection.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.mode.ModeCollection.remove" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.mode.Modeb">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.mode.</span></span><span class="sig-name descname"><span class="pre">Modeb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recall</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.mode.Modeb" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.mode.Mode" title="aloe.mode.Mode"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mode</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.mode.Modeh">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.mode.</span></span><span class="sig-name descname"><span class="pre">Modeh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recall</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.mode.Modeh" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.mode.Mode" title="aloe.mode.Mode"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mode</span></code></a></p>
+</dd></dl>
+
+</section>
+<section id="module-aloe.options">
+<span id="aloe-options-module"></span><h2>aloe.options module<a class="headerlink" href="#module-aloe.options" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.options.ObjectWithTemporaryOptions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.options.</span></span><span class="sig-name descname"><span class="pre">ObjectWithTemporaryOptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.options.ObjectWithTemporaryOptions" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.options.ObjectWithTemporaryOptions.add_temporary_options">
+<span class="sig-name descname"><span class="pre">add_temporary_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.options.ObjectWithTemporaryOptions.add_temporary_options" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.options.ObjectWithTemporaryOptions.options">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">options</span></span><a class="headerlink" href="#aloe.options.ObjectWithTemporaryOptions.options" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.options.ObjectWithTemporaryOptions.rem_temporary_options">
+<span class="sig-name descname"><span class="pre">rem_temporary_options</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.options.ObjectWithTemporaryOptions.rem_temporary_options" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.options.ObjectWithTemporaryOptions.verboseprint">
+<span class="sig-name descname"><span class="pre">verboseprint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.options.ObjectWithTemporaryOptions.verboseprint" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.options.Options">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.options.</span></span><span class="sig-name descname"><span class="pre">Options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.options.Options" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.options.Options.c">
+<span class="sig-name descname"><span class="pre">c</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#aloe.options.Options.c" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.options.Options.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.options.Options.copy" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.options.Options.h">
+<span class="sig-name descname"><span class="pre">h</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10000</span></em><a class="headerlink" href="#aloe.options.Options.h" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.options.Options.hmetric">
+<span class="sig-name descname"><span class="pre">hmetric</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FnMetric'</span></em><a class="headerlink" href="#aloe.options.Options.hmetric" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.options.Options.i">
+<span class="sig-name descname"><span class="pre">i</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#aloe.options.Options.i" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.options.Options.learner">
+<span class="sig-name descname"><span class="pre">learner</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ProgolLearner'</span></em><a class="headerlink" href="#aloe.options.Options.learner" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.options.Options.logging">
+<span class="sig-name descname"><span class="pre">logging</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#aloe.options.Options.logging" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.options.Options.solver">
+<span class="sig-name descname"><span class="pre">solver</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AloeSolver'</span></em><a class="headerlink" href="#aloe.options.Options.solver" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.options.Options.update_knowledge">
+<span class="sig-name descname"><span class="pre">update_knowledge</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#aloe.options.Options.update_knowledge" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.options.Options.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#aloe.options.Options.verbose" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.options.SystemParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.options.</span></span><span class="sig-name descname"><span class="pre">SystemParameters</span></span><a class="headerlink" href="#aloe.options.SystemParameters" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.options.SystemParameters.generic_name_for_variable">
+<span class="sig-name descname"><span class="pre">generic_name_for_variable</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#aloe.options.SystemParameters.generic_name_for_variable" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.options.SystemParameters.max_recall">
+<span class="sig-name descname"><span class="pre">max_recall</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#aloe.options.SystemParameters.max_recall" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.options.SystemParameters.maxclauses">
+<span class="sig-name descname"><span class="pre">maxclauses</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#aloe.options.SystemParameters.maxclauses" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aloe.parser">
+<span id="aloe-parser-module"></span><h2>aloe.parser module<a class="headerlink" href="#module-aloe.parser" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.parser.AloeParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.parser.</span></span><span class="sig-name descname"><span class="pre">AloeParser</span></span><a class="headerlink" href="#aloe.parser.AloeParser" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hornclause'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeParser.parse" title="Permalink to this definition"></a></dt>
+<dd><p>Parses input ‘string’
+Input:</p>
+<blockquote>
+<div><p>string: either a path to a file or a text to parse
+rule:   rule on which to parse the text</p>
+</div></blockquote>
+<p>Ouput: Object from aloe.clause</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeParser.parse_several">
+<span class="sig-name descname"><span class="pre">parse_several</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hornclause'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeParser.parse_several" title="Permalink to this definition"></a></dt>
+<dd><p>Parse string &lt;string&gt; containing multiple times the rule &lt;rule&gt;</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeParser.split_on_dots">
+<span class="sig-name descname"><span class="pre">split_on_dots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeParser.split_on_dots" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.parser.</span></span><span class="sig-name descname"><span class="pre">AloeVisitor</span></span><a class="headerlink" href="#aloe.parser.AloeVisitor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NodeVisitor</span></code></p>
+<dl>
+<dt><a href="#id33"><span class="problematic" id="id34">`</span></a>tree = grammar.parse(text)´ parses the string ‘text’ in the form of a tree.</dt><dd><p>-&gt; This class allows to navigate the tree obtained.</p>
+</dd>
+<dt><a href="#id35"><span class="problematic" id="id36">`</span></a>AloeVisitor().visit(tree)´ </dt><dd><p>– navigates through the parsed tree
+– transforms it into a Clause object</p>
+</dd>
+<dt>def visit_x(self, node, visited_children):</dt><dd><p>– with x, a non-terminal symbol
+– corresponds to a production rule: x -&gt; …
+Inputs:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>– visited_children is the list of returned values from each child</dt><dd><dl class="simple">
+<dt>Ex: headlessclause = “:-” body “.”</dt><dd><dl class="simple">
+<dt>visited_children = [[], val_body, []]</dt><dd><p>– children of “:-” and “.” are []
+– val_body is the value returned by body</p>
+</dd>
+</dl>
+</dd>
+<dt>Special children:</dt><dd><p>– <a href="#id37"><span class="problematic" id="id38">`</span></a>x?´ -&gt; [] or [child_x]
+– <a href="#id39"><span class="problematic" id="id40">`</span></a>x*´ -&gt; [child_x1, …, child_xn]
+– <a href="#id41"><span class="problematic" id="id42">`</span></a>(x y)´ -&gt; [child_x, child_y]
+– x / y -&gt; [child_x] or [child_y]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>– node: the current node from the parsed tree</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Output:</dt><dd><p>– The transformation for symbol x, given the inputs</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.generic_visit">
+<span class="sig-name descname"><span class="pre">generic_visit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.generic_visit" title="Permalink to this definition"></a></dt>
+<dd><p>The default visit method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_aloefile">
+<span class="sig-name descname"><span class="pre">visit_aloefile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_aloefile" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_arithmetic_atom">
+<span class="sig-name descname"><span class="pre">visit_arithmetic_atom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_arithmetic_atom" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a choice, return the only element in visited_children</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_arithmetic_comparison">
+<span class="sig-name descname"><span class="pre">visit_arithmetic_comparison</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_arithmetic_comparison" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_arithmetic_comparison_symbol">
+<span class="sig-name descname"><span class="pre">visit_arithmetic_comparison_symbol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_arithmetic_comparison_symbol" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a leaf, return the text matched by the regex expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_arithmetic_expression">
+<span class="sig-name descname"><span class="pre">visit_arithmetic_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_arithmetic_expression" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a choice, return the only element in visited_children</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_atom">
+<span class="sig-name descname"><span class="pre">visit_atom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_atom" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a choice, return the only element in visited_children</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_background">
+<span class="sig-name descname"><span class="pre">visit_background</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_background" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_basic_arithmetic_expression">
+<span class="sig-name descname"><span class="pre">visit_basic_arithmetic_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_basic_arithmetic_expression" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_basic_arithmetic_symbol">
+<span class="sig-name descname"><span class="pre">visit_basic_arithmetic_symbol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_basic_arithmetic_symbol" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a leaf, return the text matched by the regex expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_body">
+<span class="sig-name descname"><span class="pre">visit_body</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_body" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_choice">
+<span class="sig-name descname"><span class="pre">visit_choice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_choice" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a choice, return the only element in visited_children</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_comparison">
+<span class="sig-name descname"><span class="pre">visit_comparison</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_comparison" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a choice, return the only element in visited_children</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_compoundterm">
+<span class="sig-name descname"><span class="pre">visit_compoundterm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_compoundterm" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_constant">
+<span class="sig-name descname"><span class="pre">visit_constant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_constant" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_constant_number">
+<span class="sig-name descname"><span class="pre">visit_constant_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_constant_number" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_constant_word">
+<span class="sig-name descname"><span class="pre">visit_constant_word</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_constant_word" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_definiteclause">
+<span class="sig-name descname"><span class="pre">visit_definiteclause</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_definiteclause" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_determination">
+<span class="sig-name descname"><span class="pre">visit_determination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_determination" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_float">
+<span class="sig-name descname"><span class="pre">visit_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_float" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_generator">
+<span class="sig-name descname"><span class="pre">visit_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_generator" title="Permalink to this definition"></a></dt>
+<dd><p>generator = ((mode / determination) __)* (hornclause __)*</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_goal">
+<span class="sig-name descname"><span class="pre">visit_goal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_goal" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_goal_unit">
+<span class="sig-name descname"><span class="pre">visit_goal_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_goal_unit" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a choice, return the only element in visited_children</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_hclause">
+<span class="sig-name descname"><span class="pre">visit_hclause</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_hclause" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a choice, return the only element in visited_children</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_header">
+<span class="sig-name descname"><span class="pre">visit_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_header" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_headlessclause">
+<span class="sig-name descname"><span class="pre">visit_headlessclause</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_headlessclause" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_hornclause">
+<span class="sig-name descname"><span class="pre">visit_hornclause</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_hornclause" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a choice, return the only element in visited_children</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_in_parenthesis_arithmetic_expression">
+<span class="sig-name descname"><span class="pre">visit_in_parenthesis_arithmetic_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_in_parenthesis_arithmetic_expression" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_integer">
+<span class="sig-name descname"><span class="pre">visit_integer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_integer" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_is_evaluation">
+<span class="sig-name descname"><span class="pre">visit_is_evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_is_evaluation" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_leaf">
+<span class="sig-name descname"><span class="pre">visit_leaf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_leaf" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a leaf, return the text matched by the regex expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_list">
+<span class="sig-name descname"><span class="pre">visit_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_list" title="Permalink to this definition"></a></dt>
+<dd><p>list = “[” __ (term __ (“,” __ term __)* (“|” __ (variable / list))? )? __ “]” 
+opt1 = term __ (“,” __ term __)* (“|” __ (variable / list))?</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_matom">
+<span class="sig-name descname"><span class="pre">visit_matom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_matom" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_mcompterm">
+<span class="sig-name descname"><span class="pre">visit_mcompterm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_mcompterm" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_mode">
+<span class="sig-name descname"><span class="pre">visit_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_mode" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a choice, return the only element in visited_children</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_modeb">
+<span class="sig-name descname"><span class="pre">visit_modeb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_modeb" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_modeh">
+<span class="sig-name descname"><span class="pre">visit_modeh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_modeh" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_mterm">
+<span class="sig-name descname"><span class="pre">visit_mterm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_mterm" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a choice, return the only element in visited_children</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_neg_ex">
+<span class="sig-name descname"><span class="pre">visit_neg_ex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_neg_ex" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_negation">
+<span class="sig-name descname"><span class="pre">visit_negation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_negation" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_number">
+<span class="sig-name descname"><span class="pre">visit_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_number" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a choice, return the only element in visited_children</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_pos_ex">
+<span class="sig-name descname"><span class="pre">visit_pos_ex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_pos_ex" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_predicate">
+<span class="sig-name descname"><span class="pre">visit_predicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_predicate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_query">
+<span class="sig-name descname"><span class="pre">visit_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_query" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_recall">
+<span class="sig-name descname"><span class="pre">visit_recall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_recall" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_set">
+<span class="sig-name descname"><span class="pre">visit_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_set" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_sign">
+<span class="sig-name descname"><span class="pre">visit_sign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_sign" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a leaf, return the text matched by the regex expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_term">
+<span class="sig-name descname"><span class="pre">visit_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_term" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a choice, return the only element in visited_children</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_trigo_expression">
+<span class="sig-name descname"><span class="pre">visit_trigo_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_trigo_expression" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_trigo_symbol">
+<span class="sig-name descname"><span class="pre">visit_trigo_symbol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_trigo_symbol" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a leaf, return the text matched by the regex expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_type">
+<span class="sig-name descname"><span class="pre">visit_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_unification_comparison">
+<span class="sig-name descname"><span class="pre">visit_unification_comparison</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_unification_comparison" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_unification_comparison_symbol">
+<span class="sig-name descname"><span class="pre">visit_unification_comparison_symbol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_unification_comparison_symbol" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a leaf, return the text matched by the regex expression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_value">
+<span class="sig-name descname"><span class="pre">visit_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_value" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a choice, return the only element in visited_children</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_variable">
+<span class="sig-name descname"><span class="pre">visit_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_variable" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.parser.AloeVisitor.visit_word">
+<span class="sig-name descname"><span class="pre">visit_word</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_children</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.parser.AloeVisitor.visit_word" title="Permalink to this definition"></a></dt>
+<dd><p>When visiting a leaf, return the text matched by the regex expression</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aloe.program">
+<span id="aloe-program-module"></span><h2>aloe.program module<a class="headerlink" href="#module-aloe.program" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.program.AloeProgram">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.program.</span></span><span class="sig-name descname"><span class="pre">AloeProgram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knowledge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.program.AloeProgram" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.program.AloeProgram.build_from">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aloefile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.program.AloeProgram.build_from" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.program.AloeProgram.build_from_background">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_from_background</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.program.AloeProgram.build_from_background" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.program.AloeProgram.generate_examples">
+<span class="sig-name descname"><span class="pre">generate_examples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.program.AloeProgram.generate_examples" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.program.AloeProgram.generate_examples_from_clause">
+<span class="sig-name descname"><span class="pre">generate_examples_from_clause</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clause</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.program.AloeProgram.generate_examples_from_clause" title="Permalink to this definition"></a></dt>
+<dd><p>clause: the clause that generates examples
+mapping: dict that maps unbounded variables to</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.program.AloeProgram.induce">
+<span class="sig-name descname"><span class="pre">induce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">temp_options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.program.AloeProgram.induce" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aloe.program.AloeProgram.parser">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parser</span></span><a class="headerlink" href="#aloe.program.AloeProgram.parser" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.program.AloeProgram.query">
+<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">temp_options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.program.AloeProgram.query" title="Permalink to this definition"></a></dt>
+<dd><p>Launch a query to the aloe solver. 
+The query ‘q’ can be:
+- a string: the query will then first be parsed and then evaluated
+- a goal</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.program.AloeProgram.set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.program.AloeProgram.set" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.program.AloeProgram.verify">
+<span class="sig-name descname"><span class="pre">verify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">temp_options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.program.AloeProgram.verify" title="Permalink to this definition"></a></dt>
+<dd><p>Verify whether clause is true</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aloe.solver">
+<span id="aloe-solver-module"></span><h2>aloe.solver module<a class="headerlink" href="#module-aloe.solver" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.solver.AloeSolver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.solver.</span></span><span class="sig-name descname"><span class="pre">AloeSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.solver.AloeSolver" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.solver.Solver" title="aloe.solver.Solver"><code class="xref py py-class docutils literal notranslate"><span class="pre">Solver</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.solver.AloeSolver.query">
+<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knowledge</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">temp_options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.solver.AloeSolver.query" title="Permalink to this definition"></a></dt>
+<dd><p>Launch a query
+Inputs: 
+q: Goal, Atom
+options: parameters for the query, see aloe.options</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.solver.AloeSolver.succeeds_on">
+<span class="sig-name descname"><span class="pre">succeeds_on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knowledge</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">temp_options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.solver.AloeSolver.succeeds_on" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.solver.AloeState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.solver.</span></span><span class="sig-name descname"><span class="pre">AloeState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_clause</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.solver.AloeState" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.solver.AloeState.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.solver.AloeState.copy" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.solver.AloeState.has_atoms">
+<span class="sig-name descname"><span class="pre">has_atoms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.solver.AloeState.has_atoms" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.solver.AloeState.next_atom">
+<span class="sig-name descname"><span class="pre">next_atom</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.solver.AloeState.next_atom" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.solver.Solver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.solver.</span></span><span class="sig-name descname"><span class="pre">Solver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.solver.Solver" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aloe.html#aloe.options.ObjectWithTemporaryOptions" title="aloe.options.ObjectWithTemporaryOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectWithTemporaryOptions</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.solver.Solver.query">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knowledge</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.solver.Solver.query" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.solver.Solver.solve">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.solver.Solver.solve" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.solver.Solver.succeeds_on">
+<span class="sig-name descname"><span class="pre">succeeds_on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knowledge</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.solver.Solver.succeeds_on" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-aloe.substitution">
+<span id="aloe-substitution-module"></span><h2>aloe.substitution module<a class="headerlink" href="#module-aloe.substitution" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.substitution.</span></span><span class="sig-name descname"><span class="pre">Substitution</span></span><a class="headerlink" href="#aloe.substitution.Substitution" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class represents a substitution of variables
+It has three properties:
+- variables: the domain of substitution, a set of Variable objects
+- tally: dict giving for a symbol the number of Variable objects with the symbol
+- subst: dict mapping a Variable object to a term</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution.add_variable">
+<span class="sig-name descname"><span class="pre">add_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.Substitution.add_variable" title="Permalink to this definition"></a></dt>
+<dd><p>Adds a single variable to the domain of the substitution</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution.add_variables">
+<span class="sig-name descname"><span class="pre">add_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.Substitution.add_variables" title="Permalink to this definition"></a></dt>
+<dd><p>Adds all variables present in expr to the domain of the substitution</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.Substitution.copy" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution.from_mode">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.Substitution.from_mode" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution.generic_name_for_variables">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generic_name_for_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.Substitution.generic_name_for_variables" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution.get_type_subst">
+<span class="sig-name descname"><span class="pre">get_type_subst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body_atom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.Substitution.get_type_subst" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.Substitution.items" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution.new_variable">
+<span class="sig-name descname"><span class="pre">new_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.Substitution.new_variable" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a new variable with symbol=symbol</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution.remove_excess_variables">
+<span class="sig-name descname"><span class="pre">remove_excess_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.Substitution.remove_excess_variables" title="Permalink to this definition"></a></dt>
+<dd><p>Keep only variables in domain</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution.rename_variables">
+<span class="sig-name descname"><span class="pre">rename_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subst</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.Substitution.rename_variables" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution.substitute">
+<span class="sig-name descname"><span class="pre">substitute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.Substitution.substitute" title="Permalink to this definition"></a></dt>
+<dd><p>Apply substitution to expression &lt;expr&gt;</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution.unify">
+<span class="sig-name descname"><span class="pre">unify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.Substitution.unify" title="Permalink to this definition"></a></dt>
+<dd><p>Tries to match two atoms together and iteratively updates self.subst
+If not possible, raises a SubstitutionError</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.substitution.Substitution.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.Substitution.update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="aloe.substitution.SubstitutionError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.substitution.</span></span><span class="sig-name descname"><span class="pre">SubstitutionError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.substitution.SubstitutionError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+</section>
+<section id="module-aloe.userapi">
+<span id="aloe-userapi-module"></span><h2>aloe.userapi module<a class="headerlink" href="#module-aloe.userapi" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="aloe.userapi.deduce">
+<span class="sig-prename descclassname"><span class="pre">aloe.userapi.</span></span><span class="sig-name descname"><span class="pre">deduce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.userapi.deduce" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aloe.userapi.induce">
+<span class="sig-prename descclassname"><span class="pre">aloe.userapi.</span></span><span class="sig-name descname"><span class="pre">induce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.userapi.induce" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-aloe.utils">
+<span id="aloe-utils-module"></span><h2>aloe.utils module<a class="headerlink" href="#module-aloe.utils" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aloe.utils.bcolors">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aloe.utils.</span></span><span class="sig-name descname"><span class="pre">bcolors</span></span><a class="headerlink" href="#aloe.utils.bcolors" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.utils.bcolors.BOLD">
+<span class="sig-name descname"><span class="pre">BOLD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[1m'</span></em><a class="headerlink" href="#aloe.utils.bcolors.BOLD" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.utils.bcolors.ENDC">
+<span class="sig-name descname"><span class="pre">ENDC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[0m'</span></em><a class="headerlink" href="#aloe.utils.bcolors.ENDC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.utils.bcolors.FAIL">
+<span class="sig-name descname"><span class="pre">FAIL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[91m'</span></em><a class="headerlink" href="#aloe.utils.bcolors.FAIL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.utils.bcolors.HEADER">
+<span class="sig-name descname"><span class="pre">HEADER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[95m'</span></em><a class="headerlink" href="#aloe.utils.bcolors.HEADER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.utils.bcolors.OKBLUE">
+<span class="sig-name descname"><span class="pre">OKBLUE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[94m'</span></em><a class="headerlink" href="#aloe.utils.bcolors.OKBLUE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.utils.bcolors.OKCYAN">
+<span class="sig-name descname"><span class="pre">OKCYAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[96m'</span></em><a class="headerlink" href="#aloe.utils.bcolors.OKCYAN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.utils.bcolors.OKGREEN">
+<span class="sig-name descname"><span class="pre">OKGREEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[92m'</span></em><a class="headerlink" href="#aloe.utils.bcolors.OKGREEN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.utils.bcolors.UNDERLINE">
+<span class="sig-name descname"><span class="pre">UNDERLINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[4m'</span></em><a class="headerlink" href="#aloe.utils.bcolors.UNDERLINE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aloe.utils.bcolors.WARNING">
+<span class="sig-name descname"><span class="pre">WARNING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[93m'</span></em><a class="headerlink" href="#aloe.utils.bcolors.WARNING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.utils.bcolors.green">
+<span class="sig-name descname"><span class="pre">green</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.utils.bcolors.green" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.utils.bcolors.ipygreen">
+<span class="sig-name descname"><span class="pre">ipygreen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.utils.bcolors.ipygreen" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.utils.bcolors.ipyred">
+<span class="sig-name descname"><span class="pre">ipyred</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.utils.bcolors.ipyred" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aloe.utils.bcolors.red">
+<span class="sig-name descname"><span class="pre">red</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.utils.bcolors.red" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aloe.utils.generate_variable_names">
+<span class="sig-prename descclassname"><span class="pre">aloe.utils.</span></span><span class="sig-name descname"><span class="pre">generate_variable_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aloe.utils.generate_variable_names" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aloe.utils.multiple_replace">
+<span class="sig-prename descclassname"><span class="pre">aloe.utils.</span></span><span class="sig-name descname"><span class="pre">multiple_replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.utils.multiple_replace" title="Permalink to this definition"></a></dt>
+<dd><p>source: <a class="reference external" href="https://stackoverflow.com/questions/15175142/how-can-i-do-multiple-substitutions-using-regex">https://stackoverflow.com/questions/15175142/how-can-i-do-multiple-substitutions-using-regex</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aloe.utils.red">
+<span class="sig-prename descclassname"><span class="pre">aloe.utils.</span></span><span class="sig-name descname"><span class="pre">red</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aloe.utils.red" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-aloe">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-aloe" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Simon Jacquet.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

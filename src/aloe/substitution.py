@@ -1,4 +1,4 @@
-from aloe.clause import Clause, Constant, Variable, Function, Literal, Goal, Type, extract_variables, Expression
+from aloe.logic_concept import Clause, Constant, Variable, Function, Goal, Type, extract_variables
 from aloe.utils import generate_variable_names, multiple_replace
 import re
 
@@ -23,8 +23,7 @@ class Substitution:
         from aloe.parser import AloeParser
         self.parser = AloeParser()
         
-    def items(self):
-        return self.subst.items()
+    def items(self): return self.subst.items()
         
     def new_variable(self, symbol):
         """ Creates a new variable with symbol=symbol """
@@ -64,16 +63,6 @@ class Substitution:
                     var = self.new_variable(expr.symbol)
                     subst[expr] = var
                     return var
-            elif isinstance(expr, Expression):
-                variable_regex = r'[A-Z]\w*\d*'
-
-                sub = dict()
-                for varname in re.findall(variable_regex, expr.source):
-                    var = self.parser.parse(varname, 'variable')
-                    sub[str(var)] = str(var.apply(fun))
-                
-                new_source = multiple_replace(sub, expr.source)
-                return expr.__class__(new_source)
                     
             else: 
                 raise NotImplementedError('%s object cannot be renamed for now. (%s)' % (str(expr.__class__.__name__), str(expr)))
@@ -116,7 +105,7 @@ class Substitution:
             self.subst[key] = item
         else: #key in self.subst
             self.subst[key] = self.unify(self.subst[key],item)
-        self.update_everywhere(key)
+        self.update()
             
     def unify(self, atom1, atom2):
         """
@@ -151,27 +140,17 @@ class Substitution:
         else:
             message = "Either %s or %s isn't a Constant, Variable or Function object"
             raise TypeError(message)
-        
-    def update_everywhere(self, var):
-        for key in self.subst:
-            self.subst[key] = self.replace_var_in_expr(var, self.subst[key])
-
-    def replace_var_in_expr(self, var, expr):
-        if   isinstance(expr, Constant): return expr
-        elif isinstance(expr, Type):     return expr
-        elif isinstance(expr, Variable): return self.subst[var] if expr==var else expr
-        elif isinstance(expr, Function):
-            t = [self.replace_var_in_expr(var,t) for t in expr]
-            return expr.__class__(expr.functor, t)
-        else: 
-            message = 'CompoundTerm replace_var_in_expr has not been implemented for %s objects' % (expr.__class__.__name__)
-            raise NotImplementedError(message)
             
-    def apply_subst(self, expr):
-        def fun(expr):
-            if isinstance(expr, Variable): return self[expr]
-            else:                          return expr
-        return self.rename_variables(expr, subst=self, new_variables=False)
+    def update(self):
+        for key in self.subst:
+            self.subst[key] = self.substitute(self.subst[key])
+        
+    def substitute(self, expr):
+        """ Apply substitution to expression <expr> """
+        def fun(el):
+            if isinstance(el, Variable):   return self[el]
+            else:                          return el
+        return expr.apply(fun)
             
     def get_type_subst(self, atom, M, body_atom=False):
         if body_atom:
@@ -190,12 +169,20 @@ class Substitution:
         return s, am
 
     @staticmethod
-    def generic_name_for_variables(expr):            
-        sigma = Substitution()
-        expr = sigma.rename_variables(expr, subst=_mySubst(), new_variables=False)
-        return expr
+    def generic_name_for_variables(expr):
+        subst = dict()
+        var_names = generate_variable_names()
+        def fun(element):
+            if isinstance(element, Variable):
+                if element not in subst:
+                    subst[element] = Variable(next(var_names))
+                return subst[element]
+            else:
+                return element
+        return expr.apply(fun)
     
     def remove_excess_variables(self, domain):
+        """ Keep only variables in domain """
         # Subst: maps from old variables to new ones
         s = Substitution()
         s.add_variables(domain)
@@ -204,18 +191,3 @@ class Substitution:
                 s.add_variables(self[key])
                 s.subst[key] = self[key]
         return s
-
-    
-class _mySubst:
-    def __init__(self):
-        self.subst = dict()
-        self.var_names = generate_variable_names()
-
-    def __contains__(self, attr):
-        if attr not in self.subst:
-            self.subst[attr] = Variable(next(self.var_names))
-        return True
-
-    def __getitem__(self, attr):
-        return self.subst[attr]
-        

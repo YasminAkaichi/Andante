@@ -1,28 +1,32 @@
 from abc import ABC, abstractmethod
 
 class LogicConcept(ABC):
-    """ Class representing all logic concepts. """
+    """ Any logic concept of first order logic """
     @abstractmethod
     def apply(self, fun):
-        """ Applies the function :meth:`fun` to all sub-LogicConcepts if any.
+        """ Transforms all underlying logic concepts of the object, or if none, the object itself
         
-        sub-LogicConcepts are any LogicConcept object present as attributes of another LogicConcept
-        Ex: 
-            - Clauses have Atoms as sub-LogicConcepts
-            - Predicates have Terms as sub-LogicConcepts
-            - Variables have no sub-LogicConcepts
+        Examples
+        --------
+        Clauses have their atoms transformed
+        Predicates have their terms transformed
+        Variables are transformed
         
-        Parameters:
-            - fun (function): the function to apply.
+        Parameters
+        ----------
+        fun : function
+            The function that transforms logic concepts
             
-        Returns:
-            - ``None`` or a new :class:`LogicConcept` on which :param:`fun` has been applied.
+        Returns
+        -------
+        aloe.logic_concept.LogicConcept
+            The transformed logic concept
         """
         pass
     
     
 class Clause(LogicConcept):
-    """ Represents a horn clause in first order logic. """
+    """ Horn clause in first order logic """
     def __init__(self, head, body):
         assert isinstance(head, Atom) or head is None
         assert isinstance(body, list) and all((isinstance(batom, Atom) for batom in body))
@@ -47,7 +51,7 @@ class Clause(LogicConcept):
             return None
     
 class Goal(list, LogicConcept): 
-    """ Represents a goal as a list of atoms or negations. """
+    """ Goal in first order logic """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         assert all((isinstance(l, (Atom, Negation)) for l in self))        
@@ -60,7 +64,7 @@ class Goal(list, LogicConcept):
             return None        
         
 class Negation(LogicConcept):
-    """ Represents the negation of a goal """
+    """ Negation of a goal in first order logic """
     def __init__(self, goal):
         assert isinstance(goal, Goal)
         self.goal = goal
@@ -73,12 +77,14 @@ class Negation(LogicConcept):
             return None        
     
 class Function(LogicConcept, ABC):
-    """ 
-    Represents a function as the general form of a predicate and a CompoundTerm.
+    """ Function as the general form of a predicate and a CompoundTerm
     
-    Attributes:
-        - functor (str): name of the function.
-        - arguments (:class:`list` of :class:`Term`): arguments of the function
+    Attributes
+    ----------
+    functor : str
+        the functor, i.e. the name of the function
+    arguments : list of aloe.logic_concept.Term
+        the inputs of the function
     """
     def __init__(self, functor, arguments):
         assert isinstance(functor, str)
@@ -100,28 +106,36 @@ class Function(LogicConcept, ABC):
         except: return None
     
 class Atom(LogicConcept, ABC):
-    """ Represents an atom in the first order logic framework """
+    """ Atom in the first order logic framework """
     def __hash__(self):      return hash(str(self))
     def __eq__(self, other): return str(self) == str(other)    
     
 class Term(LogicConcept, ABC):
-    """ Represents a term in the first order logic framework """
+    """ Term in the first order logic framework """
     def __hash__(self):      return hash(str(self))
     def __eq__(self, other): return str(self) == str(other)
     
     @abstractmethod
-    def unify(self, other, subst): pass
+    def unify(self, other, subst): 
+        """ Unify two terms
+        
+        Updates the aloe.substitution.Substitution subst to take into account the unification of aloe.logic_concept.Term self and other
+        
+        Parameters
+        ----------
+        other : aloe.logic_concept.Term
+            The term to unify with
+        subst : aloe.substitution.Substitution
+            The current substitution
+        """
+        pass
 
 class Predicate(Atom, Function): 
-    """ 
-    Represents a predicate in first order logic.
-    """
+    """ Predicate in first order logic """
     pass
 
 class CompoundTerm(Term, Function):
-    """ 
-    This class represents compound terms as defined in the prolog framework.
-    """
+    """ Compound terms as defined in the prolog framework """
     def unify(self, other, subst):
         if   isinstance(other, Variable):
             other.unify(self, subst)
@@ -134,15 +148,21 @@ class CompoundTerm(Term, Function):
         else: raise UnificationException(self, other)
     
 class Constant(Term):
-    """ A constant is represented by its value that can be a int, float or a string """
+    """ Constant in first order logic
+    
+    Attributes
+    ----------
+    value : int or float or string
+        Data held by the constant
+    """
     def __init__(self, value):
         assert isinstance(value, (int, float, str))
         self.value = value
         
     def __repr__(self): return str(self.value)
     
-    def to_variable_name(self):
-        """ Returns a valid unique variable name """
+    def to_variable_name(self): # TODO change to to_variable_symbol
+        """ Returns a valid unique variable symbol """
         if isinstance(self.value, str): return self.value.capitalize()
         else:                           return 'V' + str(self.value)
         
@@ -161,13 +181,14 @@ class Constant(Term):
         else: raise UnificationException(self, other)
             
 class Variable(Term):
-    """ 
-    This class represents variables in the first order logic framework
-    Variable objects are distinguished by 
-    - a symbol: a string (Ex: 'A', 'Father')
-    - a tally id: a integer
-    There can be several Variable objects with the same symbol. To distinguish among them, we use a tally id.
-    A negative tally id means that the Variable object doesn't belong to a tally
+    """ Variable in the first order logic framework
+    
+    Attributes
+    ----------
+    symbol : string
+        The symbol or name of the variable
+    tally_id : int
+        A number to differentiate different aloe.logic_concept.Variable objects with the same symbol
     """
     def __init__(self, symbol, tally_id=0):        
         assert isinstance(symbol, str) and isinstance(tally_id, int)
@@ -196,8 +217,18 @@ class Variable(Term):
         subst[self] = other
             
 class Type(Term):
-    """ 
-    In progol, a term for a mode can be a type '+person' composed of a sign ('+', '-' or '#') and a name ('person')
+    """ Type as defined in the progol framework
+    
+    Examples
+    --------
+    +person
+    #animal
+    
+    Attributes
+    ----------
+    sign : '+' or '-' or '#'
+        '+' refers to input arguments, '-' refers to output arguments and '#' refers to constant
+    name : str
     """
     def __init__(self, sign, name):
         self.sign = sign
@@ -407,6 +438,10 @@ class UnificationException(Exception):
 
 
 class List(Term):
+    """ List in the prolog framework
+    
+    
+    """
     " [a, b, c | B] "
     def __init__(self, e1, e2=None):
         self.elements1 = e1

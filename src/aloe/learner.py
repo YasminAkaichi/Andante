@@ -1,7 +1,7 @@
 import itertools
 from abc import ABC, abstractmethod
 from aloe.options import Options, SystemParameters, ObjectWithTemporaryOptions
-from aloe.knowledge import MultipleKnowledge, LogicProgram
+from aloe.knowledge import MultipleKnowledge, TreeShapedKnowledge
 from aloe.logic_concepts import Clause, Constant, Variable, Function, Type
 from aloe.substitution import Substitution
 import aloe.hypothesis_metrics
@@ -60,7 +60,7 @@ class ProgolLearner(Learner):
         
         # 1. Add e_bar to the background knowledge
         # TODO inset a_bar
-        e_knowledge = LogicProgram([Clause(b,[]) for b in e.body], options=self.options)
+        e_knowledge = TreeShapedKnowledge([Clause(b,[]) for b in e.body], options=self.options)
         B = MultipleKnowledge(B, e_knowledge, options=self.options)
         
         # 2. Initialize InTerms and the bottom clause
@@ -172,7 +172,7 @@ class ProgolLearner(Learner):
         
         self.beg_child('Iterations')
         nclause = 0
-        learned_knowledge = LogicProgram(options=knowledge.options)
+        learned_knowledge = TreeShapedKnowledge(options=knowledge.options)
         whole_knowledge = MultipleKnowledge(knowledge, learned_knowledge)
         while examples['pos'] and nclause<SystemParameters.maxclauses:            
             # Select 1 example

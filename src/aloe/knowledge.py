@@ -8,7 +8,6 @@ from aloe.logic_concepts  import (
     Variable, 
     Function,
 )
-from aloe.clause_collections import TreeBasedClauseCollection
 from aloe.collections import OrderedSet
 
 from collections.abc import Iterable
@@ -85,7 +84,10 @@ class TreeShapedKnowledge(Knowledge):
     collec : dict
         The tree collection of clauses
     """
-    def __init__(self, clauses, operators=None, **kwargs):
+    def __init__(self, clauses=None, operators=None, options=None):
+        self.options = options
+        if clauses is None:
+            clauses = []
         if operators is None:
             operators = [clause.head for clause in clauses]
         self.clauses = OrderedSet()
@@ -95,7 +97,7 @@ class TreeShapedKnowledge(Knowledge):
             self.add(clause, op)
 
     def __iter__(self):
-        return self.clauses
+        return iter(self.clauses)
             
     def add(self, clause, func=None):
         # In case input is not a clause but an iterable containing clauses
@@ -126,7 +128,7 @@ class TreeShapedKnowledge(Knowledge):
                 term_dict['Vars'].add(clause)                        
             elif isinstance(term, Function):
                 if 'Funcs' not in term_dict:
-                    term_dict['Funcs'] = TreeBasedClauseCollection([],[])                       
+                    term_dict['Funcs'] = TreeShapedKnowledge([],[])                       
                 term_dict['Funcs'].add(clause, term)
                 
     def remove(self, clause, func=None):

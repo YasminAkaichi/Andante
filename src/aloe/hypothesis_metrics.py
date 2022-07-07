@@ -1,6 +1,6 @@
 from abc import ABC
 from aloe.logic_concepts import Clause, Type, extract_variables
-from aloe.knowledge import MultipleKnowledge, LogicProgram
+from aloe.knowledge import MultipleKnowledge, TreeShapedKnowledge
 from aloe.substitution import Substitution
 
 class HypothesisMetric(ABC):
@@ -102,7 +102,7 @@ class FnMetric(HypothesisMetric):
             """
             self.hm = hm            
             self.clause = clause
-            self.B = MultipleKnowledge(hm.B, LogicProgram([clause],options=hm.options))
+            self.B = MultipleKnowledge(hm.B, TreeShapedKnowledge([clause],options=hm.options))
             self.k = k
             self.E = E if E is not None else hm.E
             self.E_cov = {label:[e for e in self.E[label] if hm.solver.succeeds_on(e.head, self.B, verbose=0)] for label in self.E}

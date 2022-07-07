@@ -3,7 +3,7 @@ import aloe.learner
 from aloe.logic_concepts    import Goal, Clause, Negation, Variable, extract_variables
 from aloe.options   import Options
 from aloe.mode      import ModeCollection, Modeh
-from aloe.knowledge import Knowledge, TreeBasedClauseCollection, MultipleKnowledge
+from aloe.knowledge import Knowledge, TreeShapedKnowledge, MultipleKnowledge
 from aloe.substitution import Substitution
 from aloe.utils import generate_variable_names
 import itertools
@@ -26,7 +26,7 @@ class AloeProgram:
             -options: options
         """
         self.options   = options   if options   else Options()
-        self.knowledge = knowledge if knowledge else TreeBasedClauseCollection(options=self.options)
+        self.knowledge = knowledge if knowledge else TreeShapedKnowledge(options=self.options)
         self.solver    = getattr(aloe.solver, self.options.solver)(options=self.options)
         self.modes     = modes     if modes     else ModeCollection(options=self.options)
         self.examples  = examples  if examples  else {'pos':[], 'neg':[]}

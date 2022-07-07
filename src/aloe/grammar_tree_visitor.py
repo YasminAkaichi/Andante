@@ -30,7 +30,7 @@ from aloe.options   import (
     SystemParameters,
 )
 from aloe.program   import AloeProgram
-from aloe.knowledge import LogicProgram
+from aloe.knowledge import TreeShapedKnowledge
 
 
 class Visitor(NodeVisitor):
@@ -122,7 +122,7 @@ class Visitor(NodeVisitor):
         return {'modehandler':mhandler, 'options':options}
         
     visit_hclause    = visit_choice
-    visit_background = lambda self, node, visited_children: LogicProgram([c for c, _ in visited_children[6]])
+    visit_background = lambda self, node, visited_children: TreeShapedKnowledge([c for c, _ in visited_children[6]])
     visit_pos_ex     = lambda self, node, visited_children: [c for c, _ in visited_children[6]]
     visit_neg_ex     = lambda self, node, visited_children: [c for c, _ in visited_children[6]]    
     
@@ -231,7 +231,7 @@ class Visitor(NodeVisitor):
     def visit_generator(self, node, visited_children):
         l_modes, l_clauses = visited_children
         lmodes = [x for (x,), _ in l_modes]
-        knowledge = LogicProgram([x for x, _ in l_clauses])
+        knowledge = TreeShapedKnowledge([x for x, _ in l_clauses])
         return knowledge, lmodes
 
     

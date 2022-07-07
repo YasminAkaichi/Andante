@@ -2,11 +2,10 @@ import itertools
 from abc import ABC, abstractmethod
 from aloe.options import Options, SystemParameters, ObjectWithTemporaryOptions
 from aloe.knowledge import MultipleKnowledge, LogicProgram
-from aloe.logic_concept import Clause, Constant, Variable, Function, Type
+from aloe.logic_concepts import Clause, Constant, Variable, Function, Type
 from aloe.substitution import Substitution
 import aloe.hypothesis_metrics
-from aloe.livelog import LiveLog
-from sortedcontainers import SortedSet
+from aloe.live_log import LiveLog
 from aloe.collections import OrderedSet
 
 class Learner(ObjectWithTemporaryOptions, ABC):
@@ -16,16 +15,8 @@ class Learner(ObjectWithTemporaryOptions, ABC):
     @abstractmethod
     def induce(self, examples, modes, knowledge, solver, **temp_options):
         pass
-        
 
-class LearningHistory:
-    def __init__(self, options):
-        self.options = options
-        
-def fun(state_set):
-    for s in state_set:
-        print(s, 'k', s.k)
-        
+
 class ProgolLearner(Learner):
     """ 
     Inductive logic learner as described by S. Muggleton in 'Inverse entailment and progol.' 1995
@@ -216,7 +207,7 @@ class ProgolLearner(Learner):
         
         self.add_eventlog('Learned knowledge', learned_knowledge)    
         if self.options.update_knowledge:
-            for c in learned_knowledge.clauses:
+            for c in learned_knowledge:
                 knowledge.add(c)
             
         self.rem_temporary_options()

@@ -1,4 +1,4 @@
-from aloe.logic_concept import Clause, Constant, Variable, Function, Goal, Type, extract_variables
+from aloe.logic_concepts import Clause, Constant, Variable, Function, Goal, Type, extract_variables
 from aloe.utils import generate_variable_names, multiple_replace
 import re
 
@@ -8,25 +8,29 @@ class SubstitutionError(Exception):
         super().__init__(message)
 
 class Substitution:
-    """
-    This class represents a substitution of variables
-    It has three properties:
-    - variables: the domain of substitution, a set of Variable objects
-    - tally: dict giving for a symbol the number of Variable objects with the symbol
-    - subst: dict mapping a Variable object to a term
+    """ Substitution as defined in first order logic
+
+    Attributes
+    ----------
+    variables : set of aloe.logic_concepts.Variable
+        The domain of substitution
+    tally : dict of int
+        Gives for a variable symbol, the highest tally number
+    subst : dict of aloe.logic_concepts.Term
+        Mapping of variables to terms
     """
     def __init__(self):
         self.variables = set()
         self.tally = dict()
         self.subst = dict()
         
-        from aloe.parser import AloeParser
-        self.parser = AloeParser()
+        from aloe.parser import Parser
+        self.parser = Parser()
         
     def items(self): return self.subst.items()
         
     def new_variable(self, symbol):
-        """ Creates a new variable with symbol=symbol """
+        """ Creates a new variable that has some input symbol """
         if symbol not in self.tally:
             self.tally[symbol] = 0
             
@@ -45,10 +49,11 @@ class Substitution:
         self.add_variables(variable)
                 
     def add_variables(self, expr):
-        """ Adds all variables present in expr to the domain of the substitution """
+        """ Adds all variables present in some expression to the domain of substitution """
         self.variables.update(extract_variables(expr))
         
     def rename_variables(self, x, subst=None, new_variables=True):
+        """ Rename all variables by mapping to an already existing substitution or by introducing new variables """
         subst = subst if subst is not None else dict()
         
         def fun(expr):
@@ -69,8 +74,8 @@ class Substitution:
                 
         return x.apply(fun)
         
-
     def copy(self):
+        """ Returns a deep copy of itself """
         sigma = Substitution()
         sigma.variables = self.variables.copy()
         sigma.tally = self.tally.copy()
@@ -93,8 +98,11 @@ class Substitution:
     def __setitem__(self, key, item):
         """ 
         Considers the substitution {key/item}
-        If key is not present in the set of variables, throws a KeyError
-        If key is not present in the set of substitutions, adds the substitution
+
+        Raises
+        ------
+        KeyError
+            If the key is not present in the set of variables
         """
         if   key not in self.variables:
             message = str(key)
@@ -105,12 +113,18 @@ class Substitution:
             self.subst[key] = item
         else: #key in self.subst
             self.subst[key] = self.unify(self.subst[key],item)
-        self.update()
-            
+
+        for key in self.subst:
+            self.subst[key] = self.substitute(self.subst[key])
+
     def unify(self, atom1, atom2):
         """
-        Tries to match two atoms together and iteratively updates self.subst
-        If not possible, raises a SubstitutionError
+        Tries to match two expressions together and iteratively updates self.subst
+
+        Raises
+        ------
+        SubstitutionError
+            If unification impossible
         """
         if   isinstance(atom1, Constant) and isinstance(atom2, Constant):
             if atom1!=atom2: raise SubstitutionError(atom1, atom2)
@@ -141,12 +155,8 @@ class Substitution:
             message = "Either %s or %s isn't a Constant, Variable or Function object"
             raise TypeError(message)
             
-    def update(self):
-        for key in self.subst:
-            self.subst[key] = self.substitute(self.subst[key])
-        
     def substitute(self, expr):
-        """ Apply substitution to expression <expr> """
+        """ Applies the substitution to some expression """
         def fun(el):
             if isinstance(el, Variable):   return self[el]
             else:                          return el
@@ -182,7 +192,7 @@ class Substitution:
         return expr.apply(fun)
     
     def remove_excess_variables(self, domain):
-        """ Keep only variables in domain """
+        """ Returns a substitution with its variables restrained to some input domain """
         # Subst: maps from old variables to new ones
         s = Substitution()
         s.add_variables(domain)

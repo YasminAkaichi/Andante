@@ -1,5 +1,5 @@
 from abc import ABC
-from aloe.logic_concept import Clause, Type, extract_variables
+from aloe.logic_concepts import Clause, Type, extract_variables
 from aloe.knowledge import MultipleKnowledge, LogicProgram
 from aloe.substitution import Substitution
 

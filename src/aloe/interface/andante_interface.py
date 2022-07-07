@@ -1,8 +1,7 @@
 from aloe.program import AloeProgram
-from aloe.parser  import AloeParser
+from aloe.parser  import Parser
 from aloe.knowledge import Knowledge, MultipleKnowledge
 from aloe.collections import OrderedSet
-from aloe.utils import bcolors
 
 import itertools
 import math
@@ -37,7 +36,7 @@ PARSER_CATEGORIES = {'modeh':'modeh', 'modeb':'modeb', 'pos_examples':'hornclaus
 
 class AndateInterface:
     def __init__(self, ap=None, **options):
-        self.parser = AloeParser()
+        self.parser = Parser()
         self.ap = ap if ap is not None else AloeProgram(options=options)
         
         self.qi = QueryInterface(self.ap, **options)
@@ -206,7 +205,7 @@ def get_category(clause):
 
 class QueryInterface:
     def __init__(self, ap=None, **options):
-        self.parser = AloeParser()
+        self.parser = Parser()
         self.ap = ap if ap is not None else AloeProgram(options=options)
             
         # update options
@@ -218,7 +217,7 @@ class QueryInterface:
         
     def init_clauses(self):
         self._clauses = {category:OrderedSet() for category in CATEGORIES}
-        for c in self.ap.knowledge.clauses:
+        for c in self.ap.knowledge:
             c = str(c)
             self._clauses[ALL].add(c)
             self._clauses[get_category(c)].add(c)

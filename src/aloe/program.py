@@ -1,9 +1,9 @@
 import aloe.solver
 import aloe.learner
-from aloe.logic_concept    import Goal, Clause, Negation, Variable, extract_variables
+from aloe.logic_concepts    import Goal, Clause, Negation, Variable, extract_variables
 from aloe.options   import Options
 from aloe.mode      import ModeCollection, Modeh
-from aloe.knowledge import Knowledge, LogicProgram, MultipleKnowledge
+from aloe.knowledge import Knowledge, TreeBasedClauseCollection, MultipleKnowledge
 from aloe.substitution import Substitution
 from aloe.utils import generate_variable_names
 import itertools
@@ -26,7 +26,7 @@ class AloeProgram:
             -options: options
         """
         self.options   = options   if options   else Options()
-        self.knowledge = knowledge if knowledge else LogicProgram(options=self.options)
+        self.knowledge = knowledge if knowledge else TreeBasedClauseCollection(options=self.options)
         self.solver    = getattr(aloe.solver, self.options.solver)(options=self.options)
         self.modes     = modes     if modes     else ModeCollection(options=self.options)
         self.examples  = examples  if examples  else {'pos':[], 'neg':[]}
@@ -36,13 +36,13 @@ class AloeProgram:
     def parser(self):
         if not hasattr(self, '_parser'):
             import aloe.parser
-            self._parser = aloe.parser.AloeParser()
+            self._parser = aloe.parser.Parser()
         return self._parser
         
     @staticmethod
     def build_from(aloefile): 
         import aloe.parser
-        return aloe.parser.AloeParser().parse(aloefile, 'aloefile')    
+        return aloe.parser.Parser().parse(aloefile, 'aloefile')    
     
     @staticmethod
     def build_from_background(text):

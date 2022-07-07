@@ -1,4 +1,4 @@
-from aloe.logic_concept import Function, Constant, Variable, Term, Atom, Type
+from aloe.logic_concepts import Function, Constant, Variable, Term, Atom, Type
 from aloe.utils import generate_variable_names
 from aloe.collections  import OrderedSet
 

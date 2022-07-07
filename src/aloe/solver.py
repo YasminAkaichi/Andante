@@ -2,7 +2,8 @@ from abc import ABC, abstractmethod
 from aloe.options import Options, ObjectWithTemporaryOptions
 from aloe.substitution import Substitution, SubstitutionError
 from aloe.knowledge import Knowledge
-from aloe.logic_concept import Clause, Function, Goal, Atom, Negation, Comparison, Is
+from aloe.logic_concepts import Clause, Function, Goal, Atom, Negation
+from aloe.mathematical_expressions import Comparison, Is
 
 class Solver(ObjectWithTemporaryOptions, ABC):
     def __init__(self, options=None):

@@ -1,5 +1,7 @@
 import collections
+
 class OrderedSet(collections.OrderedDict, collections.MutableSet):
+    """ Ordered set of elements """
     def __init__(self, *args, **kwargs):
         if len(args)>1:
             raise TypeError("OrderedSet expected at most 1 argument, got %d" % len(args))

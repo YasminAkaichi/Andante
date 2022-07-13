@@ -67,7 +67,7 @@ class Visitor(NodeVisitor):
         choice, = visited_children
         return choice
     
-    def visit_leaf(self, node, visited_children): 
+    def visit_leaf(self, node, visited_children) -> str: 
         """ When visiting a leaf, return the text matched by the regex expression """
         return node.text
 
@@ -81,7 +81,7 @@ class Visitor(NodeVisitor):
     visit_integer = lambda self, node, _: int(  node.text)
     visit_float   = lambda self, node, _: float(node.text)
     
-    def visit_variable(self, node, visited_children):
+    def visit_variable(self, node, visited_children) -> Variable:
         symbol_node, tally_node = node.children
         symbol = symbol_node.text
         if tally_node.text:
@@ -95,7 +95,7 @@ class Visitor(NodeVisitor):
             #                 Grammar wrt files                   #
             #-----------------------------------------------------#
     
-    def visit_aloefile(self, node, visited_children):
+    def visit_aloefile(self, node, visited_children) -> AloeProgram:
         _, opt_header, _, background, _, opt_pos_ex, _, opt_neg_ex, _ = visited_children
         if opt_header:
             header = opt_header[0]
@@ -145,32 +145,32 @@ class Visitor(NodeVisitor):
     visit_atom       = visit_choice
     visit_term       = visit_choice
     
-    def visit_headlessclause(self, node, visited_children):
+    def visit_headlessclause(self, node, visited_children) -> Clause:
         _, _, body, _, _ = visited_children
         if len(body)==1:
             return Clause(None, body[0])
         else:
             return Clause(None, body)
     
-    def visit_definiteclause(self, node, visited_children):
-        head, _, optional_body, _, _ = visited_children
-        if optional_body:
-            _, _, body = optional_body[0]
-            return Clause(head, body)
-        else:
+    def visit_definiteclause(self, node, visited_children) -> Clause: 
+        head, _, optional_body, _, _ = visited_children 
+        if optional_body: 
+            _, _, body = optional_body[0] 
+            return Clause(head, body) 
+        else: 
             return Clause(head, [])
-    
-    def visit_body(self, node, visited_children):
+
+    def visit_body(self, node, visited_children) -> list:
         atom1, _, opt_atoms = visited_children
         atoms = [atom1] + [atom for _, _, atom, _ in opt_atoms]
         return atoms
         
-    def visit_predicate(self, node, visited_children):
+    def visit_predicate(self, node, visited_children) -> Predicate:
         predname, _, _, _, term1, _, opt_terms, _ = visited_children
         terms = [term1] + [term for _, _, term, _ in opt_terms]
         return Predicate(predname, terms)
     
-    def visit_compoundterm(self, node, visited_children):
+    def visit_compoundterm(self, node, visited_children) -> CompoundTerm:
         funcname, _, _, _, term1, _, opt_terms, _ = visited_children
         terms = [term1] + [term for _, _, term, _ in opt_terms]
         return CompoundTerm(funcname, terms)
@@ -180,7 +180,7 @@ class Visitor(NodeVisitor):
     visit_constant_word   = visit_constant
     visit_value           = visit_choice
     
-    def visit_list(self, node, visited_children):
+    def visit_list(self, node, visited_children) -> List:
         _, _, opt1, _, _ = visited_children
         if not opt1:
             return List([])
@@ -202,15 +202,15 @@ class Visitor(NodeVisitor):
     # 2. For modes    
     visit_mode = visit_choice
 
-    def visit_modeh(self, node, visited_children):
+    def visit_modeh(self, node, visited_children) -> Modeh:
         _, _, _, _, recall, _, _, _, atom, _, _, _, _ = visited_children
         return Modeh(recall, atom)
 
-    def visit_modeb(self, node, visited_children):
+    def visit_modeb(self, node, visited_children) -> Modeb:
         _, _, _, _, recall, _, _, _, atom, _, _, _, _ = visited_children
         return Modeb(recall, atom)
     
-    def visit_recall(self, node, visited_children):
+    def visit_recall(self, node, visited_children) -> int:
         if node.text == '*':
             return SystemParameters.max_recall
         else:
@@ -222,7 +222,7 @@ class Visitor(NodeVisitor):
     
     visit_mterm = visit_choice
     
-    def visit_type(self, node, visited_children):
+    def visit_type(self, node, visited_children) -> Type:
         sign, name = visited_children
         return Type(sign, name)
     
@@ -239,11 +239,11 @@ class Visitor(NodeVisitor):
             #                Grammar wrt queries                  #
             #-----------------------------------------------------#
    
-    def visit_query(self, node, visited_children):
+    def visit_query(self, node, visited_children) -> Goal:
         goal, _, _ = visited_children
         return goal
 
-    def visit_goal(self, node, visited_children):
+    def visit_goal(self, node, visited_children) -> Goal:
         el0, _, l_e = visited_children
         g = Goal((el0,))
         g.extend(e for _, _, e, _ in l_e)
@@ -251,7 +251,7 @@ class Visitor(NodeVisitor):
     
     visit_goal_unit = visit_choice
     
-    def visit_negation(self, node, visited_children):
+    def visit_negation(self, node, visited_children) -> Negation:
         _, _, _, _, goal, _, _ = visited_children
         return Negation(goal)
     
@@ -262,11 +262,11 @@ class Visitor(NodeVisitor):
 
     visit_comparison = visit_choice
     
-    def visit_arithmetic_comparison(self, node, visited_children):
+    def visit_arithmetic_comparison(self, node, visited_children) -> ArithmeticComparison:
         expr1, _, symbol, _, expr2 = visited_children
         return ArithmeticComparison(expr1, expr2, symbol)
     
-    def visit_unification_comparison(self, node, visited_children):
+    def visit_unification_comparison(self, node, visited_children) -> UnificationComparison:
         expr1, _, symbol, _, expr2 = visited_children
         return UnificationComparison(expr1, expr2, symbol)
         
@@ -279,19 +279,19 @@ class Visitor(NodeVisitor):
     visit_arithmetic_expression = visit_choice
     visit_arithmetic_atom       = visit_choice
     
-    def visit_basic_arithmetic_expression(self, node, visited_children):
+    def visit_basic_arithmetic_expression(self, node, visited_children) -> BasicArithmeticExpression:
         expr1, _, symbol, _, expr2 = visited_children
         return BasicArithmeticExpression(expr1, expr2, symbol)
     
-    def visit_in_parenthesis_arithmetic_expression(self, node, visited_children):
+    def visit_in_parenthesis_arithmetic_expression(self, node, visited_children) -> ParenthesisArithmeticExpression:
         _, _, expr, _, _ = visited_children
         return ParenthesisArithmeticExpression(expr)
     
-    def visit_trigo_expression(self, node, visited_children):
+    def visit_trigo_expression(self, node, visited_children) -> TrigoExpression:
         symbol, _, _, _, expr, _, _ = visited_children
         return TrigoExpression(expr, symbol)
     
-    def visit_is_evaluation(self, node, visited_children):
+    def visit_is_evaluation(self, node, visited_children) -> Is:
         arg, _, _, _, expr = visited_children
         return Is(arg, expr)
     

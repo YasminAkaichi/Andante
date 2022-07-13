@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Literal
 
 class LogicConcept(ABC):
     """ Any logic concept of first order logic """
@@ -86,7 +87,7 @@ class Function(LogicConcept, ABC):
     arguments : list of aloe.logic_concepts.Term
         the inputs of the function
     """
-    def __init__(self, functor, arguments):
+    def __init__(self, functor: str, arguments: list):
         assert isinstance(functor, str)
         assert isinstance(arguments, (list,tuple)) and all((isinstance(arg, Term) for arg in arguments))
         self.functor   = functor
@@ -230,7 +231,7 @@ class Type(Term):
         '+' refers to input arguments, '-' refers to output arguments and '#' refers to constant
     name : str
     """
-    def __init__(self, sign, name):
+    def __init__(self, sign: Literal['+','-','#'], name: str):
         self.sign = sign
         self.name = name
         

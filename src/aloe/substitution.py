@@ -107,6 +107,8 @@ class Substitution:
         if   key not in self.variables:
             message = str(key)
             raise KeyError(message)
+        elif key == item:
+            return
         elif key.is_in(item): 
             raise SubstitutionError(key, item)
         elif key not in self.subst:

@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Literal
 
+# TODO: Remove all unify functions as they are redundant with the unify function
+# in aloe.substitution.Substitution
 class LogicConcept(ABC):
     """ Any logic concept of first order logic """
     @abstractmethod
@@ -57,7 +59,7 @@ class Goal(list, LogicConcept):
         super().__init__(*args, **kwargs)
         assert all((isinstance(l, (Atom, Negation)) for l in self))        
 
-    def __repr__(self): return ','.join(repr(expr) for expr in self)        
+    def __repr__(self): return ', '.join(repr(expr) for expr in self)        
 
     def apply(self, fun): 
         try: return Goal(expr.apply(fun) for expr in self)
@@ -66,7 +68,7 @@ class Goal(list, LogicConcept):
         
 class Negation(LogicConcept):
     """ Negation of a goal in first order logic """
-    def __init__(self, goal):
+    def __init__(self, goal: Goal):
         assert isinstance(goal, Goal)
         self.goal = goal
         
@@ -78,7 +80,7 @@ class Negation(LogicConcept):
             return None        
     
 class Function(LogicConcept, ABC):
-    """ Function as the general form of a predicate and a CompoundTerm
+    """ Function as the general form of a Predicate and a CompoundTerm
     
     Attributes
     ----------
@@ -99,7 +101,7 @@ class Function(LogicConcept, ABC):
     def arity(self): return len(self.arguments)
     
     def __iter__(self): return iter(self.arguments)    
-    def __repr__(self): return '%s(%s)' % (self.functor, ','.join([repr(arg) for arg in self.arguments]))
+    def __repr__(self): return '%s(%s)' % (self.functor, ', '.join([repr(arg) for arg in self.arguments]))
     
     def apply(self, fun):
         args = [arg.apply(fun) for arg in self.arguments]
@@ -158,6 +160,9 @@ class Constant(Term):
     """
     def __init__(self, value):
         assert isinstance(value, (int, float, str))
+        if isinstance(value, str) and value[0].isupper():
+            message = 'String values of aloe.logic_concepts.Constant must begin by a lowercase, got: %s' % value
+            raise TypeError(message)
         self.value = value
         
     def __repr__(self): return str(self.value)
@@ -165,7 +170,7 @@ class Constant(Term):
     def to_variable_name(self): # TODO change to to_variable_symbol
         """ Returns a valid unique variable symbol """
         if isinstance(self.value, str): return self.value.capitalize()
-        else:                           return 'V' + str(self.value)
+        else:                           return 'V' + str(self.value).replace('.','_')
         
     def apply(self, fun): return fun(self)
     
@@ -201,7 +206,8 @@ class Variable(Term):
     def is_in(self, expr):
         output = False
         def fun(element):
-            if isinstance(element, Variable) and element == expr:
+            nonlocal output
+            if isinstance(element, Variable) and element == self:
                 output = True
         expr.apply(fun)
         return output
@@ -212,7 +218,7 @@ class Variable(Term):
         if self in subst:
             return subst[self]
         else:
-            raise Exception('Variable is not instantiated')
+            raise KeyError('Variable (%s) is not instantiated' % str(self))
 
     def unify(self, other, subst):
         subst[self] = other
@@ -232,6 +238,8 @@ class Type(Term):
     name : str
     """
     def __init__(self, sign: Literal['+','-','#'], name: str):
+        if sign not in ['+','-','#'] or not isinstance(name, str):
+            raise(ValueError("sign should be '+', '-' or '#', got "+str(sign)))
         self.sign = sign
         self.name = name
         

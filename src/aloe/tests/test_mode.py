@@ -23,7 +23,7 @@ class TestMode(unittest.TestCase):
         mb = Modeb(5, self.a) 
         for m in (mh, mb):
             a = m.instantiate()
-            self.assertEqual(a.functor, self.a.functor)
+            self.assertEqual(a.symbol, self.a.symbol)
             c, v1, v2 = a.arguments
             self.assertEqual(c, self.c)
             self.assertIsInstance(v1, Variable)

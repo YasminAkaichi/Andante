@@ -575,7 +575,7 @@ class LearningInterface:
             expl_covered = set(s.E_cov['neg'])
             all_examples = s.hm.E['neg']
             
-        relevant_exp = [e for e in all_examples if e.head.functor==s.clause.head.functor]
+        relevant_exp = [e for e in all_examples if e.head.symbol==s.clause.head.symbol]
         options = [chr(int("1F534",base=16)+(c in expl_covered))+' '+str(c) for c in relevant_exp]
         w = Dropdown(
             options=options,

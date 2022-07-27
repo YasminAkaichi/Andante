@@ -112,7 +112,7 @@ class AloeProgram:
         for modeh in [x for x in lmodes if isinstance(x, Modeh)]:
             matom = modeh.atom
             generator = generate_variable_names()
-            template = matom.__class__(matom.functor, [Variable(next(generator)) for _ in matom.arguments])
+            template = matom.__class__(matom.symbol, [Variable(next(generator)) for _ in matom.arguments])
             mapping = {var:t.name for var, t in zip(template.arguments, matom.arguments)}
             #mapping = {var:mapping[repr(var)] for var in extract_variables(clause.head)}
 

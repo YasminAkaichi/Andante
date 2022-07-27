@@ -135,11 +135,11 @@ class Substitution:
           or isinstance(atom1, Function) and isinstance(atom2, Constant):
             raise SubstitutionError(atom1, atom2)
         elif isinstance(atom1, Function) and isinstance(atom2, Function):
-            if atom1.name != atom2.name: #functor or arity unequal
+            if atom1.name != atom2.name: #symbol or arity unequal
                 raise SubstitutionError(atom1, atom2)
             else:
                 t = [self.unify(t1,t2) for t1, t2 in zip(atom1, atom2)]
-                return atom1.__class__(atom1.functor, t)
+                return atom1.__class__(atom1.symbol, t)
         elif isinstance(atom1, Variable) and isinstance(atom2, (Constant, Function)):
             self[atom1] = atom2
             return self[atom1]

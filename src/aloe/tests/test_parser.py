@@ -146,7 +146,7 @@ class TestParser(unittest.TestCase):
         p = self.parser.parse(s, rule='predicate')
         self.assertIsInstance(p, Predicate)
         self.assertEqual(len(p.arguments), 2)
-        self.assertEqual(p.functor, 'parent_of')
+        self.assertEqual(p.symbol, 'parent_of')
 
     def test_term(self):
         s = [
@@ -163,7 +163,7 @@ class TestParser(unittest.TestCase):
         cp = self.parser.parse(s, rule='compoundterm')
         self.assertIsInstance(cp, CompoundTerm)
         self.assertEqual(len(cp.arguments), 2)
-        self.assertEqual(cp.functor, 'parent_of')
+        self.assertEqual(cp.symbol, 'parent_of')
 
     def test_list(self):
         s = "[a, b, c | [a, b, c, d]]"

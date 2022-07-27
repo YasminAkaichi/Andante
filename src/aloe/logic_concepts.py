@@ -84,28 +84,28 @@ class Function(LogicConcept, ABC):
     
     Attributes
     ----------
-    functor : str
-        the functor, i.e. the name of the function
+    symbol : str
+        the symbol, i.e. the name of the function
     arguments : list of aloe.logic_concepts.Term
         the inputs of the function
     """
-    def __init__(self, functor: str, arguments: list):
-        assert isinstance(functor, str)
+    def __init__(self, symbol: str, arguments: list):
+        assert isinstance(symbol, str)
         assert isinstance(arguments, (list,tuple)) and all((isinstance(arg, Term) for arg in arguments))
-        self.functor   = functor
+        self.symbol   = symbol
         self.arguments = arguments
         
     @property
-    def name(self): return '%s/%d' % (self.functor,self.arity)
+    def name(self): return '%s/%d' % (self.symbol,self.arity)
     @property
     def arity(self): return len(self.arguments)
     
     def __iter__(self): return iter(self.arguments)    
-    def __repr__(self): return '%s(%s)' % (self.functor, ', '.join([repr(arg) for arg in self.arguments]))
+    def __repr__(self): return '%s(%s)' % (self.symbol, ', '.join([repr(arg) for arg in self.arguments]))
     
     def apply(self, fun):
         args = [arg.apply(fun) for arg in self.arguments]
-        try:    return self.__class__(self.functor, args)
+        try:    return self.__class__(self.symbol, args)
         except: return None
     
 class Atom(LogicConcept, ABC):
@@ -144,7 +144,7 @@ class CompoundTerm(Term, Function):
             other.unify(self, subst)
         elif (
             (isinstance(self, other.__class__) or isinstance(other, self.__class__)) and \
-            self.functor == other.functor
+            self.symbol == other.symbol
         ):
             for self_arg, other_arg in zip(self.arguments, other.arguments):
                 self_arg.unify(other_arg, subst)

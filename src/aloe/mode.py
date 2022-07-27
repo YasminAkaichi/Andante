@@ -48,7 +48,7 @@ class Mode:
                 return t
             elif isinstance(t, Function):
                 args = [_instantiate(t_) for t_ in t]
-                return t.__class__(t.functor, args)
+                return t.__class__(t.symbol, args)
             elif isinstance(t, Type):
                 var_name = next(var_names)
                 return Variable(var_name)
@@ -92,9 +92,9 @@ class ModeCollection: # TODO: Change to ModeManager
         Attributes
         ----------
         map_to_modeh : dict
-            Maps predicate functor to modeh (str to aloe.modes.Modeh) 
+            Maps predicate symbol to modeh (str to aloe.modes.Modeh) 
         map_to_modeb : dict    
-            Maps predicate functor to modeb (str to aloe.modes.Modeb) 
+            Maps predicate symbol to modeb (str to aloe.modes.Modeb) 
         determinations : dict
             Maps modeh to a list of modeb
         """

@@ -80,8 +80,8 @@ class DetailsInterface:
         self.old_details = {category:OrderedSet() for category in DETAILS_CATEGORIES}
         self.old_details['pos_examples'].update(str(e) for e in self.ap.examples['pos'])
         self.old_details['neg_examples'].update(str(e) for e in self.ap.examples['neg'])
-        self.old_details['modeh'].update(str(m) for _, m in self.ap.modes.modeh.items())
-        self.old_details['modeb'].update(str(m) for _, m in self.ap.modes.modeb.items())
+        self.old_details['modeh'].update(str(m) for _, m in self.ap.modes.map_to_modeh.items())
+        self.old_details['modeb'].update(str(m) for _, m in self.ap.modes.map_to_modeb.items())
         self.old_details['determination'].update('determination(%s,%s).' % (modeh, modeb) for modeh in self.ap.modes.determinations for modeb in self.ap.modes.determinations[modeh])
         
     def get_detail(self, category):
@@ -305,12 +305,13 @@ class QueryInterface:
         self.text_widget = {category:Textarea(placeholder='Type %s here' % ('clauses' if category==ALL else category), 
                                                       layout=TEXT_LAYOUT_1,
                                                      ) for category in CATEGORIES}
+
         for category in CATEGORIES:
             self.update_clauses_widget(category=category)
         self.category_text_widget = HBox([])
         self.switch_category(self.current_category(), self.current_category())
-        
-        
+
+
         self.editability_widget = Button(
             button_style='warning', # 'success', 'info', 'warning', 'danger' or ''
             layout = {'height':'auto', 'width':'100px'},
@@ -419,17 +420,17 @@ class LearningInterface:
         self.widget2 = VBox(
             [h, query_tab]
         )            
-        
+
         self.widget = VBox([self.widget1])
-        
-        
+
+
         self.togglebutton.observe(lambda x: toggle() if x['type']=='change' and x['name']=='value' else None)
         def toggle():
             if self.togglebutton.value==1:
                 self.widget.children = [self.widget1]
             else: #self.togglebutton.value==2:
                 self.widget.children = [self.widget2]
-        
+
     def _learning_info_tab(self, data):
         pass
         
@@ -442,7 +443,7 @@ class LearningInterface:
             index=1,
             button_style='info',
             tooltips=['Knowledge before learning', 'Knowledge after learning'],
-        )
+        )       
         for _, qi in self.knowledge_widget.options:
             qi.disable_knowledge_editability()
 

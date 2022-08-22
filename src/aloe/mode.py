@@ -101,8 +101,8 @@ class ModeCollection: # TODO: Change to ModeManager
         self.modes = modes or []
         determinations = determinations or []
         
-        self.map_to_modeh = {mode.atom_name:mode for mode in modes if isinstance(mode, Modeh)}
-        self.map_to_modeb = {mode.atom_name:mode for mode in modes if isinstance(mode, Modeb)}
+        self.map_to_modeh = {mode.atom_name:mode for mode in self.modes if isinstance(mode, Modeh)}
+        self.map_to_modeb = {mode.atom_name:mode for mode in self.modes if isinstance(mode, Modeb)}
 
         # determinations is a dict of sets
         # input: f/2 -> {f/2, d/3, k/2}

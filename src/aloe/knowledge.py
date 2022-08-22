@@ -37,7 +37,14 @@ class Knowledge(ABC):
         pass
     
     def copy(self):
-        return self.__class__(self.clauses)
+        return self.__class__([c for c in self])
+
+    def __repr__(self) -> str:
+        name = 'Knowledge object (class: %s)\n' % self.__class__.__name__
+        tab = ' '*3
+        tab_repr = [tab+repr(c) for c in self]
+        content = 'Clauses:\n' + '\n'.join(tab_repr)
+        return name + content
 
 class MultipleKnowledge(Knowledge):
     """ Knowledge composed of multiple sub-knowledges """
@@ -47,7 +54,7 @@ class MultipleKnowledge(Knowledge):
         self.knowledges = knowledges
         
     def __iter__(self):
-        return chain(self.knowledges)
+        return iter(chain(*self.knowledges))
         
     def match(self, atom):
         x = [k.match(atom) for k in self.knowledges]
@@ -63,10 +70,10 @@ class MultipleKnowledge(Knowledge):
         for k in self.knowledges:
             k.remove(x)
     
-    def __repr__(self):
-        tab = ' '*3
-        tab_repr = [tab+repr(k).replace('\n','\n'+tab) for k in self.knowledges]
-        return 'MultipleKnowledge object\n'+'\n\n'.join(tab_repr)
+    # def __repr__(self):
+    #     tab = ' '*3
+    #     tab_repr = [tab+repr(k).replace('\n','\n'+tab) for k in self.knowledges]
+    #     return 'MultipleKnowledge object\n'+'\n\n'.join(tab_repr)
     
     def copy(self):
         return MultipleKnowledge(*[k.copy() for k in self.knowledges], self.options)
@@ -180,5 +187,5 @@ class TreeShapedKnowledge(Knowledge):
                 sets.append(term_dict['Funcs'].match(term))
         return set.intersection(*sets)
             
-    def __repr__(self):
-        return repr(self.collec)  
+    # def __repr__(self):
+    #     return repr(self.collec)  

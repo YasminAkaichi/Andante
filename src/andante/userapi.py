@@ -1,4 +1,4 @@
-from aloe.program import AloeProgram
+from andante.program import AndanteProgram
 
 p = None
 
@@ -9,10 +9,10 @@ def induce(theory):
     modes = theory['modes']
     
     text = '%s :-begin_bg. %s :-end_bg. \n :-begin_in_pos. %s :-end_in_pos. :-begin_in_neg. %s :-end_in_neg. ' % (modes, bckg_th, pos_ex, neg_ex)
-    p = AloeProgram.build_from_text(text)
+    p = AndanteProgram.build_from_text(text)
     c = p.induce()
     
-    p = AloeProgram.build_from_text(':-begin_bg. %s %s :-end_bg.' % (bckg_th, c))
+    p = AndanteProgram.build_from_text(':-begin_bg. %s %s :-end_bg.' % (bckg_th, c))
     
     return c
 

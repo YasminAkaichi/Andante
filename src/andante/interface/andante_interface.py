@@ -1,7 +1,7 @@
-from aloe.program import AloeProgram
-from aloe.parser  import Parser
-from aloe.knowledge import Knowledge, MultipleKnowledge
-from aloe.collections import OrderedSet
+from andante.program import AndanteProgram
+from andante.parser  import Parser
+from andante.knowledge import Knowledge, MultipleKnowledge
+from andante.collections import OrderedSet
 
 import itertools
 import math
@@ -37,7 +37,7 @@ PARSER_CATEGORIES = {'modeh':'modeh', 'modeb':'modeb', 'pos_examples':'hornclaus
 class AndateInterface:
     def __init__(self, ap=None, **options):
         self.parser = Parser()
-        self.ap = ap if ap is not None else AloeProgram(options=options)
+        self.ap = ap if ap is not None else AndanteProgram(options=options)
         
         self.qi = QueryInterface(self.ap, **options)
         self.di = DetailsInterface(self)
@@ -206,7 +206,7 @@ def get_category(clause):
 class QueryInterface:
     def __init__(self, ap=None, **options):
         self.parser = Parser()
-        self.ap = ap if ap is not None else AloeProgram(options=options)
+        self.ap = ap if ap is not None else AndanteProgram(options=options)
             
         # update options
         for field, value in options.items():
@@ -374,7 +374,7 @@ class QueryInterface:
     def interact(self):
         display(self.widget)
         
-    def get_AloeProgram(self): return self.ap
+    def get_AndanteProgram(self): return self.ap
     
     
 #-----------------------------------------------#
@@ -438,8 +438,8 @@ class LearningInterface:
         new_knowledge = MultipleKnowledge(old_knowledge, learned_knowledge, options=options)
         
         self.knowledge_widget = ToggleButtons(
-            options=[('Old knowledge', QueryInterface(AloeProgram(options=options, knowledge=old_knowledge))), 
-                     ('New knowledge', QueryInterface(AloeProgram(options=options, knowledge=new_knowledge)))],
+            options=[('Old knowledge', QueryInterface(AndanteProgram(options=options, knowledge=old_knowledge))), 
+                     ('New knowledge', QueryInterface(AndanteProgram(options=options, knowledge=new_knowledge)))],
             index=1,
             button_style='info',
             tooltips=['Knowledge before learning', 'Knowledge after learning'],

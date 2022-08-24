@@ -1,12 +1,12 @@
 import itertools
 from abc import ABC, abstractmethod
-from aloe.options import Options, SystemParameters, ObjectWithTemporaryOptions
-from aloe.knowledge import MultipleKnowledge, TreeShapedKnowledge
-from aloe.logic_concepts import Clause, Constant, Variable, Function, Type
-from aloe.substitution import Substitution
-import aloe.hypothesis_metrics
-from aloe.live_log import LiveLog
-from aloe.collections import OrderedSet
+from andante.options import Options, SystemParameters, ObjectWithTemporaryOptions
+from andante.knowledge import MultipleKnowledge, TreeShapedKnowledge
+from andante.logic_concepts import Clause, Constant, Variable, Function, Type
+from andante.substitution import Substitution
+import andante.hypothesis_metrics
+from andante.live_log import LiveLog
+from andante.collections import OrderedSet
 
 class Learner(ObjectWithTemporaryOptions, ABC):
     def __init__(self, options=None):
@@ -133,8 +133,8 @@ class ProgolLearner(Learner):
     
     def build_hypothesis(self, examples, modes, bottom_i, knowledge, solver):
         HM = self.options.hmetric
-        if not isinstance(HM, aloe.hypothesis_metrics.HypothesisMetric):
-            HM = getattr(aloe.hypothesis_metrics, HM)
+        if not isinstance(HM, andante.hypothesis_metrics.HypothesisMetric):
+            HM = getattr(andante.hypothesis_metrics, HM)
         hm = HM(knowledge, examples, modes, bottom_i, solver, self.options)
         
         s0 = hm.State(Clause(bottom_i.head, []))

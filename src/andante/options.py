@@ -13,7 +13,7 @@ class Options(object):
     c       = 2        # Maximal body size for new clauses
     h       = 10000    # Maximal depth of deduction
     verbose = 0        # Level of logging output
-    solver  = "AloeSolver"
+    solver  = "AndanteSolver"
     
     # Learning Options
     learner = "ProgolLearner"
@@ -33,7 +33,7 @@ class Options(object):
         if attr in Options.__dict__:
             super().__setattr__(attr, value)
         else:
-            message = "aloe.options.Options object has no attribute '%s'" % (attr)
+            message = "andante.options.Options object has no attribute '%s'" % (attr)
             raise AttributeError(message)
             
     def __repr__(self):

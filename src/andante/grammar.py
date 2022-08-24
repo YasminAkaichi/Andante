@@ -19,7 +19,7 @@ GRAMMAR = Grammar(
             #                 Grammar wrt files                   #
             #-----------------------------------------------------#
             
-    aloefile         = __ header? __ background __ pos_ex? __ neg_ex? __
+    andantefile         = __ header? __ background __ pos_ex? __ neg_ex? __
     header           =                       (hclause __)+
     background       = ":-" __ "begin_bg"     __ "." __ (hornclause __)+ __ ":-" __ "end_bg"     __ "."
     pos_ex           = ":-" __ "begin_in_pos" __ "." __ (hornclause __)+ __ ":-" __ "end_in_pos" __ "."

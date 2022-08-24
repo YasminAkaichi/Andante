@@ -1,5 +1,5 @@
-from aloe.logic_concepts import Clause, Constant, Variable, Function, Goal, Type, extract_variables
-from aloe.utils import generate_variable_names, multiple_replace
+from andante.logic_concepts import Clause, Constant, Variable, Function, Goal, Type, extract_variables
+from andante.utils import generate_variable_names, multiple_replace
 import re
 
 class SubstitutionError(Exception):
@@ -12,11 +12,11 @@ class Substitution:
 
     Attributes
     ----------
-    variables : set of aloe.logic_concepts.Variable
+    variables : set of andante.logic_concepts.Variable
         The domain of substitution
     tally : dict of int
         Gives for a variable symbol, the highest tally number
-    subst : dict of aloe.logic_concepts.Term
+    subst : dict of andante.logic_concepts.Term
         Mapping of variables to terms
     """
     def __init__(self):
@@ -24,7 +24,7 @@ class Substitution:
         self.tally = dict()
         self.subst = dict()
         
-        from aloe.parser import Parser
+        from andante.parser import Parser
         self.parser = Parser()
         
     def items(self): return self.subst.items()

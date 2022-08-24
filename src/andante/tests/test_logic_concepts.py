@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import unittest
 import itertools 
-from aloe.logic_concepts import (
+from andante.logic_concepts import (
     LogicConcept, 
     Clause, 
     Goal, 

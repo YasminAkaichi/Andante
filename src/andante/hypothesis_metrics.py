@@ -1,7 +1,7 @@
 from abc import ABC
-from aloe.logic_concepts import Clause, Type, extract_variables
-from aloe.knowledge import MultipleKnowledge, TreeShapedKnowledge
-from aloe.substitution import Substitution
+from andante.logic_concepts import Clause, Type, extract_variables
+from andante.knowledge import MultipleKnowledge, TreeShapedKnowledge
+from andante.substitution import Substitution
 
 class HypothesisMetric(ABC):
     def State(self, *args, **kwargs):

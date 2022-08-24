@@ -1,6 +1,6 @@
 import unittest
-from aloe.mode import Modeb, Modeh, ModeCollection
-from aloe.logic_concepts import Constant, Predicate, Variable, Type
+from andante.mode import Modeb, Modeh, ModeCollection
+from andante.logic_concepts import Constant, Predicate, Variable, Type
 
 class TestMode(unittest.TestCase):
     """ Tests the Modeh and Modeb objects """

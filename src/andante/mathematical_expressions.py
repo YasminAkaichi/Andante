@@ -1,6 +1,6 @@
 import math
 from abc import ABC, abstractmethod
-from aloe.logic_concepts import (
+from andante.logic_concepts import (
     Atom, 
     LogicConcept,
     Variable,

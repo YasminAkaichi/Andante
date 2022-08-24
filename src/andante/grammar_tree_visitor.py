@@ -1,6 +1,6 @@
 from parsimonious.nodes import NodeVisitor
 
-from aloe.logic_concepts import (
+from andante.logic_concepts import (
     Clause, 
     Predicate, 
     CompoundTerm, 
@@ -11,7 +11,7 @@ from aloe.logic_concepts import (
     Type, 
     List,
 )
-from aloe.mathematical_expressions import (
+from andante.mathematical_expressions import (
     ArithmeticComparison, 
     UnificationComparison, 
     BasicArithmeticExpression, 
@@ -19,26 +19,26 @@ from aloe.mathematical_expressions import (
     Is, 
     ParenthesisArithmeticExpression,
 )
-from aloe.mode      import (
+from andante.mode      import (
     ModeCollection, 
     Mode, 
     Modeh, 
     Modeb,
 )
-from aloe.options   import (
+from andante.options   import (
     Options, 
     SystemParameters,
 )
-from aloe.program   import AloeProgram
-from aloe.knowledge import TreeShapedKnowledge
+from andante.program   import AndanteProgram
+from andante.knowledge import TreeShapedKnowledge
 
 
 class Visitor(NodeVisitor):
-    """ Grammar tree visitor for aloe.grammar.GRAMMAR
+    """ Grammar tree visitor for andante.grammar.GRAMMAR
 
-    This class is used conjointly with the aloe.grammar.GRAMMAR to parse some text.
-        tree = aloe.grammar.GRAMMAR.parse(text)                 # Reads the input string and outputs a tree
-        obj  = aloe.grammar_tree_visitor.Visitor().visit(tree)  # Navigates the tree and outputs a useable object
+    This class is used conjointly with the andante.grammar.GRAMMAR to parse some text.
+        tree = andante.grammar.GRAMMAR.parse(text)                 # Reads the input string and outputs a tree
+        obj  = andante.grammar_tree_visitor.Visitor().visit(tree)  # Navigates the tree and outputs a useable object
     
     Methods
     -------
@@ -95,7 +95,7 @@ class Visitor(NodeVisitor):
             #                 Grammar wrt files                   #
             #-----------------------------------------------------#
     
-    def visit_aloefile(self, node, visited_children) -> AloeProgram:
+    def visit_andantefile(self, node, visited_children) -> AndanteProgram:
         _, opt_header, _, background, _, opt_pos_ex, _, opt_neg_ex, _ = visited_children
         if opt_header:
             header = opt_header[0]
@@ -106,7 +106,7 @@ class Visitor(NodeVisitor):
         pos_ex = opt_pos_ex[0] if opt_pos_ex else []
         neg_ex = opt_neg_ex[0] if opt_neg_ex else []
         
-        program = AloeProgram(options=options, 
+        program = AndanteProgram(options=options, 
                               knowledge=background, 
                               modes=modehandler, 
                               examples={'pos':pos_ex,'neg':neg_ex})

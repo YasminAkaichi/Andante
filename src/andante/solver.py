@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
-from aloe.options import Options, ObjectWithTemporaryOptions
-from aloe.substitution import Substitution, SubstitutionError
-from aloe.knowledge import Knowledge
-from aloe.logic_concepts import Clause, Function, Goal, Atom, Negation
-from aloe.mathematical_expressions import Comparison, Is
+from andante.options import Options, ObjectWithTemporaryOptions
+from andante.substitution import Substitution, SubstitutionError
+from andante.knowledge import Knowledge
+from andante.logic_concepts import Clause, Function, Goal, Atom, Negation
+from andante.mathematical_expressions import Comparison, Is
 
 class Solver(ObjectWithTemporaryOptions, ABC):
     def __init__(self, options=None):
@@ -19,13 +19,13 @@ class Solver(ObjectWithTemporaryOptions, ABC):
         sigmas = self.query(q, knowledge, verbose=verbose)
         return len(sigmas)>0
 
-class AloeSolver(Solver):
+class AndanteSolver(Solver):
     def query(self, q, knowledge, sigma=None, **temp_options):
         """
         Launch a query
         Inputs: 
         q: Goal, Atom
-        options: parameters for the query, see aloe.options
+        options: parameters for the query, see andante.options
         """
         assert isinstance(knowledge, Knowledge)
         if isinstance(q, (Atom, Negation)):
@@ -67,7 +67,7 @@ class AloeSolver(Solver):
         Takes a list of atoms as input
         Output is a generator of VariableBank objects, one for each solution
         """
-        s = AloeState(atoms, sigma.copy())
+        s = AndanteState(atoms, sigma.copy())
         alternate_states = []
         count_h = 0
         while count_h < self.options.h:
@@ -169,7 +169,7 @@ class AloeSolver(Solver):
         return success
 
             
-class AloeState:
+class AndanteState:
     def __init__(self, atoms, sigma=None, next_clause=None):
         assert isinstance(atoms, list) and all(isinstance(atom, Atom) for atom in atoms)
         assert sigma is None or isinstance(sigma, Substitution)
@@ -183,7 +183,7 @@ class AloeState:
         self.next_clause = next_clause
         
     def copy(self):
-        return AloeState(self.atoms.copy(), self.sigma.copy(), self.next_clause)
+        return AndanteState(self.atoms.copy(), self.sigma.copy(), self.next_clause)
     
     def has_atoms(self):
         return len(self.atoms)>0

@@ -1,16 +1,16 @@
 import re
 from parsimonious.exceptions import ParseError, VisitationError
-from aloe.grammar import GRAMMAR
-from aloe.grammar_tree_visitor import Visitor
+from andante.grammar import GRAMMAR
+from andante.grammar_tree_visitor import Visitor
 
 class Parser:
-    """ Parser that can interpret any grammar rules present in aloe/grammar.py
+    """ Parser that can interpret any grammar rules present in andante/grammar.py
     
     Attributes
     ----------
     grammar : parsimonious.grammar.Grammar
         Defines all rules that can be parsed
-    visitor : aloe.grammar_tree_visitor.Visitor
+    visitor : andante.grammar_tree_visitor.Visitor
         Navigates through the grammatical tree outputed by the grammar object into a useful Python object
     """
     def __init__(self):
@@ -30,7 +30,7 @@ class Parser:
         Returns
         -------
         object
-            Object from the aloe package whose class depends on input rule
+            Object from the andante package whose class depends on input rule
         """
         string = string.strip()
         

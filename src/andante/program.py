@@ -1,25 +1,25 @@
-import aloe.solver
-import aloe.learner
-from aloe.logic_concepts    import Goal, Clause, Negation, Variable, extract_variables
-from aloe.options   import Options
-from aloe.mode      import ModeCollection, Modeh
-from aloe.knowledge import Knowledge, TreeShapedKnowledge, MultipleKnowledge
-from aloe.substitution import Substitution
-from aloe.utils import generate_variable_names
+import andante.solver
+import andante.learner
+from andante.logic_concepts    import Goal, Clause, Negation, Variable, extract_variables
+from andante.options   import Options
+from andante.mode      import ModeCollection, Modeh
+from andante.knowledge import Knowledge, TreeShapedKnowledge, MultipleKnowledge
+from andante.substitution import Substitution
+from andante.utils import generate_variable_names
 import itertools
 import pandas
 
-class AloeProgram:
+class AndanteProgram:
     def __init__(self, options=None, knowledge=None, modes=None, examples=None):
         """
-        Class representing a Aloe program
+        Class representing a Andante program
         Attributes :
-            - options:   see aloe.options
-            - knowledge: gathers all clauses (aloe.knowledge.Knowledge object)
+            - options:   see andante.options
+            - knowledge: gathers all clauses (andante.knowledge.Knowledge object)
             - examples:  dictionnary of positive and negative examples 
-            - solver:    handles all queries (aloe.solver.Solver object)
-            - modes:     assembles modes and determinations (aloe.modes.ModeCollection object)
-            - learner:   handles inductive learning (aloe.learner.Learner object) 
+            - solver:    handles all queries (andante.solver.Solver object)
+            - modes:     assembles modes and determinations (andante.modes.ModeCollection object)
+            - learner:   handles inductive learning (andante.learner.Learner object) 
             -B: background knowledge
             -E: examples
             -M: modes
@@ -27,26 +27,26 @@ class AloeProgram:
         """
         self.options   = options   if options   else Options()
         self.knowledge = knowledge if knowledge else TreeShapedKnowledge(options=self.options)
-        self.solver    = getattr(aloe.solver, self.options.solver)(options=self.options)
+        self.solver    = getattr(andante.solver, self.options.solver)(options=self.options)
         self.modes     = modes     if modes     else ModeCollection(options=self.options)
         self.examples  = examples  if examples  else {'pos':[], 'neg':[]}
-        self.learner   = getattr(aloe.learner, self.options.learner)(options=self.options)
+        self.learner   = getattr(andante.learner, self.options.learner)(options=self.options)
         
     @property
     def parser(self):
         if not hasattr(self, '_parser'):
-            import aloe.parser
-            self._parser = aloe.parser.Parser()
+            import andante.parser
+            self._parser = andante.parser.Parser()
         return self._parser
         
     @staticmethod
-    def build_from(aloefile): 
-        import aloe.parser
-        return aloe.parser.Parser().parse(aloefile, 'aloefile')    
+    def build_from(andantefile): 
+        import andante.parser
+        return andante.parser.Parser().parse(andantefile, 'andantefile')    
     
     @staticmethod
     def build_from_background(text):
-        return AloeProgram.build_from(':-begin_bg.\n%s\n:-end_bg.' % (text))
+        return AndanteProgram.build_from(':-begin_bg.\n%s\n:-end_bg.' % (text))
         
     def __repr__(self):
         B = repr(self.knowledge)
@@ -58,7 +58,7 @@ class AloeProgram:
         
     def query(self, q, **temp_options):
         """
-        Launch a query to the aloe solver. 
+        Launch a query to the andante solver. 
         The query 'q' can be:
         - a string: the query will then first be parsed and then evaluated
         - a goal

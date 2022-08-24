@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Literal
 
 # TODO: Remove all unify functions as they are redundant with the unify function
-# in aloe.substitution.Substitution
+# in andante.substitution.Substitution
 class LogicConcept(ABC):
     """ Any logic concept of first order logic """
     @abstractmethod
@@ -22,7 +22,7 @@ class LogicConcept(ABC):
             
         Returns
         -------
-        aloe.logic_concepts.LogicConcept
+        andante.logic_concepts.LogicConcept
             The transformed logic concept
         """
         pass
@@ -86,7 +86,7 @@ class Function(LogicConcept, ABC):
     ----------
     symbol : str
         the symbol, i.e. the name of the function
-    arguments : list of aloe.logic_concepts.Term
+    arguments : list of andante.logic_concepts.Term
         the inputs of the function
     """
     def __init__(self, symbol: str, arguments: list):
@@ -122,13 +122,13 @@ class Term(LogicConcept, ABC):
     def unify(self, other, subst): 
         """ Unify two terms
         
-        Updates the aloe.substitution.Substitution subst to take into account the unification of aloe.logic_concepts.Term self and other
+        Updates the andante.substitution.Substitution subst to take into account the unification of andante.logic_concepts.Term self and other
         
         Parameters
         ----------
-        other : aloe.logic_concepts.Term
+        other : andante.logic_concepts.Term
             The term to unify with
-        subst : aloe.substitution.Substitution
+        subst : andante.substitution.Substitution
             The current substitution
         """
         pass
@@ -161,7 +161,7 @@ class Constant(Term):
     def __init__(self, value):
         assert isinstance(value, (int, float, str))
         if isinstance(value, str) and value[0].isupper():
-            message = 'String values of aloe.logic_concepts.Constant must begin by a lowercase, got: %s' % value
+            message = 'String values of andante.logic_concepts.Constant must begin by a lowercase, got: %s' % value
             raise TypeError(message)
         self.value = value
         
@@ -194,7 +194,7 @@ class Variable(Term):
     symbol : string
         The symbol or name of the variable
     tally_id : int
-        A number to differentiate different aloe.logic_concepts.Variable objects with the same symbol
+        A number to differentiate different andante.logic_concepts.Variable objects with the same symbol
     """
     def __init__(self, symbol, tally_id=0):        
         assert isinstance(symbol, str) and isinstance(tally_id, int)

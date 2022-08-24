@@ -1,6 +1,6 @@
 import unittest
-from aloe.parser import Parser
-from aloe.logic_concepts import (
+from andante.parser import Parser
+from andante.logic_concepts import (
     LogicConcept, 
     Clause, 
     Goal, 
@@ -15,19 +15,19 @@ from aloe.logic_concepts import (
     Type, 
     List 
 )
-from aloe.mode import (
+from andante.mode import (
     ModeCollection,
     Modeh,
     Modeb,
 )
-from aloe.mathematical_expressions import (
+from andante.mathematical_expressions import (
     Comparison,
     ArithmeticComparison,
     UnificationComparison,
     ArithmeticExpression,
     TrigoExpression
 )
-from aloe.program import AloeProgram
+from andante.program import AndanteProgram
 
 
 class TestParser(unittest.TestCase):
@@ -58,7 +58,7 @@ class TestParser(unittest.TestCase):
             #                   Tests wrt files                   #
             #-----------------------------------------------------#
             
-    def test_aloefile(self):
+    def test_andantefile(self):
         s = """
         set(verbose,0).
         :-begin_bg.
@@ -66,8 +66,8 @@ class TestParser(unittest.TestCase):
         man(socrates).
         :-end_bg.
         """
-        af = self.parser.parse(s, rule='aloefile')
-        self.assertIsInstance(af, AloeProgram)
+        af = self.parser.parse(s, rule='andantefile')
+        self.assertIsInstance(af, AndanteProgram)
         answer, _ = af.query("mortal(socrates).")
         self.assertTrue(answer)
 

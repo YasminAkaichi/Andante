@@ -1,6 +1,6 @@
-from aloe.logic_concepts import Function, Constant, Predicate, Variable, Term, Atom, Type
-from aloe.utils import generate_variable_names
-from aloe.collections  import OrderedSet
+from andante.logic_concepts import Function, Constant, Predicate, Variable, Term, Atom, Type
+from andante.utils import generate_variable_names
+from andante.collections  import OrderedSet
 
 class Mode:
     def __init__(self, recall, atom):
@@ -10,7 +10,7 @@ class Mode:
         ----------
         recall : int 
             The number of times this mode can be used to build new clauses
-        atom : aloe.logic_concepts.Atom
+        atom : andante.logic_concepts.Atom
             The template of atoms that the mode defines
         """
         self.recall = recall
@@ -31,13 +31,13 @@ class Mode:
     
     def instantiate(self) -> Predicate:
         """ 
-        Instantiates the mode by converting all types (aloe.mode.Type) within 
-        its atom to variables (aloe.logic_concepts.Variable).
+        Instantiates the mode by converting all types (andante.mode.Type) within 
+        its atom to variables (andante.logic_concepts.Variable).
 
         Examples
         --------
         mode_str = 'modeh(*, parent(+person, -person))' 
-        mode = aloe.parser.parse(mode_str)
+        mode = andante.parser.parse(mode_str)
         atom = mode.isinstance()
         print(atom)
         > 'parent(A, B)'
@@ -92,9 +92,9 @@ class ModeCollection: # TODO: Change to ModeManager
         Attributes
         ----------
         map_to_modeh : dict
-            Maps predicate symbol to modeh (str to aloe.modes.Modeh) 
+            Maps predicate symbol to modeh (str to andante.modes.Modeh) 
         map_to_modeb : dict    
-            Maps predicate symbol to modeb (str to aloe.modes.Modeb) 
+            Maps predicate symbol to modeb (str to andante.modes.Modeb) 
         determinations : dict
             Maps modeh to a list of modeb
         """
@@ -124,7 +124,7 @@ class ModeCollection: # TODO: Change to ModeManager
     def add(self, item):
         """ Adds an new item to the manager
 
-        The item can be a aloe.mode.Modeh object, a aloe.mode.Modeb object or 
+        The item can be a andante.mode.Modeh object, a andante.mode.Modeb object or 
         it must represent a determination
         """
         if   isinstance(item, Modeh):

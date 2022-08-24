@@ -1,14 +1,14 @@
 from abc import ABC, abstractmethod
 
-from aloe.options import Options
-from aloe.logic_concepts  import (
+from andante.options import Options
+from andante.logic_concepts  import (
     Atom, 
     Clause, 
     Constant, 
     Variable, 
     Function,
 )
-from aloe.collections import OrderedSet
+from andante.collections import OrderedSet
 
 from collections.abc import Iterable
 from itertools import chain
@@ -84,9 +84,9 @@ class TreeShapedKnowledge(Knowledge):
     
     Attributes
     ----------
-    allclauses : set of aloe.logic_concepts.Clause
+    allclauses : set of andante.logic_concepts.Clause
         Set of all clauses represented by the tree
-    clausesbyoperator : dict of sets of aloe.logic_concepts.Clause
+    clausesbyoperator : dict of sets of andante.logic_concepts.Clause
         Given a function name, returns the set of all clauses whose head matches that function name
     collec : dict
         The tree collection of clauses
@@ -110,7 +110,7 @@ class TreeShapedKnowledge(Knowledge):
         # In case input is not a clause but an iterable containing clauses
         if not isinstance(clause, Clause):
             if not isinstance(clause, Iterable):
-                raise KeyError('Expected aloe.logic_concepts.Clause or Iterable object, found : %s' % clause.__class__.__name__)
+                raise KeyError('Expected andante.logic_concepts.Clause or Iterable object, found : %s' % clause.__class__.__name__)
             for x in clause:
                 self.add(x)
             return
@@ -142,7 +142,7 @@ class TreeShapedKnowledge(Knowledge):
         # In case input is not a clause but an iterable containing clauses
         if not isinstance(clause, Clause):
             if not isinstance(clause, Iterable):
-                raise KeyError('Expected aloe.logic_concepts.Clause or Iterable object, found : %s' % clause.__class__.__name__)
+                raise KeyError('Expected andante.logic_concepts.Clause or Iterable object, found : %s' % clause.__class__.__name__)
             for x in clause:
                 self.remove(x)
             return

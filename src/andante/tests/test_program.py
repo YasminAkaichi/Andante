@@ -1,6 +1,6 @@
 import unittest
-from aloe.program import AloeProgram
-from aloe.parser import Parser
+from andante.program import AndanteProgram
+from andante.parser import Parser
 
 s = """ 
 % Contents of the file Examples/short_family.pl
@@ -46,14 +46,14 @@ daughter(tom,eve).
 :- end_in_neg.
 """    
     
-class TestAloeProgram(unittest.TestCase):
+class TestAndanteProgram(unittest.TestCase):
     def setUp(self):
         self.parser = Parser()
-        self.ap = AloeProgram.build_from(s)
+        self.ap = AndanteProgram.build_from(s)
     
     def test_build_from(self):
-        ap = AloeProgram.build_from("Examples/short_family.pl")
-        self.assertIsInstance(ap, AloeProgram)
+        ap = AndanteProgram.build_from("Examples/short_family.pl")
+        self.assertIsInstance(ap, AndanteProgram)
 
     def test_build_from_background(self):
         bckg = """
@@ -73,8 +73,8 @@ class TestAloeProgram(unittest.TestCase):
         female(eve).
         female(lucy).
         """
-        ap = AloeProgram.build_from_background(bckg)
-        self.assertIsInstance(ap, AloeProgram)
+        ap = AndanteProgram.build_from_background(bckg)
+        self.assertIsInstance(ap, AndanteProgram)
         self.assertEqual(len(ap.examples['pos']), 0)
         self.assertEqual(len(ap.examples['neg']), 0)
         a1 = self.parser.parse("person(eve)", rule='atom')

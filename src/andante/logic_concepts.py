@@ -330,10 +330,3 @@ def extract_variables(expr):
     else:
         expr.apply(fun)
     return variables
-
-
-
-    
-
-
-

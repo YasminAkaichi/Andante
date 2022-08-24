@@ -1,3 +1,8 @@
+"""
+Define the metrics for generating and evaluating candidate clauses in the
+build_hypothesis method of the andante.learner.ProgolLearner class.
+"""
+
 from abc import ABC
 from andante.logic_concepts import Clause, Type, extract_variables
 from andante.knowledge import MultipleKnowledge, TreeShapedKnowledge
@@ -5,18 +10,23 @@ from andante.substitution import Substitution
 
 class HypothesisMetric(ABC):
     def State(self, *args, **kwargs):
+        """ Return a state object for a candidate clause """
         pass
     
     def best(self, collec):
+        """ Returns the best state among a collection of states (collec) """
         pass
     
     def prune(self, state):
+        """ Tells whether state needs to be pruned """
         pass
     
     def terminated(self, Closed, Open):
+        """ Tells whether the search for the best state is to be terminated """
         pass
     
     def rho(self, state):
+        """ Generates all children states for a parent state """
         pass            
     
 class FnMetric(HypothesisMetric):

@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
 class LiveLog:
-    """ """
+    """ Log for storing information during the learning of clauses """
     def __init__(self, parent=None):
         self._data = OrderedDict()
         self.pointer = self

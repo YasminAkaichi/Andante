@@ -23,7 +23,7 @@ class Knowledge(ABC):
 
     @abstractmethod
     def match(self, atom):
-        """ Return all clauses that match come atom """
+        """ Return all clauses that match some atom """
         pass
     
     @abstractmethod
@@ -186,6 +186,3 @@ class TreeShapedKnowledge(Knowledge):
             elif isinstance(term, Function):
                 sets.append(term_dict['Funcs'].match(term))
         return set.intersection(*sets)
-            
-    # def __repr__(self):
-    #     return repr(self.collec)  

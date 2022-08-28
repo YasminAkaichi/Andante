@@ -6,27 +6,46 @@ from andante.logic_concepts import Clause, Function, Goal, Atom, Negation
 from andante.mathematical_expressions import Comparison, Is
 
 class Solver(ObjectWithTemporaryOptions, ABC):
+    """ Deduction engine """
     def __init__(self, options=None):
         super().__init__(options)
             
     @abstractmethod
     def query(self, q, knowledge, verbose=None):
+        """ Queries some knowledge
+
+        This function returns a generator of all possible substitutions for a 
+        given query and a given knowledge
+
+        Parameters
+        ----------
+        q: andante.logic_concepts.Goal
+            The goal
+        knowledge: andante.knowledge.Knowledge
+            The knowledge 
+
+        Yields
+        ------
+        subst : andante.substitution.Substitution
+            A possible substitution for the query
+        """
         pass
     
-    def solve(self, *args, **options): return self.query(*args, **options)
+    def solve(self, *args, **options): 
+        """ Same behavior as query """
+        return self.query(*args, **options)
     
     def succeeds_on(self, q, knowledge, verbose=None):
+        """ Similar to the query method but outputs a boolean.
+
+        Returns true if there exists at least a substitution for the query.
+        Otherwise returns false.
+        """
         sigmas = self.query(q, knowledge, verbose=verbose)
         return len(sigmas)>0
 
 class AndanteSolver(Solver):
     def query(self, q, knowledge, sigma=None, **temp_options):
-        """
-        Launch a query
-        Inputs: 
-        q: Goal, Atom
-        options: parameters for the query, see andante.options
-        """
         assert isinstance(knowledge, Knowledge)
         if isinstance(q, (Atom, Negation)):
             q = Goal([q])
@@ -62,10 +81,10 @@ class AndanteSolver(Solver):
         self.rem_temporary_options()
             
     def _query(self, atoms, knowledge, sigma):
-        """ 
-        Checks the truth of an atom
-        Takes a list of atoms as input
-        Output is a generator of VariableBank objects, one for each solution
+        """ Subfunction for query
+
+        This function takes a list of andante.logic_concepts.Atom as inputs and
+        otherwise works the same way as the query method.
         """
         s = AndanteState(atoms, sigma.copy())
         alternate_states = []
@@ -170,6 +189,19 @@ class AndanteSolver(Solver):
 
             
 class AndanteState:
+    """ State used in function _query
+
+    Attributes
+    ----------
+    sigma : andante.substitution.Substitution
+        The substitution at a given state
+    atoms : list of aloe.logic_concepts.Atom
+        List of atoms that still need to be proven true
+    curr_atom : aloe.logic_concepts.Atom
+        The current atom we try to make true
+    next_clause : aloe.logic_concepts.Clause
+        The clause we need to observe next
+    """
     def __init__(self, atoms, sigma=None, next_clause=None):
         assert isinstance(atoms, list) and all(isinstance(atom, Atom) for atom in atoms)
         assert sigma is None or isinstance(sigma, Substitution)

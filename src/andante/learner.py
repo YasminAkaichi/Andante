@@ -19,8 +19,9 @@ class Learner(ObjectWithTemporaryOptions, ABC):
 
 class ProgolLearner(Learner):
     """ 
-    Inductive logic learner as described by S. Muggleton in 'Inverse entailment and progol.' 1995
-    available at http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.31.1630&rep=rep1&type=pdf
+    Inductive logic learner as described by S. Muggleton in 'Inverse entailment
+    and progol.' 1995 available at
+    http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.31.1630&rep=rep1&type=pdf
     """
     
     def __init__(self, **options):

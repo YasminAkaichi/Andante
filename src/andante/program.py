@@ -11,19 +11,22 @@ import pandas
 
 class AndanteProgram:
     def __init__(self, options=None, knowledge=None, modes=None, examples=None):
-        """
-        Class representing a Andante program
-        Attributes :
-            - options:   see andante.options
-            - knowledge: gathers all clauses (andante.knowledge.Knowledge object)
-            - examples:  dictionnary of positive and negative examples 
-            - solver:    handles all queries (andante.solver.Solver object)
-            - modes:     assembles modes and determinations (andante.modes.ModeCollection object)
-            - learner:   handles inductive learning (andante.learner.Learner object) 
-            -B: background knowledge
-            -E: examples
-            -M: modes
-            -options: options
+        """ Class representing a Andante program
+
+        Attributes
+        ----------
+        options : andante.options.Options
+            Options for the object
+        knowledge : andante.knowledge.Knowledge 
+            Collection of clauses, background knowledge
+        examples : dict 
+            Dictionnary of positive and negative examples 
+        solver : andante.solver.Solver 
+            Deduction engine, handles all queries
+        modes : andante.modes.ModeCollection 
+            Collection of modes and determinations
+        learner : andante.learner.Learner 
+            Induction engine, handles learning
         """
         self.options   = options   if options   else Options()
         self.knowledge = knowledge if knowledge else TreeShapedKnowledge(options=self.options)
@@ -34,6 +37,7 @@ class AndanteProgram:
         
     @property
     def parser(self):
+        """ Returns a andante.parser.Parser object """
         if not hasattr(self, '_parser'):
             import andante.parser
             self._parser = andante.parser.Parser()
@@ -41,14 +45,17 @@ class AndanteProgram:
         
     @staticmethod
     def build_from(andantefile): 
+        """ Returns the corresponding AndanteProgram """
         import andante.parser
         return andante.parser.Parser().parse(andantefile, 'andantefile')    
     
     @staticmethod
     def build_from_background(text):
+        """ Returns the corresponding AndanteProgram """
         return AndanteProgram.build_from(':-begin_bg.\n%s\n:-end_bg.' % (text))
         
     def __repr__(self):
+        """ Get string representation of the object """
         B = repr(self.knowledge)
         E = 'Positive:\n%s\nNegative:\n%s' % ('\n'.join(repr(e) for e in self.examples['pos']),
                                               '\n'.join(repr(e) for e in self.examples['neg']))
@@ -57,11 +64,21 @@ class AndanteProgram:
         return 'Background:\n%s\n\nExamples:\n%s\n\nModes:\n%s\n\noptions:\n%s' % (B,E,M,o)
         
     def query(self, q, **temp_options):
-        """
-        Launch a query to the andante solver. 
-        The query 'q' can be:
-        - a string: the query will then first be parsed and then evaluated
-        - a goal
+        """ Launch a query to the andante solver. 
+
+        Parameters
+        ----------
+        q : str or andante.logic_concepts.Goal
+            The query to be evaluated
+
+        Returns
+        -------
+        bool
+            Whether there exists a substitution for the query
+        pandas.DataFrame
+            Tabular aggregating all substitutions possible for the query.
+            Columns correspond to varibles.
+            Rows correspond to the various possible substitutions.
         """
         assert isinstance(q, (str, Goal))
         if isinstance(q, str):
@@ -83,18 +100,19 @@ class AndanteProgram:
             return True, pandas_out
     
     def verify(self, c, **temp_options):
-        """
-        Verify whether clause is true 
-        """
+        """ Verify whether some clause is true, given the current background knowledge """
         assert isinstance(c, (str, Clause))
         if isinstance(c, str):
             c = self.parser.parse(c)
         goal = Goal([Negation(Goal(c.body + [Negation(Goal([c.head]))]))])
         return self.query(goal, **temp_options)
     
-    def set(self, field, value): self.options[field] = value
+    def set(self, field, value):
+        """ Set an option to a new value """
+        self.options[field] = value
         
     def induce(self, **temp_options):
+        """ Launches the learning process for new clauses """
         return self.learner.induce(self.examples, self.modes, self.knowledge, self.solver, **temp_options)
 
     def generate_examples(self, text, update_examples=True):

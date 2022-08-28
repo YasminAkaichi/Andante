@@ -31,10 +31,28 @@ PARSER_CATEGORIES = {'modeh':'modeh', 'modeb':'modeb', 'pos_examples':'hornclaus
 
 
 #-----------------------------------------------#
-#              Andante Interface
+#                Main Interface
 #-----------------------------------------------#
 
-class AndateInterface:
+class MainInterface:
+    """ Main interface object
+
+    Attributes
+    ----------
+    parser : andante.parser.Parser
+        General Andante parser
+    ap : andante.program.AndanteProgram
+        Program that will be the subject of induction
+    qi : andante.interface.QueryInterface
+        Interface for querying self.ap
+    di : andante.interface.DetailsInterface 
+        Details regarding self.ap
+    iis : list of andante.interface.LearningInterface
+        Interfaces for each induction.
+        Provides details on the learning process for each of these inductions
+    widget : ipywidgets.widgets.widget.Widget
+        Widget to see all elements from the Andante interface
+    """
     def __init__(self, ap=None, **options):
         self.parser = Parser()
         self.ap = ap if ap is not None else AndanteProgram(options=options)
@@ -42,23 +60,35 @@ class AndateInterface:
         self.qi = QueryInterface(self.ap, **options)
         self.di = DetailsInterface(self)
         self.iis = []
-        self.induction_count = 0
-        
-        self.query_interface   = self.qi.widget
-        self.details_interface = self.di.widget
         
         self.widget = Tab()
-        self.widget.children = [self.query_interface, self.details_interface]
+        self.widget.children = [self.qi.widget, self.di.widget]
         self.widget.set_title(0, 'Query program')
         self.widget.set_title(1, 'Program details')
         
-    def add_tab(self, widget, title):
+    def add_tab(self, widget, title=""):
+        """ Add a widget to the tab list 
+
+        Parameters
+        ----------
+        widget : ipywidgets.widgets.widget.Widget
+            Widget to add
+        title : str
+            Text to put to describe the widget
+        """
         self.widget.children = list(self.widget.children) + [widget]
         self.widget.set_title(len(self.widget.children)-1, title)
         
-    def add_induction_tab(self, widget):
-        self.add_tab(widget, 'Induction #%d' % self.induction_count)
-        self.induction_count += 1
+    def add_learning_interface(self, learning_interface):
+        """ Add a new learning interface to the tab list
+
+        Parameters
+        ----------
+        learning_interface : andante.interface.LearningInterface
+            The interface to add
+        """
+        self.add_tab(learning_interface.widget, 'Induction #%d' % len(self.iis))
+        self.iis.append(learning_interface)
 
         
 #-----------------------------------------------#
@@ -66,39 +96,66 @@ class AndateInterface:
 #-----------------------------------------------#
         
 class DetailsInterface:
-    def __init__(self, ai):
-        self.ai = ai
-        self.ap = self.ai.ap
-        self.parser = self.ai.parser
-        
-        self.init_details()
+    """ Details interface for an AndanteProgram
+
+    Attributes
+    ----------
+    mi : andante.interface.MainInterface
+        Link to the main interface
+    ap : andante.program.AndanteProgram
+        Reference to mi.ap
+    parser : andante.parser.Parser
+        Reference to mi.parser
+    data : dict (str -> andante.collections.OrderedSet)
+        Where all detailed information is stored (as strings).
+        Information on positive and negative examples, modes and determinations.
+        User for comparing the content of the interface and the AndanteProgram.
+    widget : ipywidgets.widgets.widget.Widget
+        Widget interface
+    """
+    def __init__(self, mi):
+        self.mi = mi
+        self.ap = self.mi.ap
+        self.parser = self.mi.parser
+        self.data = None
+
+        self.update_data()
         self.build_widget()
-        self.refresh_details()
+        self.refresh_interface()
         
+    def update_data(self):
+        """ Syncronize interface with AndanteProgram Python object """
+        self.data = {category:OrderedSet() for category in DETAILS_CATEGORIES}
+        self.data['pos_examples'].update(str(e) for e in self.ap.examples['pos'])
+        self.data['neg_examples'].update(str(e) for e in self.ap.examples['neg'])
+        self.data['modeh'].update(str(m) for _, m in self.ap.modes.map_to_modeh.items())
+        self.data['modeb'].update(str(m) for _, m in self.ap.modes.map_to_modeb.items())
+        self.data['determination'].update('determination(%s,%s).' % (modeh, modeb) for modeh in self.ap.modes.determinations for modeb in self.ap.modes.determinations[modeh])
         
-    def init_details(self):
-        self.old_details = {category:OrderedSet() for category in DETAILS_CATEGORIES}
-        self.old_details['pos_examples'].update(str(e) for e in self.ap.examples['pos'])
-        self.old_details['neg_examples'].update(str(e) for e in self.ap.examples['neg'])
-        self.old_details['modeh'].update(str(m) for _, m in self.ap.modes.map_to_modeh.items())
-        self.old_details['modeb'].update(str(m) for _, m in self.ap.modes.map_to_modeb.items())
-        self.old_details['determination'].update('determination(%s,%s).' % (modeh, modeb) for modeh in self.ap.modes.determinations for modeb in self.ap.modes.determinations[modeh])
-        
-    def get_detail(self, category):
+    def get_displayed_text(self, category):
+        """ Get data from interface for some category
+
+        Parameters
+        ----------
+        category : str
+            The category for which to retrieve data
+        """
         displayed_text = getattr(self, category+'_widget').children[1].value
         return self.parser.split_on_dots(displayed_text)
         
-    def update_details(self):
+    def update_andante_program(self):
+        """ Syncronize AndanteProgram Python object with updates from the interface """
         to_remove = dict()
-        to_add = dict()
+        to_add = dict()  
+
+        # Read from the interface and list all elements to remove and to add to 
+        # the AndanteProgram
         for category in DETAILS_CATEGORIES:
-            new = OrderedSet(self.get_detail(category))
-            old = self.old_details[category]
-            
+            new = OrderedSet(self.get_displayed_text(category))
+            old = self.data[category]
             to_remove[category] = [self.parser.parse(c, PARSER_CATEGORIES[category]) for c in old if c not in new]
             to_add[category]    = [self.parser.parse(c, PARSER_CATEGORIES[category]) for c in new if c not in old]
-            
-            self.old_details[category] = new
+            self.data[category] = new
         
         for e in to_add['pos_examples']:
             self.ap.examples['pos'].append(e)
@@ -114,16 +171,23 @@ class DetailsInterface:
         for c in itertools.chain(to_remove['modeh'], to_remove['modeb'], to_remove['determination']):
             self.ap.modes.remove(c)
             
-    def refresh_details(self):
+    def refresh_interface(self):
+        """ Refresh interface with the current state of the AndanteProgram """
         for category in DETAILS_CATEGORIES:
-            getattr(self, category+'_widget').children[1].value = '\n'.join(self.old_details[category])
+            getattr(self, category+'_widget').children[1].value = '\n'.join(self.data[category])
             
     def save(self):
-        self.update_details()
-        self.init_details() # Re-init details to take into account outside modifications of self.ap
-        self.update_details()
+        """ Save current state of the interface in the AndanteProgram """
+        # Update andante program with modifications from the interface
+        self.update_andante_program()
+        # Re-init data to take into account outside modifications of self.ap
+        self.update_data() 
+        self.refresh_interface()
             
     def build_widget(self):
+        """ Build wigdet for displaying all details """
+
+        # Whether to show details on examples and modes or the options
         details_toggle_button = ToggleButtons(
             options=['Modes', 'Options'],
             button_style='info',
@@ -173,8 +237,7 @@ class DetailsInterface:
             save_options()
             self.ap.induce(update_knowledge=False, logging=True, verbose=0)
             log = self.ap.learner.logs[-1]
-            self.ai.iis.append(LearningInterface(log))
-            self.ai.add_induction_tab(self.ai.iis[-1].widget)
+            self.mi.add_learning_interface(LearningInterface(log))
             
         launch_induction_button = Button(description='Induce')
         launch_induction_button.on_click(lambda x: launch_induction())
@@ -195,15 +258,30 @@ class DetailsInterface:
                 pane_widths=[0, 4, 5.9],
             )],)
         
-def get_category(clause):
-    return RULES if ':-' in clause else FACTS
-
-
 #-----------------------------------------------#
 #              Query Interface
 #-----------------------------------------------#
 
+def get_category(clause):
+    return RULES if ':-' in clause else FACTS
+
 class QueryInterface:
+    """ Query interface for an AndanteProgram
+
+    This interface allows an easy way to query the knowledge of a AndanteProgram.
+
+    Attributes
+    ----------
+    parser : andante.parser.Parser
+        Parser to handle string input
+    ap : andante.program.AndanteProgram
+        The AndanteProgram
+        Mostly used as ap.knowledge
+    _clauses : dict (id -> andante.collections.OrderedSet
+        Memory of all clauses stored in the AndanteProgram
+    widget : ipywidgets.widgets.widget.Widget
+        Widget interface
+    """
     def __init__(self, ap=None, **options):
         self.parser = Parser()
         self.ap = ap if ap is not None else AndanteProgram(options=options)
@@ -392,15 +470,31 @@ ATTR_DESCRIPTION = {
 }            
 
 class LearningInterface:
+    """ Learning interface
+
+    Attributes
+    ----------
+    data : OrderedDict
+        Various information on the training
+    widget : ipywidgets.widgets.widget.Widget
+        Widget interface
+    """
+
     focus = None
     focus_default_color = None
     
     def __init__(self, log):
-        self.log = log
+        """
+        Parameters
+        ----------
+        log : andante.live_log.LiveLog
+            The log with all information related to the learning
+        """
         self.data = log.data
         self.build_widget()
     
     def interact(self):
+        """ Displays the LearningInterface """
         display(self.widget)
         
     def build_widget(self):
@@ -431,10 +525,8 @@ class LearningInterface:
             else: #self.togglebutton.value==2:
                 self.widget.children = [self.widget2]
 
-    def _learning_info_tab(self, data):
-        pass
-        
     def _query_tab(self, options, old_knowledge, learned_knowledge):
+        """ Builds a query widget to challenge new and old knowledges """
         new_knowledge = MultipleKnowledge(old_knowledge, learned_knowledge, options=options)
         
         self.knowledge_widget = ToggleButtons(
@@ -599,6 +691,7 @@ class LearningInterface:
         return explanation_button        
             
     def remove_focus(self):
+        """ Remove focus from all buttons """
         if self.focus is None:
             return
         self.focus.style.button_color = self.focus_default_color
@@ -606,6 +699,7 @@ class LearningInterface:
         self.focus_default_color = None
 
     def put_focus(self, button):
+        """ Put focus on the input button """
         self.remove_focus()
         self.focus = button
         self.focus_default_color = button.style.button_color

@@ -1,3 +1,7 @@
+"""
+Define the grammar used by the andante.parser.Parser object
+"""
+
 import parsimonious
 from parsimonious.grammar import Grammar
 

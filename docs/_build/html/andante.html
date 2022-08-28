@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>andante package &mdash; Andante  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to Andante’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Andante
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">andante package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-andante.collections">andante.collections module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#andante-grammar-module">andante.grammar module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#andante-grammar-tree-visitor-module">andante.grammar_tree_visitor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-andante.hypothesis_metrics">andante.hypothesis_metrics module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#andante-interface-module">andante.interface module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-andante.knowledge">andante.knowledge module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-andante.learner">andante.learner module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-andante.live_log">andante.live_log module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-andante.logic_concepts">andante.logic_concepts module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#andante-mathematical-expressions-module">andante.mathematical_expressions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-andante.mode">andante.mode module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-andante.options">andante.options module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#andante-parser-module">andante.parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#andante-program-module">andante.program module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-andante.solver">andante.solver module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-andante.substitution">andante.substitution module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-andante.utils">andante.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-andante">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Andante</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>andante package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/andante.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="andante-package">
+<h1>andante package<a class="headerlink" href="#andante-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-andante.collections">
+<span id="andante-collections-module"></span><h2>andante.collections module<a class="headerlink" href="#module-andante.collections" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="andante.collections.OrderedSet">
+<em class="property">class </em><code class="descclassname">andante.collections.</code><code class="descname">OrderedSet</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.collections.OrderedSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.abc.MutableSet</span></code></p>
+<p>Set object with ordered keys</p>
+<dl class="method">
+<dt id="andante.collections.OrderedSet.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>elem</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.collections.OrderedSet.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an element.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="andante.collections.OrderedSet.difference">
+<code class="descname">difference</code><a class="headerlink" href="#andante.collections.OrderedSet.difference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.collections.OrderedSet.difference_update">
+<code class="descname">difference_update</code><a class="headerlink" href="#andante.collections.OrderedSet.difference_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.collections.OrderedSet.discard">
+<code class="descname">discard</code><span class="sig-paren">(</span><em>elem</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.collections.OrderedSet.discard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove an element.  Do not raise an exception if absent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="andante.collections.OrderedSet.intersection">
+<code class="descname">intersection</code><a class="headerlink" href="#andante.collections.OrderedSet.intersection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.collections.OrderedSet.intersection_update">
+<code class="descname">intersection_update</code><a class="headerlink" href="#andante.collections.OrderedSet.intersection_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.collections.OrderedSet.issubset">
+<code class="descname">issubset</code><a class="headerlink" href="#andante.collections.OrderedSet.issubset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.collections.OrderedSet.issuperset">
+<code class="descname">issuperset</code><a class="headerlink" href="#andante.collections.OrderedSet.issuperset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.collections.OrderedSet.symmetric_difference">
+<code class="descname">symmetric_difference</code><a class="headerlink" href="#andante.collections.OrderedSet.symmetric_difference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.collections.OrderedSet.symmetric_difference_update">
+<code class="descname">symmetric_difference_update</code><a class="headerlink" href="#andante.collections.OrderedSet.symmetric_difference_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.collections.OrderedSet.union">
+<code class="descname">union</code><a class="headerlink" href="#andante.collections.OrderedSet.union" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.collections.OrderedSet.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="optional">[</span><em>E</em>, <span class="optional">]</span><em>**F</em><span class="sig-paren">)</span> &#x2192; None.  Update D from dict/iterable E and F.<a class="headerlink" href="#andante.collections.OrderedSet.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="andante-grammar-module">
+<h2>andante.grammar module<a class="headerlink" href="#andante-grammar-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="andante-grammar-tree-visitor-module">
+<h2>andante.grammar_tree_visitor module<a class="headerlink" href="#andante-grammar-tree-visitor-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-andante.hypothesis_metrics">
+<span id="andante-hypothesis-metrics-module"></span><h2>andante.hypothesis_metrics module<a class="headerlink" href="#module-andante.hypothesis_metrics" title="Permalink to this headline">¶</a></h2>
+<p>Define the metrics for generating and evaluating candidate clauses in the
+build_hypothesis method of the andante.learner.ProgolLearner class.</p>
+<dl class="class">
+<dt id="andante.hypothesis_metrics.FnMetric">
+<em class="property">class </em><code class="descclassname">andante.hypothesis_metrics.</code><code class="descname">FnMetric</code><span class="sig-paren">(</span><em>B</em>, <em>E</em>, <em>M</em>, <em>bottom</em>, <em>solver</em>, <em>options</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.hypothesis_metrics.FnMetric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.hypothesis_metrics.HypothesisMetric" title="andante.hypothesis_metrics.HypothesisMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.hypothesis_metrics.HypothesisMetric</span></code></a></p>
+<dl class="method">
+<dt id="andante.hypothesis_metrics.FnMetric.State">
+<code class="descname">State</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.hypothesis_metrics.FnMetric.State" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a state object for a candidate clause</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.hypothesis_metrics.FnMetric.best">
+<code class="descname">best</code><span class="sig-paren">(</span><em>collec</em>, <em>key=&lt;function FnMetric.&lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.hypothesis_metrics.FnMetric.best" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the best state among a collection of states (collec)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.hypothesis_metrics.FnMetric.build_d">
+<code class="descname">build_d</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.hypothesis_metrics.FnMetric.build_d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.hypothesis_metrics.FnMetric.d_of_clause">
+<code class="descname">d_of_clause</code><span class="sig-paren">(</span><em>clause</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.hypothesis_metrics.FnMetric.d_of_clause" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.hypothesis_metrics.FnMetric.prune">
+<code class="descname">prune</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.hypothesis_metrics.FnMetric.prune" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells whether state needs to be pruned</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.hypothesis_metrics.FnMetric.rho">
+<code class="descname">rho</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.hypothesis_metrics.FnMetric.rho" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates all children states for a parent state</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.hypothesis_metrics.FnMetric.terminated">
+<code class="descname">terminated</code><span class="sig-paren">(</span><em>Closed</em>, <em>Open</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.hypothesis_metrics.FnMetric.terminated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells whether the search for the best state is to be terminated</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.hypothesis_metrics.HypothesisMetric">
+<em class="property">class </em><code class="descclassname">andante.hypothesis_metrics.</code><code class="descname">HypothesisMetric</code><a class="headerlink" href="#andante.hypothesis_metrics.HypothesisMetric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dl class="method">
+<dt id="andante.hypothesis_metrics.HypothesisMetric.State">
+<code class="descname">State</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.hypothesis_metrics.HypothesisMetric.State" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a state object for a candidate clause</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.hypothesis_metrics.HypothesisMetric.best">
+<code class="descname">best</code><span class="sig-paren">(</span><em>collec</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.hypothesis_metrics.HypothesisMetric.best" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the best state among a collection of states (collec)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.hypothesis_metrics.HypothesisMetric.prune">
+<code class="descname">prune</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.hypothesis_metrics.HypothesisMetric.prune" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells whether state needs to be pruned</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.hypothesis_metrics.HypothesisMetric.rho">
+<code class="descname">rho</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.hypothesis_metrics.HypothesisMetric.rho" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates all children states for a parent state</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.hypothesis_metrics.HypothesisMetric.terminated">
+<code class="descname">terminated</code><span class="sig-paren">(</span><em>Closed</em>, <em>Open</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.hypothesis_metrics.HypothesisMetric.terminated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells whether the search for the best state is to be terminated</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="andante-interface-module">
+<h2>andante.interface module<a class="headerlink" href="#andante-interface-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-andante.knowledge">
+<span id="andante-knowledge-module"></span><h2>andante.knowledge module<a class="headerlink" href="#module-andante.knowledge" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="andante.knowledge.Knowledge">
+<em class="property">class </em><code class="descclassname">andante.knowledge.</code><code class="descname">Knowledge</code><a class="headerlink" href="#andante.knowledge.Knowledge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Collection of clauses</p>
+<dl class="method">
+<dt id="andante.knowledge.Knowledge.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>clause</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.knowledge.Knowledge.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add some clause to the current knowledge</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.knowledge.Knowledge.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.knowledge.Knowledge.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.knowledge.Knowledge.match">
+<code class="descname">match</code><span class="sig-paren">(</span><em>atom</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.knowledge.Knowledge.match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all clauses that match some atom</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.knowledge.Knowledge.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>clause</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.knowledge.Knowledge.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove some clause from the current knowledge</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.knowledge.MultipleKnowledge">
+<em class="property">class </em><code class="descclassname">andante.knowledge.</code><code class="descname">MultipleKnowledge</code><span class="sig-paren">(</span><em>*knowledges</em>, <em>options=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.knowledge.MultipleKnowledge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.knowledge.Knowledge" title="andante.knowledge.Knowledge"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.knowledge.Knowledge</span></code></a></p>
+<p>Knowledge composed of multiple sub-knowledges</p>
+<dl class="method">
+<dt id="andante.knowledge.MultipleKnowledge.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.knowledge.MultipleKnowledge.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add some clause to the current knowledge</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.knowledge.MultipleKnowledge.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.knowledge.MultipleKnowledge.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.knowledge.MultipleKnowledge.match">
+<code class="descname">match</code><span class="sig-paren">(</span><em>atom</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.knowledge.MultipleKnowledge.match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all clauses that match some atom</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.knowledge.MultipleKnowledge.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.knowledge.MultipleKnowledge.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove some clause from the current knowledge</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.knowledge.TreeShapedKnowledge">
+<em class="property">class </em><code class="descclassname">andante.knowledge.</code><code class="descname">TreeShapedKnowledge</code><span class="sig-paren">(</span><em>clauses=None</em>, <em>operators=None</em>, <em>options=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.knowledge.TreeShapedKnowledge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.knowledge.Knowledge" title="andante.knowledge.Knowledge"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.knowledge.Knowledge</span></code></a></p>
+<p>Knowledge stored as a tree of clauses</p>
+<dl class="docutils">
+<dt>allclauses <span class="classifier-delimiter">:</span> <span class="classifier">set of andante.logic_concepts.Clause</span></dt>
+<dd>Set of all clauses represented by the tree</dd>
+<dt>clausesbyoperator <span class="classifier-delimiter">:</span> <span class="classifier">dict of sets of andante.logic_concepts.Clause</span></dt>
+<dd>Given a function name, returns the set of all clauses whose head matches that function name</dd>
+<dt>collec <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd>The tree collection of clauses</dd>
+</dl>
+<dl class="method">
+<dt id="andante.knowledge.TreeShapedKnowledge.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>clause</em>, <em>func=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.knowledge.TreeShapedKnowledge.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add some clause to the current knowledge</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.knowledge.TreeShapedKnowledge.match">
+<code class="descname">match</code><span class="sig-paren">(</span><em>expr</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.knowledge.TreeShapedKnowledge.match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all clauses that match some atom</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.knowledge.TreeShapedKnowledge.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>clause</em>, <em>func=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.knowledge.TreeShapedKnowledge.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove some clause from the current knowledge</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-andante.learner">
+<span id="andante-learner-module"></span><h2>andante.learner module<a class="headerlink" href="#module-andante.learner" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="andante.learner.Learner">
+<em class="property">class </em><code class="descclassname">andante.learner.</code><code class="descname">Learner</code><span class="sig-paren">(</span><em>options=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.learner.Learner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.options.ObjectWithTemporaryOptions" title="andante.options.ObjectWithTemporaryOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.options.ObjectWithTemporaryOptions</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dl class="method">
+<dt id="andante.learner.Learner.induce">
+<code class="descname">induce</code><span class="sig-paren">(</span><em>examples</em>, <em>modes</em>, <em>knowledge</em>, <em>solver</em>, <em>**temp_options</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.learner.Learner.induce" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.learner.ProgolLearner">
+<em class="property">class </em><code class="descclassname">andante.learner.</code><code class="descname">ProgolLearner</code><span class="sig-paren">(</span><em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.learner.ProgolLearner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.learner.Learner" title="andante.learner.Learner"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.learner.Learner</span></code></a></p>
+<p>Inductive logic learner as described by S. Muggleton in ‘Inverse entailment
+and progol.’ 1995 available at
+<a class="reference external" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.31.1630&amp;rep=rep1&amp;type=pdf">http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.31.1630&amp;rep=rep1&amp;type=pdf</a></p>
+<dl class="method">
+<dt id="andante.learner.ProgolLearner.add_eventlog">
+<code class="descname">add_eventlog</code><span class="sig-paren">(</span><em>event_name</em>, <em>value</em>, <em>display_fun=&lt;class 'str'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.learner.ProgolLearner.add_eventlog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an eventlog to the last log (only if self.options.keep_logs is true)
+Print the eventlog to the screen (only if self.options.verboseprint &gt; 1)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.learner.ProgolLearner.add_log">
+<code class="descname">add_log</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.learner.ProgolLearner.add_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new log</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.learner.ProgolLearner.beg_child">
+<code class="descname">beg_child</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.learner.ProgolLearner.beg_child" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.learner.ProgolLearner.build_bottom_i">
+<code class="descname">build_bottom_i</code><span class="sig-paren">(</span><em>e</em>, <em>M</em>, <em>B</em>, <em>solver</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.learner.ProgolLearner.build_bottom_i" title="Permalink to this definition">¶</a></dt>
+<dd><p>For better understanding, read this function along Fig.1. ‘Algorithm for constructing bottom’ 
+in page 14 of document tutorial4.4.pdf 
+Inputs:
+- e: a single example (Clause object)
+- M: the set of all modes (ModeCollection object)
+- B: the background knowledge (Knowledge object)
+- solver: the engine to verify expressions (Solver object)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.learner.ProgolLearner.build_hypothesis">
+<code class="descname">build_hypothesis</code><span class="sig-paren">(</span><em>examples</em>, <em>modes</em>, <em>bottom_i</em>, <em>knowledge</em>, <em>solver</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.learner.ProgolLearner.build_hypothesis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.learner.ProgolLearner.end_child">
+<code class="descname">end_child</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.learner.ProgolLearner.end_child" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.learner.ProgolLearner.induce">
+<code class="descname">induce</code><span class="sig-paren">(</span><em>examples</em>, <em>modes</em>, <em>knowledge</em>, <em>solver</em>, <em>**temp_options</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.learner.ProgolLearner.induce" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-andante.live_log">
+<span id="andante-live-log-module"></span><h2>andante.live_log module<a class="headerlink" href="#module-andante.live_log" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="andante.live_log.LiveLog">
+<em class="property">class </em><code class="descclassname">andante.live_log.</code><code class="descname">LiveLog</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.live_log.LiveLog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Log for storing information during the learning of clauses</p>
+<dl class="method">
+<dt id="andante.live_log.LiveLog.add_eventlog">
+<code class="descname">add_eventlog</code><span class="sig-paren">(</span><em>event_id</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.live_log.LiveLog.add_eventlog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.live_log.LiveLog.beg_child">
+<code class="descname">beg_child</code><span class="sig-paren">(</span><em>name</em>, <em>point_to_child=True</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.live_log.LiveLog.beg_child" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.live_log.LiveLog.data">
+<code class="descname">data</code><a class="headerlink" href="#andante.live_log.LiveLog.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.live_log.LiveLog.end_child">
+<code class="descname">end_child</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.live_log.LiveLog.end_child" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-andante.logic_concepts">
+<span id="andante-logic-concepts-module"></span><h2>andante.logic_concepts module<a class="headerlink" href="#module-andante.logic_concepts" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="andante.logic_concepts.Atom">
+<em class="property">class </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">Atom</code><a class="headerlink" href="#andante.logic_concepts.Atom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.LogicConcept" title="andante.logic_concepts.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.LogicConcept</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Atom in the first order logic framework</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.logic_concepts.Clause">
+<em class="property">class </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">Clause</code><span class="sig-paren">(</span><em>head</em>, <em>body</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.LogicConcept" title="andante.logic_concepts.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.LogicConcept</span></code></a></p>
+<p>Horn clause in first order logic</p>
+<dl class="method">
+<dt id="andante.logic_concepts.Clause.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Clause.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.logic_concepts.CompoundTerm">
+<em class="property">class </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">CompoundTerm</code><span class="sig-paren">(</span><em>symbol: str</em>, <em>arguments: list</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.CompoundTerm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.Term" title="andante.logic_concepts.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.Term</span></code></a>, <a class="reference internal" href="#andante.logic_concepts.Function" title="andante.logic_concepts.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.Function</span></code></a></p>
+<p>Compound terms as defined in the prolog framework</p>
+<dl class="method">
+<dt id="andante.logic_concepts.CompoundTerm.unify">
+<code class="descname">unify</code><span class="sig-paren">(</span><em>other</em>, <em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.CompoundTerm.unify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unify two terms</p>
+<p>Updates the andante.substitution.Substitution subst to take into account the unification of andante.logic_concepts.Term self and other</p>
+<dl class="docutils">
+<dt>other <span class="classifier-delimiter">:</span> <span class="classifier">andante.logic_concepts.Term</span></dt>
+<dd>The term to unify with</dd>
+<dt>subst <span class="classifier-delimiter">:</span> <span class="classifier">andante.substitution.Substitution</span></dt>
+<dd>The current substitution</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.logic_concepts.Constant">
+<em class="property">class </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">Constant</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Constant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.Term" title="andante.logic_concepts.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.Term</span></code></a></p>
+<p>Constant in first order logic</p>
+<dl class="docutils">
+<dt>value <span class="classifier-delimiter">:</span> <span class="classifier">int or float or string</span></dt>
+<dd>Data held by the constant</dd>
+</dl>
+<dl class="method">
+<dt id="andante.logic_concepts.Constant.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Constant.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.logic_concepts.Constant.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Constant.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.logic_concepts.Constant.to_variable_name">
+<code class="descname">to_variable_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Constant.to_variable_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a valid unique variable symbol</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.logic_concepts.Constant.unify">
+<code class="descname">unify</code><span class="sig-paren">(</span><em>other</em>, <em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Constant.unify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unify two terms</p>
+<p>Updates the andante.substitution.Substitution subst to take into account the unification of andante.logic_concepts.Term self and other</p>
+<dl class="docutils">
+<dt>other <span class="classifier-delimiter">:</span> <span class="classifier">andante.logic_concepts.Term</span></dt>
+<dd>The term to unify with</dd>
+<dt>subst <span class="classifier-delimiter">:</span> <span class="classifier">andante.substitution.Substitution</span></dt>
+<dd>The current substitution</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.logic_concepts.Function">
+<em class="property">class </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">Function</code><span class="sig-paren">(</span><em>symbol: str</em>, <em>arguments: list</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.LogicConcept" title="andante.logic_concepts.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.LogicConcept</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Function as the general form of a Predicate and a CompoundTerm</p>
+<dl class="docutils">
+<dt>symbol <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>the symbol, i.e. the name of the function</dd>
+<dt>arguments <span class="classifier-delimiter">:</span> <span class="classifier">list of andante.logic_concepts.Term</span></dt>
+<dd>the inputs of the function</dd>
+</dl>
+<dl class="method">
+<dt id="andante.logic_concepts.Function.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Function.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="andante.logic_concepts.Function.arity">
+<code class="descname">arity</code><a class="headerlink" href="#andante.logic_concepts.Function.arity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.logic_concepts.Function.name">
+<code class="descname">name</code><a class="headerlink" href="#andante.logic_concepts.Function.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.logic_concepts.Goal">
+<em class="property">class </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">Goal</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Goal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>, <a class="reference internal" href="#andante.logic_concepts.LogicConcept" title="andante.logic_concepts.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.LogicConcept</span></code></a></p>
+<p>Goal in first order logic</p>
+<dl class="method">
+<dt id="andante.logic_concepts.Goal.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Goal.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.logic_concepts.List">
+<em class="property">class </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">List</code><span class="sig-paren">(</span><em>e1</em>, <em>e2=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.List" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.Term" title="andante.logic_concepts.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.Term</span></code></a></p>
+<p>List in the prolog framework</p>
+<dl class="method">
+<dt id="andante.logic_concepts.List.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.List.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.logic_concepts.List.unify">
+<code class="descname">unify</code><span class="sig-paren">(</span><em>other</em>, <em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.List.unify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unify two terms</p>
+<p>Updates the andante.substitution.Substitution subst to take into account the unification of andante.logic_concepts.Term self and other</p>
+<dl class="docutils">
+<dt>other <span class="classifier-delimiter">:</span> <span class="classifier">andante.logic_concepts.Term</span></dt>
+<dd>The term to unify with</dd>
+<dt>subst <span class="classifier-delimiter">:</span> <span class="classifier">andante.substitution.Substitution</span></dt>
+<dd>The current substitution</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.logic_concepts.LogicConcept">
+<em class="property">class </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">LogicConcept</code><a class="headerlink" href="#andante.logic_concepts.LogicConcept" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Any logic concept of first order logic</p>
+<dl class="method">
+<dt id="andante.logic_concepts.LogicConcept.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.LogicConcept.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.logic_concepts.Negation">
+<em class="property">class </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">Negation</code><span class="sig-paren">(</span><em>goal: andante.logic_concepts.Goal</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Negation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.LogicConcept" title="andante.logic_concepts.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.LogicConcept</span></code></a></p>
+<p>Negation of a goal in first order logic</p>
+<dl class="method">
+<dt id="andante.logic_concepts.Negation.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Negation.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.logic_concepts.Predicate">
+<em class="property">class </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">Predicate</code><span class="sig-paren">(</span><em>symbol: str</em>, <em>arguments: list</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Predicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.Atom" title="andante.logic_concepts.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.Atom</span></code></a>, <a class="reference internal" href="#andante.logic_concepts.Function" title="andante.logic_concepts.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.Function</span></code></a></p>
+<p>Predicate in first order logic</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.logic_concepts.Term">
+<em class="property">class </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">Term</code><a class="headerlink" href="#andante.logic_concepts.Term" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.LogicConcept" title="andante.logic_concepts.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.LogicConcept</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Term in the first order logic framework</p>
+<dl class="method">
+<dt id="andante.logic_concepts.Term.unify">
+<code class="descname">unify</code><span class="sig-paren">(</span><em>other</em>, <em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Term.unify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unify two terms</p>
+<p>Updates the andante.substitution.Substitution subst to take into account the unification of andante.logic_concepts.Term self and other</p>
+<dl class="docutils">
+<dt>other <span class="classifier-delimiter">:</span> <span class="classifier">andante.logic_concepts.Term</span></dt>
+<dd>The term to unify with</dd>
+<dt>subst <span class="classifier-delimiter">:</span> <span class="classifier">andante.substitution.Substitution</span></dt>
+<dd>The current substitution</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.logic_concepts.Type">
+<em class="property">class </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">Type</code><span class="sig-paren">(</span><em>sign: Literal[+, -, #], name: str</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.Term" title="andante.logic_concepts.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.Term</span></code></a></p>
+<p>Type as defined in the progol framework</p>
+<p>+person
+#animal</p>
+<dl class="docutils">
+<dt>sign <span class="classifier-delimiter">:</span> <span class="classifier">‘+’ or ‘-‘ or ‘#’</span></dt>
+<dd>‘+’ refers to input arguments, ‘-‘ refers to output arguments and ‘#’ refers to constant</dd>
+</dl>
+<p>name : str</p>
+<dl class="method">
+<dt id="andante.logic_concepts.Type.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Type.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.logic_concepts.Type.unify">
+<code class="descname">unify</code><span class="sig-paren">(</span><em>other</em>, <em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Type.unify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unify two terms</p>
+<p>Updates the andante.substitution.Substitution subst to take into account the unification of andante.logic_concepts.Term self and other</p>
+<dl class="docutils">
+<dt>other <span class="classifier-delimiter">:</span> <span class="classifier">andante.logic_concepts.Term</span></dt>
+<dd>The term to unify with</dd>
+<dt>subst <span class="classifier-delimiter">:</span> <span class="classifier">andante.substitution.Substitution</span></dt>
+<dd>The current substitution</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="andante.logic_concepts.UnificationError">
+<em class="property">exception </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">UnificationError</code><span class="sig-paren">(</span><em>term1</em>, <em>term2</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.UnificationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.logic_concepts.Variable">
+<em class="property">class </em><code class="descclassname">andante.logic_concepts.</code><code class="descname">Variable</code><span class="sig-paren">(</span><em>symbol</em>, <em>tally_id=0</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.Term" title="andante.logic_concepts.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.Term</span></code></a></p>
+<p>Variable in the first order logic framework</p>
+<dl class="docutils">
+<dt>symbol <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>The symbol or name of the variable</dd>
+<dt>tally_id <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>A number to differentiate different andante.logic_concepts.Variable objects with the same symbol</dd>
+</dl>
+<dl class="method">
+<dt id="andante.logic_concepts.Variable.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Variable.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.logic_concepts.Variable.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Variable.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.logic_concepts.Variable.is_in">
+<code class="descname">is_in</code><span class="sig-paren">(</span><em>expr</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Variable.is_in" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.logic_concepts.Variable.unify">
+<code class="descname">unify</code><span class="sig-paren">(</span><em>other</em>, <em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.Variable.unify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unify two terms</p>
+<p>Updates the andante.substitution.Substitution subst to take into account the unification of andante.logic_concepts.Term self and other</p>
+<dl class="docutils">
+<dt>other <span class="classifier-delimiter">:</span> <span class="classifier">andante.logic_concepts.Term</span></dt>
+<dd>The term to unify with</dd>
+<dt>subst <span class="classifier-delimiter">:</span> <span class="classifier">andante.substitution.Substitution</span></dt>
+<dd>The current substitution</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="andante.logic_concepts.extract_variables">
+<code class="descclassname">andante.logic_concepts.</code><code class="descname">extract_variables</code><span class="sig-paren">(</span><em>expr</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.logic_concepts.extract_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns as a set all Variables present in expr</p>
+</dd></dl>
+
+</div>
+<div class="section" id="andante-mathematical-expressions-module">
+<h2>andante.mathematical_expressions module<a class="headerlink" href="#andante-mathematical-expressions-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-andante.mathematical_expressions"></span><dl class="class">
+<dt id="andante.mathematical_expressions.ArithmeticComparison">
+<em class="property">class </em><code class="descclassname">andante.mathematical_expressions.</code><code class="descname">ArithmeticComparison</code><span class="sig-paren">(</span><em>arg1</em>, <em>arg2</em>, <em>symbol</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.ArithmeticComparison" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.mathematical_expressions.Comparison" title="andante.mathematical_expressions.Comparison"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.mathematical_expressions.Comparison</span></code></a></p>
+<dl class="method">
+<dt id="andante.mathematical_expressions.ArithmeticComparison.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.ArithmeticComparison.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.mathematical_expressions.ArithmeticExpression">
+<em class="property">class </em><code class="descclassname">andante.mathematical_expressions.</code><code class="descname">ArithmeticExpression</code><a class="headerlink" href="#andante.mathematical_expressions.ArithmeticExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.LogicConcept" title="andante.logic_concepts.LogicConcept"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.LogicConcept</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dl class="method">
+<dt id="andante.mathematical_expressions.ArithmeticExpression.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.ArithmeticExpression.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.mathematical_expressions.BasicArithmeticExpression">
+<em class="property">class </em><code class="descclassname">andante.mathematical_expressions.</code><code class="descname">BasicArithmeticExpression</code><span class="sig-paren">(</span><em>expr1</em>, <em>expr2</em>, <em>symbol</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.BasicArithmeticExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.mathematical_expressions.ArithmeticExpression" title="andante.mathematical_expressions.ArithmeticExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.mathematical_expressions.ArithmeticExpression</span></code></a></p>
+<dl class="method">
+<dt id="andante.mathematical_expressions.BasicArithmeticExpression.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.BasicArithmeticExpression.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.mathematical_expressions.BasicArithmeticExpression.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.BasicArithmeticExpression.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.mathematical_expressions.Comparison">
+<em class="property">class </em><code class="descclassname">andante.mathematical_expressions.</code><code class="descname">Comparison</code><span class="sig-paren">(</span><em>arg1</em>, <em>arg2</em>, <em>symbol</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.Comparison" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.Atom" title="andante.logic_concepts.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.Atom</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dl class="method">
+<dt id="andante.mathematical_expressions.Comparison.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.Comparison.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.mathematical_expressions.Comparison.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.Comparison.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.mathematical_expressions.Is">
+<em class="property">class </em><code class="descclassname">andante.mathematical_expressions.</code><code class="descname">Is</code><span class="sig-paren">(</span><em>arg1</em>, <em>arg2</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.Is" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.logic_concepts.Atom" title="andante.logic_concepts.Atom"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.logic_concepts.Atom</span></code></a></p>
+<dl class="method">
+<dt id="andante.mathematical_expressions.Is.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.Is.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.mathematical_expressions.Is.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.Is.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.mathematical_expressions.ParenthesisArithmeticExpression">
+<em class="property">class </em><code class="descclassname">andante.mathematical_expressions.</code><code class="descname">ParenthesisArithmeticExpression</code><span class="sig-paren">(</span><em>expr</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.ParenthesisArithmeticExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.mathematical_expressions.ArithmeticExpression" title="andante.mathematical_expressions.ArithmeticExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.mathematical_expressions.ArithmeticExpression</span></code></a></p>
+<dl class="method">
+<dt id="andante.mathematical_expressions.ParenthesisArithmeticExpression.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.ParenthesisArithmeticExpression.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.mathematical_expressions.ParenthesisArithmeticExpression.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.ParenthesisArithmeticExpression.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.mathematical_expressions.TrigoExpression">
+<em class="property">class </em><code class="descclassname">andante.mathematical_expressions.</code><code class="descname">TrigoExpression</code><span class="sig-paren">(</span><em>expr</em>, <em>symbol</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.TrigoExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.mathematical_expressions.ArithmeticExpression" title="andante.mathematical_expressions.ArithmeticExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.mathematical_expressions.ArithmeticExpression</span></code></a></p>
+<dl class="method">
+<dt id="andante.mathematical_expressions.TrigoExpression.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.TrigoExpression.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms all underlying logic concepts of the object, or if none, the object itself</p>
+<p>Clauses have their atoms transformed
+Predicates have their terms transformed
+Variables are transformed</p>
+<dl class="docutils">
+<dt>fun <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd>The function that transforms logic concepts</dd>
+</dl>
+<dl class="docutils">
+<dt>andante.logic_concepts.LogicConcept</dt>
+<dd>The transformed logic concept</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.mathematical_expressions.TrigoExpression.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.TrigoExpression.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.mathematical_expressions.UnificationComparison">
+<em class="property">class </em><code class="descclassname">andante.mathematical_expressions.</code><code class="descname">UnificationComparison</code><span class="sig-paren">(</span><em>arg1</em>, <em>arg2</em>, <em>symbol</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.UnificationComparison" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.mathematical_expressions.Comparison" title="andante.mathematical_expressions.Comparison"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.mathematical_expressions.Comparison</span></code></a></p>
+<dl class="method">
+<dt id="andante.mathematical_expressions.UnificationComparison.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>subst</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mathematical_expressions.UnificationComparison.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-andante.mode">
+<span id="andante-mode-module"></span><h2>andante.mode module<a class="headerlink" href="#module-andante.mode" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="andante.mode.Mode">
+<em class="property">class </em><code class="descclassname">andante.mode.</code><code class="descname">Mode</code><span class="sig-paren">(</span><em>recall</em>, <em>atom</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mode.Mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="andante.mode.Mode.atom_arity">
+<code class="descname">atom_arity</code><a class="headerlink" href="#andante.mode.Mode.atom_arity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.mode.Mode.atom_name">
+<code class="descname">atom_name</code><a class="headerlink" href="#andante.mode.Mode.atom_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determination form of a mode
+Ex: Input: modeh(<a href="#id1"><span class="problematic" id="id2">*</span></a>,parent_of(+person,-person)) (as a Mode object)</p>
+<blockquote>
+<div>Ouput: ‘parent_of/2’ (string)</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.mode.Mode.instantiate">
+<code class="descname">instantiate</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; andante.logic_concepts.Predicate<a class="headerlink" href="#andante.mode.Mode.instantiate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates the mode by converting all types (andante.mode.Type) within 
+its atom to variables (andante.logic_concepts.Variable).</p>
+<p>mode_str = ‘modeh(<a href="#id3"><span class="problematic" id="id4">*</span></a>, parent(+person, -person))’ 
+mode = andante.parser.parse(mode_str)
+atom = mode.isinstance()
+print(atom)
+&gt; ‘parent(A, B)’</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.mode.ModeCollection">
+<em class="property">class </em><code class="descclassname">andante.mode.</code><code class="descname">ModeCollection</code><span class="sig-paren">(</span><em>modes=None</em>, <em>determinations=None</em>, <em>options=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mode.ModeCollection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="andante.mode.ModeCollection.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mode.ModeCollection.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an new item to the manager</p>
+<p>The item can be a andante.mode.Modeh object, a andante.mode.Modeb object or 
+it must represent a determination</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.mode.ModeCollection.add_determination">
+<code class="descname">add_determination</code><span class="sig-paren">(</span><em>deterh</em>, <em>deterb</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mode.ModeCollection.add_determination" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a single determination</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.mode.ModeCollection.get_modeb">
+<code class="descname">get_modeb</code><span class="sig-paren">(</span><em>expr</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mode.ModeCollection.get_modeb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.mode.ModeCollection.get_modeb_from_modeh">
+<code class="descname">get_modeb_from_modeh</code><span class="sig-paren">(</span><em>expr</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mode.ModeCollection.get_modeb_from_modeh" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.mode.ModeCollection.get_modeh">
+<code class="descname">get_modeh</code><span class="sig-paren">(</span><em>expr</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mode.ModeCollection.get_modeh" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.mode.ModeCollection.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mode.ModeCollection.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a single item from the manager</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.mode.Modeb">
+<em class="property">class </em><code class="descclassname">andante.mode.</code><code class="descname">Modeb</code><span class="sig-paren">(</span><em>recall</em>, <em>atom</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mode.Modeb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.mode.Mode" title="andante.mode.Mode"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.mode.Mode</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.mode.Modeh">
+<em class="property">class </em><code class="descclassname">andante.mode.</code><code class="descname">Modeh</code><span class="sig-paren">(</span><em>recall</em>, <em>atom</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mode.Modeh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.mode.Mode" title="andante.mode.Mode"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.mode.Mode</span></code></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="andante.mode.get_input_name_decorator">
+<code class="descclassname">andante.mode.</code><code class="descname">get_input_name_decorator</code><span class="sig-paren">(</span><em>input_types=[&lt;class 'str'&gt;]</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.mode.get_input_name_decorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Feeds the name of the input to the decorated function</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-andante.options">
+<span id="andante-options-module"></span><h2>andante.options module<a class="headerlink" href="#module-andante.options" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="andante.options.ObjectWithTemporaryOptions">
+<em class="property">class </em><code class="descclassname">andante.options.</code><code class="descname">ObjectWithTemporaryOptions</code><span class="sig-paren">(</span><em>options=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.options.ObjectWithTemporaryOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dl class="method">
+<dt id="andante.options.ObjectWithTemporaryOptions.add_temporary_options">
+<code class="descname">add_temporary_options</code><span class="sig-paren">(</span><em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.options.ObjectWithTemporaryOptions.add_temporary_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.options.ObjectWithTemporaryOptions.options">
+<code class="descname">options</code><a class="headerlink" href="#andante.options.ObjectWithTemporaryOptions.options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.options.ObjectWithTemporaryOptions.rem_temporary_options">
+<code class="descname">rem_temporary_options</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.options.ObjectWithTemporaryOptions.rem_temporary_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.options.ObjectWithTemporaryOptions.verboseprint">
+<code class="descname">verboseprint</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.options.ObjectWithTemporaryOptions.verboseprint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.options.Options">
+<em class="property">class </em><code class="descclassname">andante.options.</code><code class="descname">Options</code><span class="sig-paren">(</span><em>options=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.options.Options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="andante.options.Options.c">
+<code class="descname">c</code><em class="property"> = 2</em><a class="headerlink" href="#andante.options.Options.c" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.options.Options.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.options.Options.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.options.Options.h">
+<code class="descname">h</code><em class="property"> = 10000</em><a class="headerlink" href="#andante.options.Options.h" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.options.Options.hmetric">
+<code class="descname">hmetric</code><em class="property"> = 'FnMetric'</em><a class="headerlink" href="#andante.options.Options.hmetric" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.options.Options.i">
+<code class="descname">i</code><em class="property"> = 2</em><a class="headerlink" href="#andante.options.Options.i" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.options.Options.learner">
+<code class="descname">learner</code><em class="property"> = 'ProgolLearner'</em><a class="headerlink" href="#andante.options.Options.learner" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.options.Options.logging">
+<code class="descname">logging</code><em class="property"> = False</em><a class="headerlink" href="#andante.options.Options.logging" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.options.Options.solver">
+<code class="descname">solver</code><em class="property"> = 'AndanteSolver'</em><a class="headerlink" href="#andante.options.Options.solver" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.options.Options.update_knowledge">
+<code class="descname">update_knowledge</code><em class="property"> = True</em><a class="headerlink" href="#andante.options.Options.update_knowledge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.options.Options.verbose">
+<code class="descname">verbose</code><em class="property"> = 0</em><a class="headerlink" href="#andante.options.Options.verbose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.options.SystemParameters">
+<em class="property">class </em><code class="descclassname">andante.options.</code><code class="descname">SystemParameters</code><a class="headerlink" href="#andante.options.SystemParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="andante.options.SystemParameters.generic_name_for_variable">
+<code class="descname">generic_name_for_variable</code><em class="property"> = True</em><a class="headerlink" href="#andante.options.SystemParameters.generic_name_for_variable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.options.SystemParameters.max_recall">
+<code class="descname">max_recall</code><em class="property"> = 100</em><a class="headerlink" href="#andante.options.SystemParameters.max_recall" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="andante.options.SystemParameters.maxclauses">
+<code class="descname">maxclauses</code><em class="property"> = 100</em><a class="headerlink" href="#andante.options.SystemParameters.maxclauses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="andante-parser-module">
+<h2>andante.parser module<a class="headerlink" href="#andante-parser-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="andante-program-module">
+<h2>andante.program module<a class="headerlink" href="#andante-program-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-andante.solver">
+<span id="andante-solver-module"></span><h2>andante.solver module<a class="headerlink" href="#module-andante.solver" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="andante.solver.AndanteSolver">
+<em class="property">class </em><code class="descclassname">andante.solver.</code><code class="descname">AndanteSolver</code><span class="sig-paren">(</span><em>options=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.solver.AndanteSolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.solver.Solver" title="andante.solver.Solver"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.solver.Solver</span></code></a></p>
+<dl class="method">
+<dt id="andante.solver.AndanteSolver.query">
+<code class="descname">query</code><span class="sig-paren">(</span><em>q</em>, <em>knowledge</em>, <em>sigma=None</em>, <em>**temp_options</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.solver.AndanteSolver.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries some knowledge</p>
+<p>This function returns a generator of all possible substitutions for a 
+given query and a given knowledge</p>
+<dl class="docutils">
+<dt>q: andante.logic_concepts.Goal</dt>
+<dd>The goal</dd>
+<dt>knowledge: andante.knowledge.Knowledge</dt>
+<dd>The knowledge</dd>
+</dl>
+<dl class="docutils">
+<dt>subst <span class="classifier-delimiter">:</span> <span class="classifier">andante.substitution.Substitution</span></dt>
+<dd>A possible substitution for the query</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.solver.AndanteSolver.succeeds_on">
+<code class="descname">succeeds_on</code><span class="sig-paren">(</span><em>q</em>, <em>knowledge</em>, <em>sigma=None</em>, <em>**temp_options</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.solver.AndanteSolver.succeeds_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to the query method but outputs a boolean.</p>
+<p>Returns true if there exists at least a substitution for the query.
+Otherwise returns false.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.solver.AndanteState">
+<em class="property">class </em><code class="descclassname">andante.solver.</code><code class="descname">AndanteState</code><span class="sig-paren">(</span><em>atoms</em>, <em>sigma=None</em>, <em>next_clause=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.solver.AndanteState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>State used in function _query</p>
+<dl class="docutils">
+<dt>sigma <span class="classifier-delimiter">:</span> <span class="classifier">andante.substitution.Substitution</span></dt>
+<dd>The substitution at a given state</dd>
+<dt>atoms <span class="classifier-delimiter">:</span> <span class="classifier">list of aloe.logic_concepts.Atom</span></dt>
+<dd>List of atoms that still need to be proven true</dd>
+<dt>curr_atom <span class="classifier-delimiter">:</span> <span class="classifier">aloe.logic_concepts.Atom</span></dt>
+<dd>The current atom we try to make true</dd>
+<dt>next_clause <span class="classifier-delimiter">:</span> <span class="classifier">aloe.logic_concepts.Clause</span></dt>
+<dd>The clause we need to observe next</dd>
+</dl>
+<dl class="method">
+<dt id="andante.solver.AndanteState.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.solver.AndanteState.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.solver.AndanteState.has_atoms">
+<code class="descname">has_atoms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.solver.AndanteState.has_atoms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.solver.AndanteState.next_atom">
+<code class="descname">next_atom</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.solver.AndanteState.next_atom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="andante.solver.Solver">
+<em class="property">class </em><code class="descclassname">andante.solver.</code><code class="descname">Solver</code><span class="sig-paren">(</span><em>options=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.solver.Solver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#andante.options.ObjectWithTemporaryOptions" title="andante.options.ObjectWithTemporaryOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">andante.options.ObjectWithTemporaryOptions</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Deduction engine</p>
+<dl class="method">
+<dt id="andante.solver.Solver.query">
+<code class="descname">query</code><span class="sig-paren">(</span><em>q</em>, <em>knowledge</em>, <em>verbose=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.solver.Solver.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries some knowledge</p>
+<p>This function returns a generator of all possible substitutions for a 
+given query and a given knowledge</p>
+<dl class="docutils">
+<dt>q: andante.logic_concepts.Goal</dt>
+<dd>The goal</dd>
+<dt>knowledge: andante.knowledge.Knowledge</dt>
+<dd>The knowledge</dd>
+</dl>
+<dl class="docutils">
+<dt>subst <span class="classifier-delimiter">:</span> <span class="classifier">andante.substitution.Substitution</span></dt>
+<dd>A possible substitution for the query</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.solver.Solver.solve">
+<code class="descname">solve</code><span class="sig-paren">(</span><em>*args</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.solver.Solver.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same behavior as query</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.solver.Solver.succeeds_on">
+<code class="descname">succeeds_on</code><span class="sig-paren">(</span><em>q</em>, <em>knowledge</em>, <em>verbose=None</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.solver.Solver.succeeds_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to the query method but outputs a boolean.</p>
+<p>Returns true if there exists at least a substitution for the query.
+Otherwise returns false.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-andante.substitution">
+<span id="andante-substitution-module"></span><h2>andante.substitution module<a class="headerlink" href="#module-andante.substitution" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="andante.substitution.Substitution">
+<em class="property">class </em><code class="descclassname">andante.substitution.</code><code class="descname">Substitution</code><a class="headerlink" href="#andante.substitution.Substitution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Substitution as defined in first order logic</p>
+<dl class="docutils">
+<dt>variables <span class="classifier-delimiter">:</span> <span class="classifier">set of andante.logic_concepts.Variable</span></dt>
+<dd>The domain of substitution</dd>
+<dt>tally <span class="classifier-delimiter">:</span> <span class="classifier">dict of int</span></dt>
+<dd>Gives for a variable symbol, the highest tally number</dd>
+<dt>subst <span class="classifier-delimiter">:</span> <span class="classifier">dict of andante.logic_concepts.Term</span></dt>
+<dd>Mapping of variables to terms</dd>
+</dl>
+<dl class="method">
+<dt id="andante.substitution.Substitution.add_variable">
+<code class="descname">add_variable</code><span class="sig-paren">(</span><em>variable</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.substitution.Substitution.add_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a single variable to the domain of the substitution</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.substitution.Substitution.add_variables">
+<code class="descname">add_variables</code><span class="sig-paren">(</span><em>expr</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.substitution.Substitution.add_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds all variables present in some expression to the domain of substitution</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.substitution.Substitution.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.substitution.Substitution.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a deep copy of itself</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="andante.substitution.Substitution.from_mode">
+<em class="property">static </em><code class="descname">from_mode</code><span class="sig-paren">(</span><em>M</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.substitution.Substitution.from_mode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="andante.substitution.Substitution.generic_name_for_variables">
+<em class="property">static </em><code class="descname">generic_name_for_variables</code><span class="sig-paren">(</span><em>expr</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.substitution.Substitution.generic_name_for_variables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.substitution.Substitution.get_type_subst">
+<code class="descname">get_type_subst</code><span class="sig-paren">(</span><em>atom</em>, <em>M</em>, <em>body_atom=False</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.substitution.Substitution.get_type_subst" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.substitution.Substitution.items">
+<code class="descname">items</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.substitution.Substitution.items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="andante.substitution.Substitution.new_variable">
+<code class="descname">new_variable</code><span class="sig-paren">(</span><em>symbol</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.substitution.Substitution.new_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new variable that has some input symbol</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.substitution.Substitution.remove_excess_variables">
+<code class="descname">remove_excess_variables</code><span class="sig-paren">(</span><em>domain</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.substitution.Substitution.remove_excess_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a substitution with its variables restrained to some input domain</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.substitution.Substitution.rename_variables">
+<code class="descname">rename_variables</code><span class="sig-paren">(</span><em>x</em>, <em>subst=None</em>, <em>new_variables=True</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.substitution.Substitution.rename_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename all variables by mapping to an already existing substitution or by introducing new variables</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.substitution.Substitution.substitute">
+<code class="descname">substitute</code><span class="sig-paren">(</span><em>expr</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.substitution.Substitution.substitute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies the substitution to some expression</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="andante.substitution.Substitution.unify">
+<code class="descname">unify</code><span class="sig-paren">(</span><em>atom1</em>, <em>atom2</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.substitution.Substitution.unify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tries to match two expressions together and iteratively updates self.subst</p>
+<dl class="docutils">
+<dt>SubstitutionError</dt>
+<dd>If unification impossible</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="andante.substitution.SubstitutionError">
+<em class="property">exception </em><code class="descclassname">andante.substitution.</code><code class="descname">SubstitutionError</code><span class="sig-paren">(</span><em>key</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.substitution.SubstitutionError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-andante.utils">
+<span id="andante-utils-module"></span><h2>andante.utils module<a class="headerlink" href="#module-andante.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="andante.utils.generate_variable_names">
+<code class="descclassname">andante.utils.</code><code class="descname">generate_variable_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#andante.utils.generate_variable_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="andante.utils.multiple_replace">
+<code class="descclassname">andante.utils.</code><code class="descname">multiple_replace</code><span class="sig-paren">(</span><em>dict</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#andante.utils.multiple_replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>source: <a class="reference external" href="https://stackoverflow.com/questions/15175142/how-can-i-do-multiple-substitutions-using-regex">https://stackoverflow.com/questions/15175142/how-can-i-do-multiple-substitutions-using-regex</a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-andante">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-andante" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Andante’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Simon Jacquet.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

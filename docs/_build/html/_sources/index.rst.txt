@@ -11,7 +11,7 @@ Welcome to Andante's documentation!
    :caption: Table of Contents
    :name: mastertoc
 
-   aloe
+   andante
 
 Indices and tables
 ==================

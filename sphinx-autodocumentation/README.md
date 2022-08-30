@@ -20,16 +20,16 @@ pip install sphinx_rtd_theme
 
 ## Produce output
 
-Run make with html as argument in the andante/docs/ folder:
+Run make with html as argument in the current folder:
 ```bash
 make html
 ```
 
 ## See output html
 
-Go to the _build/html and open index.html.
+Go to the html folder and open index.html.
 ```bash
-cd _build/html ; open index.html
+cd html ; open index.html
 ```
 
 

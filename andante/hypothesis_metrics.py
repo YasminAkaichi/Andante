@@ -1,6 +1,14 @@
 """
 Define the metrics for generating and evaluating candidate clauses in the
 build_hypothesis method of the andante.learner.ProgolLearner class.
+
+License
+-------
+
+This software is distributed under the terms of both the MIT license and the
+Apache License (Version 2.0).
+
+See LICENSE for details.
 """
 
 from abc import ABC

@@ -1,3 +1,13 @@
+"""
+License
+-------
+
+This software is distributed under the terms of both the MIT license and the
+Apache License (Version 2.0).
+
+See LICENSE for details.
+"""
+
 from andante.program import AndanteProgram
 from andante.parser  import Parser
 from andante.knowledge import Knowledge, MultipleKnowledge

@@ -1,3 +1,13 @@
+"""
+License
+-------
+
+This software is distributed under the terms of both the MIT license and the
+Apache License (Version 2.0).
+
+See LICENSE for details.
+"""
+
 from andante.logic_concepts import Function, Constant, Predicate, Variable, Term, Atom, Type
 from andante.utils import generate_variable_names
 from andante.collections  import OrderedSet

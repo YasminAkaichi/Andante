@@ -1,3 +1,13 @@
+"""
+License
+-------
+
+This software is distributed under the terms of both the MIT license and the
+Apache License (Version 2.0).
+
+See LICENSE for details.
+"""
+
 from parsimonious.nodes import NodeVisitor
 
 from andante.logic_concepts import (

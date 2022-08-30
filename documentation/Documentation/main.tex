@@ -28,7 +28,7 @@ implementation in the Andante toolbox.
 
 All jupyter notebook examples can be found in the \textsc{Documentation
 examples.ipynb} file in the git-repository for the Andante package at the
-address: \url{https://gitlab.unamur.be/sijacque/andante/-/tree/master/src}
+address: \url{https://gitlab.unamur.be/sijacque/andante}
 
 Section \ref{terminology} gives the terminologies used throughout the rest of 
 the document and in the implementation.
@@ -480,7 +480,7 @@ $\rho$, terminated.
 
 The Andante toobox implements only the case where we have access to both
 positive and negative examples. All those functions are implemented in the
-\textsc{andante.hypothesis\_metrics.py} module.
+\textsc{andante/hypothesis\_metrics.py} module.
 
 \begin{itemize}
     \item Let $s$ be the current state. 
@@ -587,60 +587,60 @@ challenge the knowledge both before and after induction.
 \begin{itemize}
     \item \textbf{Utilities:} Regroups a few utility classes.
     \begin{itemize}
-        \item \textsc{collections.py}: Defines \textsc{OrderedSet} class.
-        \item \textsc{options.py}: Option-related classes.
+        \item \textsc{andante/collections.py}: Defines \textsc{OrderedSet} class.
+        \item \textsc{andante/options.py}: Option-related classes.
     \end{itemize}
     
 \item \textbf{Basic objects:} Regroups all classes implementing terminology
     as described in section \ref{terminology:lpconcepts}.
     \begin{itemize}
-        \item \textsc{logic\_concepts.py}: Classes for Logic Concept terminology
+        \item \textsc{andante/logic\_concepts.py}: Classes for Logic Concept terminology
             as described in section \ref{terminology:lpconcepts}.
-        \item \textsc{mode.py}: Classes for Inducive Logic Concept terminology
+        \item \textsc{andante/mode.py}: Classes for Inducive Logic Concept terminology
             as described in section \ref{terminology:ilpconcepts}.
-        \item \textsc{mathematical\_expressions.py}: Classes for all
+        \item \textsc{andante/mathematical\_expressions.py}: Classes for all
             mathemitical expressions.
-        \item \textsc{knowledge.py}: Classes that act as knowledge, i.e.
+        \item \textsc{andante/knowledge.py}: Classes that act as knowledge, i.e.
             collections of clauses.
     \end{itemize}
     
     \item \textbf{Parsing:} Regroups modules for parsing text into Python
         objects.
     \begin{itemize}
-        \item \textsc{grammar.py}: Module for defining the grammar for parsing.
+        \item \textsc{andante/grammar.py}: Module for defining the grammar for parsing.
             The class also allows to transform text into a grammar tree.
-        \item \textsc{grammar\_tree\_visitor.py}: Module for turning the grammar
+        \item \textsc{andante/grammar\_tree\_visitor.py}: Module for turning the grammar
             tree into Python objects.
-        \item \textsc{parser.py}: Main module for parsing text. It makes the
+        \item \textsc{andante/parser.py}: Main module for parsing text. It makes the
             link between the two previous modules.
     \end{itemize}
     
     \item \textbf{Solving:} Regroups modules around the engine for deduction.
     \begin{itemize}
-        \item \textsc{substitution.py}: Defines the \textsc{Substitution} class
+        \item \textsc{andante/substitution.py}: Defines the \textsc{Substitution} class
             that handles substitution but also unification.
-        \item \textsc{solver.py}: Implements the engine for deduction.
+        \item \textsc{andante/solver.py}: Implements the engine for deduction.
     \end{itemize}
     
     \item \textbf{Learning:} Regroups modules around the induction engine.
     \begin{itemize}
-        \item \textsc{hypothesis\_metrics.py}: Metrics for choosing the best
+        \item \textsc{andante/hypothesis\_metrics.py}: Metrics for choosing the best
             clause to learn.
-        \item \textsc{learner.py}: Engine for induction, i.e. learning new
+        \item \textsc{andante/learner.py}: Engine for induction, i.e. learning new
             clauses.
-        \item \textsc{live\_log.py}: Logs for storing information produced by
+        \item \textsc{andante/live\_log.py}: Logs for storing information produced by
             the induction engine.
     \end{itemize}
     
     \item \textbf{Interface:}
     \begin{itemize}
-        \item \textsc{interface.py}: Defines interfaces to query, induce,
+        \item \textsc{andante/interface.py}: Defines interfaces to query, induce,
             inspect an Andante program.
     \end{itemize}
     
     \item \textbf{Program:}
     \begin{itemize}
-        \item \textsc{program.py}: Defines the \textsc{AndanteProgram} class
+        \item \textsc{andante/program.py}: Defines the \textsc{AndanteProgram} class
             that facilitates using the paser, the solver and the learner.
     \end{itemize}
     

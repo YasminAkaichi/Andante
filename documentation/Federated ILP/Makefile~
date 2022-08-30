@@ -1,0 +1,8 @@
+#! /usr/bin/make -f 
+
+pdf: presentation-250621.tex
+	pdflatex presentation-250621.tex; pdflatex presentation-250621.tex
+
+handout-pdf: presentation-250621.tex
+	pdfnup --nup 2x2 --a5paper --delta "0.5cm 0.5cm" --trim "-0.5cm -0.5cm -0.5cm -0.5cm" presentation-250621.pdf
+	mv presentation-250621-nup.pdf handout.pdf

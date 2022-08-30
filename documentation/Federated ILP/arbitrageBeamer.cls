@@ -1,0 +1,26 @@
+% Copyright 2018 by Jean-Marie Jacquet
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% This file results from an adaptation of
+% the beamer file from Till Tantau
+% taking inspiration from similar work
+% done by Eric Cornelis (University of Namur) in 2012
+% for the Naxys research center
+
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+\ProvidesClass{arbitrageBeamer}
+   [2018/04/01 Class for slides of the Arbitrage Project]
+
+\LoadClassWithOptions{beamer}
+
+\gdef\beamer@theme@leiiutbm@class@babel@lang{english}
+
+\usetheme{ARBITRAGE}
+
+\endinput
+

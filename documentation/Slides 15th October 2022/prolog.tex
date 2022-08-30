@@ -1,0 +1,16 @@
+% Meta interpretor for regular grammar
+parse(S,G1,G2) :- parse(s(0),S,[],G1,G2).
+
+parse(Q,X,X,G1,G2) :- abduce(acceptor(Q),G1,G2).
+parse(Q,[C|X],Y,G1,G2) :- skolem(P), abduce(delta1(Q,C,P),G1,G3), parse(P,X,Y,G3,G2).
+
+abduce(X,G,G) :- member(X,G).
+abduce(X,G,[X|G]) :- not(member(X,G)).
+
+skolem(s(0)). skolem(s(1)).
+
+% Examples for parity example
+parse([],[],G1), parse([0],G1,G2), parse([0,0],G2,G3), parse([1,1],G3,G4), parse([0,0,0],G4,G5), parse([0,1,1],G5,G6), parse([1,0,1],G6,G), not(parse([1],G,G)), not(parse([0,1],G,G).
+
+% Output
+G = [delta1(s(1),0,s(1)), delta1(s(0),1,s(1)), delta1(s(1),1,s(0)), delta1(s(0),0,s(0)), acceptor(s(0))]

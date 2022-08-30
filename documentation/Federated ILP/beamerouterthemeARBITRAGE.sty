@@ -1,0 +1,69 @@
+\ProvidesPackage{beamerouterthemeARBITRAGE}
+   [2018/04/01 Beamer Outer 'ARBITRAGE' Theme]
+
+\mode<presentation>
+   
+\setbeamercolor{section in head/foot}{parent=palette quaternary}
+\setbeamercolor{subsection in head/foot}{parent=palette primary}
+
+\setbeamercolor{frametitle}{fg=white,bg=unamurgray}
+\setbeamercolor{frametitle right}{fg=white,bg=unamurgreen}
+
+% \setbeamercolor{author in head/foot}{parent=section in head/foot}
+\setbeamercolor{author in head/foot}{fg=white,bg=unamurgreen}
+% \setbeamercolor{title in head/foot}{parent=subsection in head/foot}
+\setbeamercolor{title in head/foot}{fg=white,bg=unamurgray}
+
+\setbeamercolor*{palette primary}{use=structure,fg=white,bg=structure.fg}
+% \setbeamercolor*{palette primary}{use=structure,fg=white,bg=unamurgray}
+\setbeamercolor*{palette secondary}{use=structure,fg=white,bg=structure.fg!75!black}
+\setbeamercolor*{palette tertiary}{use=structure,fg=white,bg=structure.fg!50!black}
+\setbeamercolor*{palette quaternary}{fg=white,bg=unamurgreen}
+
+\setbeamercolor*{sidebar}{use=structure,bg=structure.fg}
+  
+\setbeamercolor*{palette sidebar primary}{use=structure,fg=structure.fg!10}
+\setbeamercolor*{palette sidebar secondary}{fg=white}
+\setbeamercolor*{palette sidebar tertiary}{use=structure,fg=structure.fg!50}
+\setbeamercolor*{palette sidebar quaternary}{fg=white}
+
+\setbeamercolor*{titlelike}{fg=white,bg=unamurgreen}
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+\def\livrenamur{%
+\begin{picture}(0,0)
+% \put(0,11){%
+\put(0,2){%
+\makebox(0,0){%
+\begin{tikzpicture}
+% \draw (0,0) -- (4,0) -- (4,1)-- (0,1) --cycle;
+
+% \path[draw=red,fill=red,xscale=1,yscale=0.35] (4,1) .. controls (3.5,1) and (2,1) .. (2,0)
+%       .. controls (2,1) and (0.5,1) .. (0,1) -- cycle;
+
+\path[draw=white,fill=white,xscale=1,yscale=0.35] 
+(3,1) .. controls (2.5,1) and (2,1) .. (2,0)
+      .. controls (2,1) and (1.5,1) .. (1,1) -- cycle;
+
+\end{tikzpicture}}}
+\end{picture}}
+
+\makeatother
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fill,rightskip=1cm]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=1cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \hspace*{-.5\paperwidth}\livrenamur}%
+  \vskip0pt%
+}
+\makeatletter
+
+\mode
+<all>

@@ -1,0 +1,52 @@
+
+\frametitle{Inductive logic programming}
+
+\begin{itemize}
+
+\vfill
+\pause
+\item Given background knowledge
+
+\begin{center}
+\begin{minipage}{8.5cm}
+\begin{block}{}
+\begin{lstlisting}[basicstyle=\scriptsize]
+parent(ann,mary).      female(ann).
+parent(ann,tom).       female(mary).
+parent(tom,eve).       female(eve).
+\end{lstlisting}
+\end{block}
+\end{minipage}
+\end{center}
+
+\vfill
+\pause
+\item Given positive and negative information
+
+\begin{center}
+\begin{minipage}{8.5cm}
+\begin{block}{}
+\begin{lstlisting}[basicstyle=\scriptsize]
++ daughter(mary,ann).    - daughter(tom,ann).
++ daughter(eve,tom).     - daughter(tom,eve).
+\end{lstlisting}
+\end{block}
+\end{minipage}
+\end{center}
+
+\vfill
+\pause
+\item Induce relations
+\begin{center}
+\begin{minipage}{8.5cm}
+\begin{block}{}
+\begin{lstlisting}[basicstyle=\scriptsize]
+daughter(X,Y) :- parent(Y,X), female(X).
+\end{lstlisting}
+\end{block}
+\end{minipage}
+\end{center}
+
+\vfill
+\end{itemize}
+

@@ -1,0 +1,117 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem, minted, multicol, amsmath}
+\usepackage[left=3cm, right=3cm]{geometry}
+
+\title{Definitions - ILP}
+\author{Simon Jacquet}
+\date{\today}
+
+\setmintedinline[prolog]{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Predicate logic}
+
+\subsection{Fundamentals}
+\begin{description}[leftmargin=0cm]
+    \item[Variable:] \mintinline{python}{Xxxx} 
+    \item[Function:] \mintinline{python}{xxxx(<Term>,...,<Term>)}  \\ Operator that maps inputs to some output. Terms as input, terms as output ($2 + 3$).
+    \item[Predicate:] \mintinline{python}{xxxx(<Term>,...,<Term>)} \\ Function that takes terms as input and outputs either true or false ($2 < 3$).
+    \item[Function symbol or predicate symbol:] \mintinline{python}{xxxx}
+    \item[Constant:] \mintinline{python}{xxxx} \\ Function symbol or predicate symbol with arity 0.
+    \item[Term:] \mintinline{python}{<Constant> | <Variable> | <Function symbol>}
+    \item[Atom (or atomic formula):] Predicate symbol (ntuple of terms).
+    \item[Literal:] \mintinline{python}{<Atom> | } $\neg$ \mintinline{python}{<Atom>} \\ 
+    A literal is either an atom or its negation. Let $A$ be an atom, 
+    \begin{itemize}
+        \item $A$ is a positive literal;
+        \item $\neg A$ (or $\overline{A}$) is a negative literal.
+    \end{itemize} 
+\end{description} 
+
+\subsection{Clauses}
+\begin{description}[leftmargin=0cm]
+    \item[Clause:] \mintinline{python}{(<Literal>,...,<Literal>)} \\
+    A clause is a finite set of literals. It is to be taken as the disjunction of the literals. Let $A_i, B_i$ be atoms, the same clause can be written as:
+    \begin{eqnarray*}
+         & (A_1, ..., A_n, \neg B_1, ..., \neg B_m) \\
+    \iff & A_1 \lor ... \lor A_n \lor B_1 \lor ... \lor B_m \\
+    \iff & A_1, ..., A_n \leftarrow B_1, ..., B_m
+    \end{eqnarray*}
+    \item[Horn clause:] $A \leftarrow B_1, ..., B_m \quad | \quad \leftarrow B_1, ..., B_m $ \\ A Horn clause has at most 1 positive literal. A Horn clause is either a goal or a definite clause.
+    \item[Denial or goal:] $\leftarrow B_1, ..., B_m$ \\ A denial or goal is a Horn clause with 0 positive literal.
+    \item[Definite clause:] $A \leftarrow B_1, ..., B_m$ \\ A Horn clause with exactly 1 positive literal. $A$, the positive literal is called the head. $B_1, ..., B_n$, the negative literals are called the body.
+    \item[Unit clause:] $A \leftarrow \quad | \quad \leftarrow B$ \\ A unit clause is a Horn clause composed of a single literal, either a positive literal ($A \leftarrow$) or a negative literal ($\leftarrow B$).
+\end{description} 
+
+
+\subsection{Clausal theory}
+\begin{description}[leftmargin=0cm]
+    \item[Clausal theory (aka logic program):] \mintinline{python}{(<Clause>,...,<Clause>)} \\ A clausal theory is a set, or conjunction of clauses. Let $C_i$ be clauses, a clausal theory can be written as:
+    \begin{eqnarray*}
+         & (C_1, ..., C_n) \\
+    \iff & C_1 \land ... \land C_n
+    \end{eqnarray*}
+    \item[Monoadic (Dyadic) clausal theory:] Clausal theory in which all predicates have arity $\leq 1$ ($\leq 2$).
+    \item[Horn logic program:] Clausal theory in which all clauses are Horn clauses.
+    \item[Definite logic program:] Clausal theory in which all clauses are definite clauses.
+    \item[Datalog program:] Logic program in which there are no functions, with the exception of constants.
+    \item[Higher-order Datalog program:] Datalog program in which there is a predicate which has a predicate as argument.
+    \item[Well-formed-formulaes (wffs):] \mintinline{python}{<Literal> | <Clause> | <Clausal theory>}
+    \item[Ground:] Let $E$ be a wff or a term, $E$ is ground iff it contains no variable.
+    \item[Skolemisation:] Replacing variables by constants.
+    \item[Skolem constants:] Unique constants.
+\end{description}
+
+\section{Grammar}
+
+\subsection{Fundamentals}
+\begin{multicols}{2}
+\begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries $L(G)$}]
+\item[$\Sigma$] Finite alphabet
+\item[$\Sigma^*$] Infinite set of strings containing $\ge 0$ letters from $\Sigma$
+\item[$\lambda$] Empty string
+\item[$uv$] Concatenation of string $u$ and $v$
+\item[$|u|$] Length of string $u$
+\item[$L$] Language, a subset of $\Sigma*$
+\item[$\nu$] Set of non-terminal symbols disjoint from $\Sigma$
+\item[$r$] Production rule $LHS \rightarrow RHS$ \\
+           Well-formed when $LHS \in (\nu \cup \Sigma)^*, RHS \in (\nu \cup \Sigma \cup \lambda)^*$ \\
+           When applied, replaces $LHS$ by $RHS$ in a given string
+\item[$G$] Grammar composed of the pair $<s,R>$
+\item[$s$] Start symbol, $s \in \nu$
+\item[$R$] Finite set of production rules
+\item[$L(G)$] Language that follows grammar $G$
+\end{description}
+\end{multicols}
+
+\subsection{Types of grammar}
+Let $a,b \in \Sigma$, let $S,A,B,C \in \nu$. 
+\begin{description}[leftmargin=0cm]
+\item[Regular Chomsky-normal grammar:] $S \rightarrow \lambda \quad | \quad S \rightarrow aB$ \\
+Production rules must be of the form above.
+\item[Linear Context-Free grammar:] $S \rightarrow \lambda \quad | \quad S \rightarrow aB \quad | \quad S \rightarrow Ab$ \\
+Production rules must be of the form above.
+\item[Context-Free grammar:] $S \rightarrow \lambda \quad | \quad S \rightarrow aB \quad | \quad S \rightarrow Ab \quad | \quad S \rightarrow AB$ \\
+Production rules must be of the form above.
+\item[Deterministic Context-Free grammar:] Context-Free grammar with no two rules $S \rightarrow aB, \quad
+S \rightarrow aC$ with $B \neq C$.
+\end{description}
+
+\subsection{Properties of language}
+\begin{itemize}
+    \item $\sigma \in \Sigma^*$ is in $L(G)$ $\iff 
+    \begin{cases}
+      \exists s \in \nu, \\
+      \exists (r_1, ..., r_n) \in R^n, \\
+      s \rightarrow_{r_1} ... \rightarrow_{r_n} \sigma.
+    \end{cases}$
+    \item Language $L$ is Regular/Linear Context-Free/Context-Free iff $\exists G$, $L = L(G)$, with G, a Regular/Linear Context-Free/Context-Free grammar.
+\end{itemize}
+
+\end{document}

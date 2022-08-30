@@ -1,0 +1,435 @@
+
+\begin{frame}{ILP approach}
+
+\begin{align}
+B \land H \quad &\models \quad E \label{eq1} \\
+B \land \overline{E} \quad &\models \quad \overline{H} \label{eq2} \\
+B \land \overline{E} \quad &\models \quad \overline{\bot} \label{eq3} \\
+\overline{\bot} \quad &\models \quad \overline{H} \label{eq4} \\
+H \quad &\models \quad \bot \label{eq5}
+\end{align}
+
+\begin{itemize}
+    \item From (\ref{eq3}), we build $\overline{\bot}$
+    \item From (\ref{eq5}), we build $H$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Subsumption}
+\vfill
+\begin{block}{Atom subsumption}
+Let $\theta$ be a substitution of the form \{$v_1/t_1, ..., v_n/t_n$\}. \\
+Let $F$ be an arbitrary atom. \\
+$F\theta$ is the atom $F$ where each of its variable $v_i$ have been replaced by $t_i$.
+\end{block}
+\vfill
+\begin{block}{Clause subsumption}
+Let $C$ and $D$ be clauses. \\
+$C$ subsumes $D$ iff $\exists \theta = \{v_1/t_1, ..., v_n/t_n\}, C\theta \subseteq D$ \\
+We note $C \preceq D$ \\
+It is worth noting that if $C \preceq D$, then $C \rightarrow D$
+\end{block}    
+\vfill
+\end{frame}
+
+\begin{frame}{Subsumption example}
+\vfill
+\begin{center}
+\begin{tabular}{lllll}
+    A & & All men are mortal & & mortal(X) \\
+    C & & Socrates is mortal & & mortal(socrates) \\
+\end{tabular}
+\end{center}    
+\vfill
+\begin{itemize}
+\item Let $\theta = \{X/\text{socrates}\}$
+\begin{center}
+\begin{tabular}{llll}
+&$A\theta$&$=$&$C$\\
+$\Leftrightarrow$&$A$&$\preceq$&$C$
+\end{tabular}    
+\end{center}
+\vfill
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Computing $\bot$ (i)}
+
+\begin{align}
+B \land H \quad &\models \quad E \tag{\ref{eq1}} \\
+B \land \overline{E} \quad &\models \quad \overline{H} \tag{\ref{eq2}}
+\end{align}
+
+\begin{itemize}
+    \item We suppose $H$ and $E$ to be single Horn clauses
+\end{itemize}
+
+\begin{eqnarray*}
+E &\equiv& A \leftarrow B_1, ..., B_n \\
+  &\equiv& A \lor \neg B_1 \lor ... \lor \neg B_n \\
+\overline{E} &\equiv& \neg E \\
+&\equiv& \neg A \land B_1 \land ... \land B_n \\
+&\equiv& \leftarrow A, \quad B_1 \leftarrow, \quad ..., \quad B_n \leftarrow 
+\end{eqnarray*}    
+
+\begin{itemize}
+    \item The negation of a Horn clause is a set of ground unit clauses
+\end{itemize}    
+    
+\end{frame}
+
+\begin{frame}{Negation of a Horn clause}
+\vfill
+$$\begin{array}{llll}
+E &\equiv& \text{mortal}(X) \leftarrow \text{man}(X)   & \forall X \\
+&\equiv& \text{mortal}(X) \lor \neg \text{man}(X)  & \forall X\\
+\overline{E} &\equiv& \neg E & \\
+&\equiv& \neg \text{mortal}(X) \land \text{man}(X) & \exists X\\
+&\equiv& \neg \text{mortal}(cst) \land \text{man}(cst) &  \\
+\end{array}$$
+\vfill
+\begin{itemize}
+    \item The negation of a Horn clause is a set of unit clauses
+    \item The unit clauses do not have variables $\Rightarrow$ they are ground
+\end{itemize}
+\vfill
+\end{frame}
+
+
+
+\begin{frame}{Computing $\bot$ (ii)}
+
+\begin{align}
+B \land H \quad &\models \quad E \tag{\ref{eq1}} \\
+B \land \overline{E} \quad &\models \quad \overline{H} \tag{\ref{eq2}} \\
+B \land \overline{E} \quad &\models \quad \overline{\bot} \tag{\ref{eq3}} \\
+\overline{\bot} \quad &\models \quad \overline{H} \tag{\ref{eq4}} \\
+H \quad &\models \quad \bot \tag{\ref{eq5}}
+\end{align}
+
+\begin{itemize}
+    \item $\overline{\bot}$ is the conjunction of ground literals which are true in all models $B \land \overline{E}$
+    \begin{itemize}
+        \item[\ding{43}] the smallest Herbrand model of $B \land \overline{E}$ 
+    \end{itemize}
+    \item $\bot = \neg \overline{\bot}$
+    \item $H$ can be found by considering the clauses that $\theta$-subsume $\bot$ (\ref{eq5})
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Model}
+\begin{block}{Model}
+In first order logic, a model $M$ consists of:
+\begin{itemize}
+    \item $D$: universe
+    \item For each $n$-ary relation constant $p$ an n-ary relation $p^D$ over $D$
+    \item For each $n$-ary function constant $f$ an n-ary function $f^D$ over $D$
+    \item For each object constant $c$ an element $c^D$ from $D$
+\end{itemize}
+\end{block}    
+\end{frame}
+
+\begin{frame}{Herbrand model}
+\begin{block}{Ground}
+A term or atom is ground iff it has no variable
+\end{block}    
+\begin{block}{Herbrand universe}
+The Herbrand universe, noted $U_H$ is the set of all ground terms
+\end{block}
+\begin{block}{Herbrand base}
+The Herbrand base, noted $B_H$ is the set of all ground atoms
+\end{block}
+\begin{block}{Herbrand model}
+Model in which the universe is a Herbrand universe
+\end{block}
+\end{frame}
+
+\begin{frame}{Computing $\bot$: example 1}
+\vfill
+\begin{align}
+B \land \overline{E} \quad &\models \quad \overline{\bot} \tag{\ref{eq3}}
+\end{align}
+\vfill
+
+$$\begin{array}{lll}
+B & \text{animal}(X) \leftarrow \text{pet}(X). & \forall X \\
+  & \text{pet}(X) \leftarrow \text{dog}(X).    & \forall X \\
+E & \text{nice}(X) \leftarrow \text{dog}(X).   & \forall X \\
+\only<2->{
+\overline{E} & \neg \text{nice}(X) \land \text{dog}(X). & \exists X \\
+}
+\only<3->{
+\overline{\bot} & \neg \text{nice}(X) \land \text{dog}(X) \land \text{pet}(X) \land \text{animal}(X). & \exists X \\
+}
+\only<4->{
+\bot & \text{nice}(X) \lor \neg \text{dog}(X) \lor \neg \text{pet}(X) \lor \neg \text{animal}(X). & \forall X \\
+}
+\only<5->{
+& \text{nice}(X) \leftarrow \text{dog}(X), \text{pet}(X), \text{animal}(X). & \forall X \\
+}
+\end{array}$$
+
+\vfill
+\end{frame}
+
+\begin{frame}{Computing $\bot$: example 2}
+\vfill
+\begin{align}
+B \land \overline{E} \quad &\models \quad \overline{\bot} \tag{\ref{eq3}}
+\end{align}
+\vfill
+\begin{description}
+\item[$B$] $\text{white}(swan1).$
+\item[$E$] $\leftarrow \text{black}(swan1).$
+\item<2->[] $\neg \text{black}(swan1).$
+\item<3->[$\overline{E}$] $\text{black}(swan1).$
+\item<4->[$\overline{\bot}$] $\text{black}(swan1), \text{white}(swan1).$
+\item<5->[$\bot$] $\leftarrow \text{black}(swan1), \text{white}(swan1).$
+\end{description}
+\vfill
+\end{frame}
+
+
+\begin{frame}{$\bot_i$: introduction}
+
+\begin{itemize}
+    \item In general, $\bot$ has infinite cardinality
+    \item To deal with this, we introduce $\bot_i$
+    \begin{itemize}
+        \item $\bot_i \ \preceq \ \bot$ 
+        \begin{itemize}
+            \item[\ding{43}] property we impose on $\bot_i$
+        \end{itemize}
+        \item $\square \preceq H \preceq \ \bot_i \ \preceq \ \bot $
+        \begin{itemize}
+            \item[\ding{43}] when searching for $H$, we will limit ourselves to those who respect this equation
+        \end{itemize}
+    \end{itemize}
+    \item To ensure we have a valid $\bot_i$, we will use equation \ref{eq3} under another form
+\begin{align}
+B \land \overline{E} \quad &\models \quad \overline{\bot} \tag{\ref{eq3}} \\
+B \land \overline{E} \land \bot \quad &\models \quad \square \tag{3a} \\
+B \land \overline{E} \land \bot_i \quad &\models \quad \square \tag{3b}
+\end{align}
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Modes (i)}
+\begin{block}{Mode declaration}
+\begin{itemize}
+    \item modeh($n$,atom) $|$ modeb($n$,atom)
+    \item $n$: $ * \ | \geq 1$, called the recall
+    \item atom, a ground atom,
+    \item terms in this atom are either (i) constants, (ii) a function of terms, (iii) +type, -type or \#type (type is a constant)
+    \item modeh(*,f(+int,-int)), modeb(*,d(+int,-int)) are modes
+\end{itemize}
+\end{block}    
+\begin{block}{Instantiation}
+Let $m$ be a mode declaration, $a(m)$ is the atom of $m$ with place-markers (iii) replaced by distinct variables.
+\begin{align*}
+m &= \text{modeh}(*,f(+\text{int},-\text{int})) \\
+a(m) &= f(A,B)
+\end{align*}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Modes (ii)}
+\begin{block}{$C \in \mathcal{L}(M)$}
+\begin{itemize}
+    \item Let $C = h \leftarrow b_1, \dots, b_n$, a definite clause
+    \item Let $M$ be a definite mode language
+    \item $C \in \mathcal{L}$ iff
+    \begin{enumerate}
+        \item $h$ (resp. $b_i$) is the atom of a modeh (resp. modeb) declaration, with +type and -type replaced by variables, and \#type replaced by a ground term
+        \item every variable +type in atom $b_i$ corresponds to either (i) a variable +type in $h$ or (ii) a variable -type in $b_j$, $1 \leq j < i$ 
+    \end{enumerate}
+\end{itemize}
+\end{block}
+
+\begin{block}{Example}
+With $M=$
+$\begin{array}{ll}
+modeh(*,f(+int,-int)) & modeb(*,d(+int,-int))  \\
+modeb(*,f(+int,-int)) & modeb(*,m(+int,+int,-int)) \\
+\end{array}$\\
+\vspace{5pt}
+The clause $ f(A,B) \leftarrow d(A,C), f(C,D), m(A,D,B) $ is in $\mathcal{L}(M)$.
+\end{block}
+
+\end{frame}
+
+\begin{frame}{$\bot_i \in \mathcal{L}_i(M)$}
+\begin{block}{Depth $d(v)$}
+\[
+    d(v) = 
+\begin{cases}
+    0, & \text{if } v \text{is in the head of }C\\
+    (\max_{u\in U_v} d(u)) +1,              & \text{otherwise}
+\end{cases}
+\] where $U_v$ are the variables in atoms in the body of $C$ containing $v$.
+\end{block}
+\begin{block}{$C \in \mathcal{L}_i(M)$}
+\begin{itemize}
+    \item $C \in \mathcal{L}(M)$
+    \item All variables in $C$ have depth $\leq i$
+\end{itemize}
+\end{block}    
+\begin{itemize}
+    \item $\bot$ is the most-specific definite clause such that 
+    $ B \ \land \bot \land \ \overline{e} \ \vdash_h \square$
+    \item $\bot_i$ is the most-specific definite clause in $\mathcal{L}_i(M)$ such that $\bot_i \ \preceq \ \bot$
+\end{itemize}
+\end{frame}
+
+% Definitive mode language
+% \mathcal{L}_i(M)
+% \bot_i
+\begin{frame}{Algorithm to construct $\bot_i$ (i)}
+
+\vfill
+\begin{block}{Prior knowledge}
+\begin{itemize}
+    \item $h$, a natural number: depth bound on deduction
+    \item $i$, a natural number: variable distance
+    \item $B$, a set of Horn clauses: background knowledge
+    \item $e$, a definite clause: single sample from examples
+    \item $M$, a set of mode declarations
+\end{itemize}
+\end{block}
+\vfill
+\begin{block}{Initialisation}
+\begin{itemize}
+    \item hash, a hash function: $\text{Terms} \rightarrow N$
+    \item $\overline{e}$, a logic program: $\overline{a} \land b_1 \land ... \land b_n$
+    \item $\bot_i$, a logic program
+    \item InTerms, a set of terms
+    \item $k$, a natural number
+\end{itemize}
+\end{block}
+\vfill
+
+\end{frame}
+
+
+\begin{frame}{Algorithm to construct $\bot_i$ (ii)}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Construct $\bot_i$ - Part 1}\label{alg:bot1}
+
+Get $m \in M$, modeh such that $a(m) \preceq a$ with substitution $\theta_h$ \\
+\If{$\nexists m$}{
+\Return $\square$ \\
+}
+$a_h \gets a(m)$ \\
+\For{$v/t \in \theta_h$}{
+\If{$v$ corresponds to \#type in $m$}{
+Replace $v$ by $t$ in $a_h$ \\
+}\Else{
+Replace $v$ by $v_k$ in $a_h$, with $k=\text{hash}(t)$ \\
+}
+\If{$v$ corresponds to +type in $m$}{
+Add $v$ to InTerms \\
+}
+}
+Add $a_h$ to $\bot_i$ \\
+
+\end{algorithm}    
+\end{frame}
+
+\begin{frame}{Algorithm to construct $\bot_i$ (iii)}
+\scalebox{0.9}{
+\begin{algorithm}[H]
+\scriptsize
+\caption{Construct $\bot_i$ - Part 2}\label{alg:bot2}
+\For{$k \gets 1,\dots,i$}{
+\ForAll{modeb $m \in M$}{
+Let $\{v_1, ..., v_n\}$ be the variables corresponding to +type in $a(m)$ \\
+Let $T_i$ be the set of all terms of the type associated with $v_i$ in $m$ \\
+$T(m) \gets T_1 \times ... \times T_n$ \\
+
+\ForAll{$\langle t_1,\dots,t_n \rangle \in T(m)$}{
+$a_b \gets a(m)$ \\
+$\theta \gets \{v_1/t_1,...,v_n/t_n\}$ \\
+
+\If{Prolog succeeds on goal $a_b\theta$}{
+
+Let $\Theta_b$ be the set of answer substitutions \\
+
+\ForAll{$\theta_b \in \Theta_b$}{
+\ForAll{$v/t \in \theta_b$}{
+\If{$v$ corresponds to \#type in $m$}{
+Replace $v$ by $t$ in $a_b$ \\
+}\Else{
+Replace $v$ by $v_k$ in $a_b$, with $k=\text{hash}(t)$ \\
+}
+\If{$v$ corresponds to -type}{
+Add $v$ to InTerms \\
+}
+}
+}
+
+}
+}
+}
+Add $\overline{a_b}$ to $\bot_i$ \\
+}
+\Return $\bot_i$
+
+\end{algorithm}
+}
+
+\end{frame}
+
+\begin{frame}{Algorithm for search $\square \preceq C \preceq \bot_i$}
+
+\begin{algorithm}[H]\label{alg:C}
+\scriptsize
+\caption{Construct $C$}
+\SetKwInOut{Input}{input}
+\Input{$h, B, e, \bot_i$}
+Open $\gets \{\langle\square, \emptyset, 1\rangle\}$, Closed $\gets \emptyset$ \\
+\While{True}{
+$s \gets $ best(Open) \\
+Open $\gets$ Open $- \{s\}$, Closed $\gets$ Closed $\cup \{s\}$ \\
+\If{$\neg$ prune($s$)}{
+Open $\gets$ $(\text{Open} \cup \rho(s)) - \text{Closed}$ \\
+}
+\If{terminated(Closed,Open)}{\Return best(Closed)}
+\If{Open $=\emptyset$}{
+print 'no compression'\\
+\Return $\langle e,\emptyset,1 \rangle$\\
+}
+}
+
+\end{algorithm}
+
+\begin{itemize}
+    \item $\rho$ is the refinement operator
+\end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Cover set algorithm}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Cover set algorithm}
+\SetKwInOut{Input}{input}
+\Input{$h,i,B,M,E$}
+\ForAll{$e \in E$}{
+Construct $\bot_i$ for $e$ using Algorithms \ref{alg:bot1} and \ref{alg:bot2} \\
+Construct state $s$ from $\bot_i$ using Algorithm \ref{alg:C} \\
+Let $C'$ be the unflattening of $C(s)$ \\
+$B \gets B \cup C'$ \\
+$E \gets E - \{e: e\in E, \ B \land \overline{e} \vdash_h \emptyset\}$ \\
+}
+\end{algorithm}
+\end{frame}% Refinement
+
+
+

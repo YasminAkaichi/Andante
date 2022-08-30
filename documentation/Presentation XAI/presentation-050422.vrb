@@ -1,0 +1,52 @@
+
+\frametitle{Programmation logique inductive}
+
+\begin{itemize}
+
+\vfill
+\pause
+\item Connaissances de base
+
+\begin{center}
+\begin{minipage}{8.5cm}
+\begin{block}{}
+\begin{lstlisting}[basicstyle=\scriptsize]
+parent(anne,marie).      femme(anne).
+parent(anne,tom).        femme(marie).
+parent(tom,eve).         femme(eve).
+\end{lstlisting}
+\end{block}
+\end{minipage}
+\end{center}
+
+\vfill
+\pause
+\item Information positive et négative
+
+\begin{center}
+\begin{minipage}{8.5cm}
+\begin{block}{}
+\begin{lstlisting}[basicstyle=\scriptsize]
++ fille(marie,anne).    - fille(tom,anne).
++ fille(eve,tom).       - fille(tom,eve).
+\end{lstlisting}
+\end{block}
+\end{minipage}
+\end{center}
+
+\vfill
+\pause
+\item Relation induite
+\begin{center}
+\begin{minipage}{8.5cm}
+\begin{block}{}
+\begin{lstlisting}[basicstyle=\scriptsize]
+fille(X,Y) :- parent(Y,X), fille(X).
+\end{lstlisting}
+\end{block}
+\end{minipage}
+\end{center}
+
+\vfill
+\end{itemize}
+

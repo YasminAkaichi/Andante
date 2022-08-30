@@ -1,0 +1,102 @@
+\ProvidesPackageRCS $Header: /Users/joseph/Documents/LaTeX/beamer/base/themes/inner/beamerinnerthemerounded.sty,v d02a7cf4d8ae 2010/06/17 09:11:41 rivanvx $
+
+\RequirePackage{tikz}
+
+\DeclareOptionBeamer{shadow}[true]{\def\beamer@themerounded@shadow{#1}}
+\ExecuteOptionsBeamer{shadow=false}
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\setbeamertemplate{blocks}[rounded][shadow=\beamer@themerounded@shadow]
+\setbeamertemplate{items}[ball]
+\setbeamertemplate{sections/subsections in toc}[ball]
+
+% \setbeamertemplate{title page}[default][colsep=-4bp,rounded=true,shadow=\beamer@themerounded@shadow]
+
+\defbeamertemplate*{title page}{ARBITRAGEtheme}[1][]
+{
+  \vbox{}
+  \vfill
+  \begin{centering}
+% \hspace*{-2cm}
+    \begin{beamercolorbox}[sep=0.5pt,center,#1,shadow=false]{nadititle}
+%      \hspace*{0.75ex}
+      \begin{beamercolorbox}[sep=8pt,center,#1,shadow=false]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{title}\insertsubtitle\par}%
+      \fi%     
+      \end{beamercolorbox}\hskip3ex\vskip0.4em%
+    \end{beamercolorbox}%
+    \vskip1em\par
+% \hspace*{-2cm}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{author}
+      \usebeamerfont{author}\usebeamercolor[fg]{title}\insertauthor
+    \end{beamercolorbox}
+% \hspace*{-2cm}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
+      \usebeamerfont{institute}\usebeamercolor[fg]{title}\insertinstitute
+    \end{beamercolorbox}
+% \hspace*{-2cm}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{date}
+      \usebeamerfont{date}\usebeamercolor[fg]{title}\insertdate
+    \end{beamercolorbox}\vskip0.5em
+% \hspace*{-2cm}
+%    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+  \end{centering}
+  \vfill
+}
+
+\setbeamertemplate{title page}[ARBITRAGEtheme][colsep=-4bp,rounded=true,shadow=\beamer@themerounded@shadow]
+
+%put different background image on the titlepage
+\setbeamertemplate{background}
+ {\ifnum\thepage=1%
+   \includegraphics[width=\paperwidth,height=\paperheight]{nadi_frontpage_bg}
+%% \else%
+%%   \includegraphics[width=\paperwidth,height=\paperheight]{unamur_slide_bg}%
+\fi%
+}
+
+\def\livrenamur{%
+\begin{picture}(0,0)
+% \put(0,11){%
+\put(0,2){%
+\makebox(0,0){%
+\begin{tikzpicture}
+% \draw (0,0) -- (4,0) -- (4,1)-- (0,1) --cycle;
+
+% \path[draw=red,fill=red,xscale=1,yscale=0.35] (4,1) .. controls (3.5,1) and (2,1) .. (2,0)
+%       .. controls (2,1) and (0.5,1) .. (0,1) -- cycle;
+
+\path[draw=white,fill=white,xscale=1,yscale=0.35] 
+(3,1) .. controls (2.5,1) and (2,1) .. (2,0)
+      .. controls (2,1) and (1.5,1) .. (1,1) -- cycle;
+
+\end{tikzpicture}}}
+\end{picture}}
+
+\makeatother
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fill,rightskip=1cm]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=1cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \hspace*{-.5\paperwidth}\livrenamur}%
+  \vskip0pt%
+}
+\makeatletter
+
+ 
+\setbeamertemplate{part page}[default][colsep=-4bp,rounded=true,shadow=\beamer@themerounded@shadow]
+
+ 
+\mode<all>
+

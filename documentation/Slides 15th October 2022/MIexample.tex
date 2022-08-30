@@ -1,0 +1,72 @@
+\begin{frame}[fragile]{Learning in action}
+\begin{minted}[breaklines, bgcolor=black!10]{prolog}
+% Meta interpretor for regular grammar
+parse(S,G1,G2) :- parse(s(0),S,[],G1,G2).
+
+parse(Q,X,X,G1,G2) :- abduce(acceptor(Q),G1,G2).
+parse(Q,[C|X],Y,G1,G2) :- skolem(P), abduce(delta1(Q,C,P),G1,G3), parse(P,X,Y,G3,G2).
+
+abduce(X,G,G) :- member(X,G).
+abduce(X,G,[X|G]) :- not(member(X,G)).
+
+skolem(s(0)). skolem(s(1)).
+\end{minted}    
+
+\vfill
+
+\only<1>{ 
+\mintinline{prolog}{? parse([],[],G1).} \\
+\mintinline{prolog}{H = []}
+}
+
+\only<2>{ 
+\mintinline{prolog}{? parse(s(0),[],[],[],G1).} \\
+\mintinline{prolog}{H = []}
+}
+
+\only<3>{ 
+\mintinline{prolog}{? abduce(acceptor(s(0)),[],G1).} \\
+\mintinline{prolog}{H = []}
+}
+
+\only<4>{ 
+\mintinline{prolog}{G1 = [acceptor(s(0))])} \\
+\mintinline{prolog}{H = G1 = [acceptor(s(0))]}
+}
+
+\only<5>{ 
+\mintinline{prolog}{? parse([0],[acceptor(s(0))],G2).} \\
+\mintinline{prolog}{H = [acceptor(s(0))]}
+}
+
+\only<6>{ 
+\mintinline{prolog}{? parse(s(0),[0],[],[acceptor(s(0))],G2).} \\
+\mintinline{prolog}{H = [acceptor(s(0))]}
+}
+
+\only<7>{ 
+\mintinline{prolog}{? skolem(P), abduce(delta1(s(0),0,P),[acceptor(s(0))],T),}\\ \mintinline{prolog}{| parse(P,[],[],T,G2).} \\
+\mintinline{prolog}{H = [acceptor(s(0))]}
+}
+
+\only<8>{ 
+\mintinline{prolog}{? abduce(delta1(s(0),0,s(0)),[acceptor(s(0))],T),}\\ \mintinline{prolog}{| parse(s(0),[],[],T,G2).} \\
+\mintinline{prolog}{H = [acceptor(s(0))]}
+}
+
+\only<9>{ 
+\mintinline{prolog}{? parse(s(0),[],[],[delta1(s(0),0,s(0)), acceptor(s(0))],G2).} \\
+\mintinline{prolog}{H = [acceptor(s(0))]}
+}
+
+\only<10>{ 
+\mintinline{prolog}{? abduce(acceptor(s(0)),}
+\mintinline{prolog}{| [delta1(s(0),0,s(0)), acceptor(s(0))],G2).} \\
+\mintinline{prolog}{H = [acceptor(s(0))]}
+}
+
+\only<11>{ 
+\mintinline{prolog}{G2 = [delta1(s(0),0,s(0)), acceptor(s(0))]} \\
+\mintinline{prolog}{H = G2 = [delta1(s(0),0,s(0)), acceptor(s(0))]}
+}
+\end{frame}

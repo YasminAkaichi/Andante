@@ -1,0 +1,76 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+%\usecolortheme{orchid}
+\usecolortheme[rgb={0,0.4,0}]{structure}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=blue,
+    }
+
+\title{Summary of my research}
+\author{Simon Jacquet}
+\date{August 29th 2022}
+
+\logo{\includegraphics[height=1cm]{../../images/logo unamur.png}}
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Main research}
+
+\textbf{Timeline:}
+\begin{itemize}
+\item October - January: State of the art for Inductive Logic Programming in
+general. It becomes apparent that the learning of ILP can be quite cryptic.
+\item February - May: Implementation of the Andante python toolbox as a
+solution to this problem. Andante provides an interface for viewing in details
+the ILP learning. Andante provides also Python objects that are easy to
+interact with. 
+\item June - August: Refactorization of the code. Documentation of the Andante
+toolbox both in the code and in the form of outside documentation.
+Implementation of some unit tests.
+\end{itemize}
+
+\textbf{Deliverables:}
+\begin{itemize}
+\item \href{https://gitlab.unamur.be/sijacque/andante/-/tree/master/src}{Andante package}
+\item \href{https://gitlab.unamur.be/sijacque/andante/-/tree/master/docs}{Sphinx auto-generated documentation}
+\item \href{https://gitlab.unamur.be/sijacque/andante-documentation}{Andante documentation}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Grand challenge}
+
+\textbf{Timeline:}
+\begin{itemize}
+\item October - December: Getting in contact with the Cetic for the grand
+    challenges.
+\item January - February: Searching for a bridge between the grand challenge
+    and our research.
+\item March - May: State of the art on the recommendation systems.
+\item June: Search for a database to do medical recommendation.
+\item July - August: Implementation of a Neural Collaborative Filter for the
+    MovieLens dataset and for the UCI ML drug review dataset.
+\end{itemize}
+
+\textbf{Deliverables:}
+\begin{itemize}
+\item \href{https://gitlab.unamur.be/sijacque/fl-ncf/-/tree/master/src}{Implementation of Neural Collaborative Filters}
+\item \href{https://gitlab.unamur.be/sijacque/fl-ncf/-/blob/master/src/MovieLens.sync.ipynb}{Script for the MovieLens dataset}
+\item \href{https://gitlab.unamur.be/sijacque/fl-ncf/-/blob/master/src/UCI_ML.sync.ipynb}{Script for the UCI ML drug review dataset}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{The end}
+\begin{center} \LARGE
+Thank you all for your \\ 
+support / guidance / help \\ 
+during my research!
+\end{center}
+\end{frame}
+
+\end{document}

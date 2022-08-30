@@ -1,0 +1,134 @@
+\begin{frame}{Overview}
+
+\begin{enumerate}
+    \item ILP approach with $\perp$ 
+$$\begin{matrix}
+            B \land H &\models& E && \\
+            B \land \overline{E} &\models& \overline{H} && \\
+            B \land \overline{E} &\models& \overline{\perp} &\models& \overline{H}\\
+            && H &\models& \perp \\
+\end{matrix}$$
+    \item MIL with $E = E_1 \land ... \land E_n$
+\end{enumerate}
+    
+\end{frame}
+
+
+\begin{frame}{Computing $\perp$: example 1}
+\vfill
+\begin{align}
+B \land \overline{E} \quad &\models \quad \overline{\perp} \tag{\ref{eq3}}
+\end{align}
+\vfill
+\begin{description}
+\item[$B$] $\text{animal}(X) \leftarrow \text{pet}(X).$
+\item[]    $\text{pet}(X) \leftarrow \text{dog}(X).$
+\item[$E$] $\text{nice}(X) \leftarrow \text{dog}(X).$
+\item<2->[$\overline{E}$] $ \neg \text{nice}(X) \land \text{dog}(X).$
+\item<3->[$\overline{\perp}$] $ \neg \text{nice}(X) \land \text{dog}(X) \land \text{pet}(X) \land \text{animal}(X).$
+\item<4->[$\perp$] $\text{nice}(X) \lor \neg \text{dog}(X) \lor \neg \text{pet}(X) \lor \neg \text{animal}(X).$
+\item<5->[] $\text{nice}(X) \leftarrow \text{dog}(X), \text{pet}(X), \text{animal}(X).$
+\end{description}
+\vfill
+\end{frame}
+
+\begin{frame}{Algorithm to construct $\perp_i$ (ii)}
+
+\begin{itemize}
+    \item Get $m \in M$, modeh such that $a(m) \preceq a$ with substitution $\theta_h$
+    \item If there is no such $m$, then failure
+    \item $a_h := a(m)$
+    \item For $v/t \in \theta_h$,
+    \begin{itemize}
+        \item if $v$ corresponds to \#type in $m$:
+        \begin{itemize}
+            \item[\ding{43}] replace $v$ by $t$ in $a_h$
+        \end{itemize}
+        \item otherwise:
+        \begin{itemize}
+            \item[\ding{43}] replace $v$ by $v_k$ in $a_h$, with $k=\text{hash}(t)$
+        \end{itemize}
+        \item if $v$ corresponds to +type in $m$:
+        \begin{itemize}
+            \item[\ding{43}] add $v$ to InTerms
+        \end{itemize}
+    \end{itemize}
+    \item Add $a_h$ to $\perp_i$
+\end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Algorithm to construct $\perp_i$ (ii)}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Construct $\perp_i$ - Part 1}\label{alg:cap}
+\begin{algorithmic}[1]
+\State Get $m \in M$, modeh such that $a(m) \preceq a$ with substitution $\theta_h$
+\If{$\nexists m$}
+\State Failure
+\EndIf
+\State $a_h \gets a(m)$
+\For{$v/t \in \theta_h$}
+\If{$v$ corresponds to \#type in $m$}
+\State replace $v$ by $t$ in $a_h$
+\Else 
+\State replace $v$ by $v_k$ in $a_h$, with $k=\text{hash}(t)$
+\EndIf
+\If{$v$ corresponds to +type in $m$}
+\State add $v$ to InTerms
+\EndIf
+\EndFor
+\State Add $a_h$ to $\perp_i$
+\end{algorithmic}
+\end{algorithm}    
+\end{frame}
+
+\begin{frame}{Algorithm to construct $\perp_i$ (iii)}
+
+\begin{algorithm}[H]
+\scriptsize
+\caption{Construct $\perp_i$ - Part 2}
+\begin{algorithmic}[1]
+\For{$k \gets 1,\dots,i$}
+\For{modeb $m \in M$}
+\State Let $\{v_1, ..., v_n\}$ be the variables corresponding to +type in $a(m)$
+\State Let $T_i$ be the set of all terms of the type associated with $v_i$ in $m$
+\State $T(m) \gets T_1 \times ... \times T_n$ 
+\For{$\langle t_1,\dots,t_n \rangle \in T(m)$}
+\State $a_b \gets a(m)$
+\State $\theta \gets \{v_1/t_1,...,v_n/t_n\}$
+\If{Prolog succeeds on goal $a_b\theta$}
+\State Let $\Theta_b$ bet the set of answer substitutions
+\For{$\theta_b \in \Theta_b$}
+\For{$v/t \in \theta_b$}
+\If{$v$ corresponds to \#type in $m$}
+\State Replace $v$ by $t$ in $a_b$
+\Else
+\State Replace $v$ by $v_k$ in $a_b$, with $k=\text{hash}(t)$
+\EndIf
+\If{$v$ corresponds to -type}
+\State Add $v$ to InTerms
+\EndIf
+\EndFor
+\EndFor
+\State Add $\overline{a_b}$
+\EndIf
+\EndFor
+\EndFor
+\EndFor
+\State \Return $\perp_i$
+\end{algorithmic}
+\end{algorithm}    
+    
+\end{frame}
+
+\begin{frame}{Overview}
+\begin{enumerate}
+\vfill
+    \item ILP approach with $\bot$
+    \vfill
+    \item MIL with $E = E_1 \land ... \land E_n$
+\vfill
+\end{enumerate}    
+\end{frame}

@@ -1,0 +1,83 @@
+%------------------------------------------------------
+
+\begin{frame}{Context}
+\vfill
+\begin{itemize}
+    \item Data
+    \begin{itemize}
+        \item Text of laws
+        \item Split in positive examples $E^+$ and negative examples $E^-$
+    \end{itemize}
+    \vfill
+    \item Objective
+    \begin{itemize}
+        \item Construct a logic program that
+        \begin{itemize}
+            \item Generalizes positive examples
+            \item Reject negative examples
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\vfill
+\end{frame}
+
+
+%------------------------------------------------------
+% When thinking about logic, we mostly think of deduction
+
+\begin{frame}{Deduction}
+\vfill
+\begin{itemize}
+    \item Facts
+    \begin{center}
+        All men are mortal.\\
+        Socrates is a man.
+    \end{center}
+    \vfill
+    \item One can deduce
+    \begin{center}
+        Socrates is mortal.
+    \end{center}
+\end{itemize}
+\vfill    
+\end{frame}
+
+%------------------------------------------------------
+
+\begin{frame}{Deduction}
+\vfill
+\begin{itemize}
+    \item Facts
+    \begin{center}
+        mortal(X) $\leftarrow$ man(X).\\
+        man(socrates).
+    \end{center}
+    \vfill
+    \item One can deduce
+    \begin{center}
+        mortal(socrates).
+    \end{center}
+\end{itemize}
+\vfill    
+\end{frame}
+
+%------------------------------------------------------
+
+\begin{frame}{Induction}
+\vfill
+\begin{itemize}
+    \item From specific to general
+    \item Facts
+    \begin{center}
+        mortal(X) $\leftarrow$ man(X).\\
+        man(socrates).
+    \end{center}
+\vfill
+    \item One can deduce
+    \begin{center}
+        mortal(socrates).
+    \end{center}
+\end{itemize}
+\vfill    
+    
+\end{frame}

@@ -1,0 +1,75 @@
+\documentclass{beamer}
+
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+
+
+\begin{document}
+
+
+\begin{frame}{Algorithm to construct $\perp_i$ (ii)}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Construct $\perp_i$ - Part 1}\label{alg:cap}
+
+Get $m \in M$, modeh such that $a(m) \preceq a$ with substitution $\theta_h$ \\
+\If{$\nexists m$}{
+Failure \\
+}
+$a_h \gets a(m)$ \\
+\For{$v/t \in \theta_h$}{
+\If{$v$ corresponds to \#type in $m$}{
+Replace $v$ by $t$ in $a_h$ \\
+}\Else{
+Replace $v$ by $v_k$ in $a_h$, with $k=\text{hash}(t)$ \\
+}
+\If{$v$ corresponds to +type in $m$}{
+Add $v$ to InTerms \\
+}
+}
+Add $a_h$ to $\perp_i$ \\
+
+\end{algorithm}    
+\end{frame}
+
+\begin{frame}{Algorithm to construct $\perp_i$ (iii)}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Construct $\perp_i$ - Part 2}
+\For{$k \gets 1,\dots,i$}{
+\ForAll{modeb $m \in M$}{
+Let $\{v_1, ..., v_n\}$ be the variables corresponding to +type in $a(m)$ \\
+Let $T_i$ be the set of all terms of the type associated with $v_i$ in $m$ \\
+$T(m) \gets T_1 \times ... \times T_n$ \\
+
+\ForAll{$\langle t_1,\dots,t_n \rangle \in T(m)$}{
+$a_b \gets a(m)$ \\
+$\theta \gets \{v_1/t_1,...,v_n/t_n\}$ \\
+
+\If{Prolog succeeds on goal $a_b\theta$}{
+
+Let $\Theta_b$ bet the set of answer substitutions \\
+
+\ForAll{$\theta_b \in \Theta_b$}{
+\ForAll{$v/t \in \theta_b$}{
+\If{$v$ corresponds to \#type in $m$}{
+Replace $v$ by $t$ in $a_b$ \\
+}\Else{
+Replace $v$ by $v_k$ in $a_b$, with $k=\text{hash}(t)$ \\
+}
+\If{$v$ corresponds to -type}{
+Add $v$ to InTerms \\
+}
+}
+}
+
+Add $\overline{a_b}$ to $\perp_i$ \\
+}
+}
+}
+}
+\Return $\perp_i$
+
+\end{algorithm}
+\end{frame}
+
+\end{document}

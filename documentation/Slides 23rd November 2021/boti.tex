@@ -1,0 +1,71 @@
+
+\begin{frame}{Algorithms: Constructing $\bot_i$ (i)}
+
+\begin{algorithm}[H]
+\scriptsize
+\caption{Construct $\bot_i$ - Part 1}\label{alg:bot1}
+
+Get $m \in M$, modeh such that $a(m) \preceq a$ with substitution $\theta_h$ \\
+\If{$\nexists m$}{
+\Return $\square$ \\
+}
+$a_h \gets a(m)$ \\
+\For{$v/t \in \theta_h$}{
+\If{$v$ corresponds to \#type in $m$}{
+Replace $v$ by $t$ in $a_h$ \\
+}\Else{
+Replace $v$ by $v_k$ in $a_h$, with $k=\text{hash}(t)$ \\
+}
+\If{$v$ corresponds to +type in $m$}{
+Add $v$ to InTerms \\
+}
+}
+Add $a_h$ to $\bot_i$ \\
+
+\end{algorithm}    
+    
+\end{frame}
+
+\begin{frame}{Algorithms: Constructing $\bot_i$ (ii)}
+
+\scalebox{0.9}{
+\begin{algorithm}[H]
+\scriptsize
+\caption{Construct $\bot_i$ - Part 2}\label{alg:bot2}
+\For{$k \gets 1,\dots,i$}{
+\ForAll{modeb $m \in M$}{
+Let $\{v_1, ..., v_n\}$ be the variables corresponding to +type in $a(m)$ \\
+Let $T_i$ be the set of all terms of the type associated with $v_i$ in $m$ \\
+$T(m) \gets T_1 \times ... \times T_n$ \\
+
+\ForAll{$\langle t_1,\dots,t_n \rangle \in T(m)$}{
+$a_b \gets a(m)$ \\
+$\theta \gets \{v_1/t_1,...,v_n/t_n\}$ \\
+
+\If{Prolog succeeds on goal $a_b\theta$}{
+
+Let $\Theta_b$ be the set of answer substitutions \\
+
+\ForAll{$\theta_b \in \Theta_b$}{
+\ForAll{$v/t \in \theta_b$}{
+\If{$v$ corresponds to \#type in $m$}{
+Replace $v$ by $t$ in $a_b$ \\
+}\Else{
+Replace $v$ by $v_k$ in $a_b$, with $k=\text{hash}(t)$ \\
+}
+\If{$v$ corresponds to -type}{
+Add $v$ to InTerms \\
+}
+}
+}
+Add $\overline{a_b}$ to $\bot_i$ \\
+
+}
+}
+}
+}
+\Return $\bot_i$
+
+\end{algorithm}
+}    
+\end{frame}

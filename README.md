@@ -31,6 +31,9 @@ Installation for Ubuntu:
 sudo apt install git
 ```
 
+Using git is a skill to be learned. The most fundamental git commands can be
+found in the git-fundamentals.md file.
+
 ### Jupyter notebook
 Jupyter Notebook is a web application that runs Python. It is needed to run the
 notebooks available in the jupyter-notebooks folder. For any problem during the

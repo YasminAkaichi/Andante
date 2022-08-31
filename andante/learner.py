@@ -1,4 +1,6 @@
 """
+All learners that build new knowledge
+
 License
 -------
 
@@ -62,11 +64,17 @@ class ProgolLearner(Learner):
         """ 
         For better understanding, read this function along Fig.1. 'Algorithm for constructing bottom' 
         in page 14 of document tutorial4.4.pdf 
-        Inputs:
-        - e: a single example (Clause object)
-        - M: the set of all modes (ModeCollection object)
-        - B: the background knowledge (Knowledge object)
-        - solver: the engine to verify expressions (Solver object)
+
+        Parameters
+        ----------
+        e: andante.logic_concepts.Clause object
+            A single example
+        M: andante.mode.ModeCollection object
+            The set of all modes
+        B: andante.knowledge.Knowledge object
+            The background knowledge
+        solver: andante.solver.Solver object
+            The engine to verify expressions
         """
         
         # 1. Add e_bar to the background knowledge
@@ -143,6 +151,11 @@ class ProgolLearner(Learner):
         return bottom
     
     def build_hypothesis(self, examples, modes, bottom_i, knowledge, solver):
+        """ Lattice search algorithm
+
+        Given some bottom_i, builds a new clause that covers all positive
+        examples but no negative examples. See above for the paper reference.
+        """
         HM = self.options.hmetric
         if not isinstance(HM, andante.hypothesis_metrics.HypothesisMetric):
             HM = getattr(andante.hypothesis_metrics, HM)
@@ -171,6 +184,23 @@ class ProgolLearner(Learner):
                 return None            
             
     def induce(self, examples, modes, knowledge, solver, **temp_options):
+        """ Main algorithm of the learning process 
+
+        This is the implementation of the cover set algorithm. This is the
+        function called first when learning new clauses.
+
+        Parameters
+        ----------
+        examples : dict
+            Dictionnary containing the sets of positive and negative examples.
+        modes : andante.mode.ModeCollection
+            All modes and determinations that shapes the possible learned
+            clauses.
+        knowledge : andante.knowledge.Knowledge
+            The background knowledge
+        solver :
+            The deduction engine
+        """
         self.add_temporary_options(**temp_options)
         
         log_options = self.options.copy()

@@ -1,4 +1,10 @@
 """
+Defines how one converts a grammar to a Python object. 
+
+The grammar defined in the module andante/grammar.py converts input text into
+a grammar tree. Such a tree is then processed by the grammar-tree-visitor into
+Python objects.
+
 License
 -------
 

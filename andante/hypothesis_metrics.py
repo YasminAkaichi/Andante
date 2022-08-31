@@ -17,6 +17,10 @@ from andante.knowledge import MultipleKnowledge, TreeShapedKnowledge
 from andante.substitution import Substitution
 
 class HypothesisMetric(ABC):
+    """ Abstract class for all hypothesis metrics.
+
+    Defines all methods that a hypothesis metric must implement.
+    """
     def State(self, *args, **kwargs):
         """ Return a state object for a candidate clause """
         pass
@@ -38,14 +42,29 @@ class HypothesisMetric(ABC):
         pass            
     
 class FnMetric(HypothesisMetric):
+    """ Metric using positive and negative examples to find the best hypothesis
+
+    Attributes
+    ----------
+    B: andante.knowledge.Knowledge
+        The background knowledge
+    E: dict
+        Set of examples
+    bottom: andante.logic_concepts.Clause
+        The bottom clause
+    solver: andante.solver.Solver
+        The deduction engine
+    options: andante.options.Options
+        All options
+    subst: andante.substitution.Substitution
+        Defines the domain of variables
+    d: dict (andante.logic_concepts.Variable -> int)
+        Dict giving for each variable in the scope of subst, its distance as
+        defined by S. Muggleton in 'Inverse entailment and progol.' 1995
+        available at
+        http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.31.1630&rep=rep1&type=pdf
+    """
     def __init__(self, B, E, M, bottom, solver, options):
-        """
-        B: background knowledge
-        E: set of examples
-        bottom: Clause object
-        solver: Solver object
-        options: Option object
-        """
         self.B = B
         self.E = E
         self.M = M

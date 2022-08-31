@@ -1,5 +1,7 @@
 """
-Define the grammar used by the andante.parser.Parser object
+Defines the grammar used by the andante.parser.Parser object.
+
+This grammar allows input strings to be converted to so-called grammar trees.
 
 License
 -------

@@ -20,7 +20,7 @@ Isabelle Linden, Jean-Marie Jacquet and Wim Vanhoof.
 """
 
 from abc import ABC, abstractmethod
-from typing import Literal
+#from typing import Literal
 
 # TODO: Remove all unify functions as they are redundant with the unify function
 # in andante.substitution.Substitution
@@ -258,6 +258,7 @@ class Type(Term):
         '+' refers to input arguments, '-' refers to output arguments and '#' refers to constant
     name : str
     """
+    #def __init__(self, sign: Literal['+','-','#'], name: str):
     def __init__(self, sign: Literal['+','-','#'], name: str):
         if sign not in ['+','-','#'] or not isinstance(name, str):
             raise(ValueError("sign should be '+', '-' or '#', got "+str(sign)))

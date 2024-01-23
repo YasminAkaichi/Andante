@@ -173,6 +173,7 @@ class ProgolLearner(Learner):
         hm = HM(knowledge, examples, modes, bottom_i, solver, self.options)
         
         s0 = hm.State(Clause(bottom_i.head, []))
+        self.add_eventlog('Metrics', s0.metrics_info())
         Open = OrderedSet({s0})
         Closed = OrderedSet()
         for _ in range(100):
@@ -183,10 +184,14 @@ class ProgolLearner(Learner):
             if not hm.prune(s):
                 for s_new in hm.rho(s):
                     if s_new not in Open and s_new not in Closed:
-                        self.add_eventlog(s_new.clause, s_new)
+                        self.add_eventlog('Candidate', s_new)
                         Open.add(s_new)
                 
             if hm.terminated(Closed, Open):
+                Closed = OrderedSet([s for s in Closed if s.n==0]) # Only keep candidates that cover no negative examples
+                if not Closed:
+                    return None
+                    
                 sbest = hm.best(Closed)
                 c = sbest.clause
                 return c
@@ -231,7 +236,7 @@ class ProgolLearner(Learner):
             e1 = examples['pos'][0]
             
             self.beg_child(e1)
-            display_examples = lambda E: '%dp/%dn' % (len(E['pos']), len(E['neg']))
+            display_examples = lambda E: '%d positives - %d negatives' % (len(E['pos']), len(E['neg']))
             self.add_eventlog('Examples', examples, display_examples)            
             self.add_eventlog('Current example', e1)
             

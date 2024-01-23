@@ -141,10 +141,10 @@ class FnMetric(HypothesisMetric):
             E_cov: the examples covered
             
             The metrics are as follow:
-            c: the number of atom in the body of clause
-            h: an optimistic guess to the number of atoms still needed in the clause 
             p: the number of positive examples covered by B
             n: the number of negative examples covered by B
+            c: the number of atom in the body of clause
+            h: an optimistic guess to the number of atoms still needed in the clause 
             g: p-c-h
             f: g-n = p-(c+h+n)
             """
@@ -160,15 +160,18 @@ class FnMetric(HypothesisMetric):
 
             # Metrics for the state
             # - c: the number of atoms in the body of C
-            self.c = len(self.clause.body)
-            self.h = hm.d_of_clause(self.clause)
             self.p = len(self.E_cov['pos'])
             self.n = len(self.E_cov['neg'])
+            self.c = len(self.clause.body)
+            self.h = hm.d_of_clause(self.clause)
+            if self.n > 0:
+                self.h = max(1, self.h)
             self.g = self.p - self.c - self.h
             self.f = self.g - self.n
             
-            self.metrics = (self.c,self.h,self.p,self.n,self.g,self.f)
+            self.metrics = (self.p,self.n,self.c,self.h,self.g,self.f)
             
+        def metrics_info(self): return "[  p,  n,  c,  h,  g,  f]"
         def copy(self): return self.hm.State(self.clause.copy(), self.k, self.E_cov)
         def __repr__(self): return self.str_id
         def __str__(self): 
@@ -177,7 +180,7 @@ class FnMetric(HypothesisMetric):
         def __hash__(self): return hash(self.str_id)
         def __eq__(self, other): return self.str_id==other.str_id
 
-    def best(self, collec, key=lambda s: s.f):
+    def best(self, collec, key=lambda s: (s.f, s.n)):
         return max([s for s in collec if s.c<=self.options.c], key=key)
 
     def prune(self, state):

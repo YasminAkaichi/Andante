@@ -31,7 +31,7 @@ import itertools
 import pandas
 
 class AndanteProgram:
-    def __init__(self, options=None, knowledge=None, modes=None, examples=None):
+    def __init__(self, options=None, knowledge=None, modes=None, examples=None,results=None,parameters=None):
         """ Class representing a Andante program
 
         Attributes
@@ -55,7 +55,9 @@ class AndanteProgram:
         self.modes     = modes     if modes     else ModeCollection(options=self.options)
         self.examples  = examples  if examples  else {'pos':[], 'neg':[]}
         self.learner   = getattr(andante.learner, self.options.learner)(options=self.options)
-        
+        self.results = results
+        self.parameters= parameters
+
     @property
     def parser(self):
         """ Returns a andante.parser.Parser object """
@@ -117,7 +119,7 @@ class AndanteProgram:
                     data[i].append(value)
                     all_var.add(var)
                     
-            pandas_out = pandas.DataFrame(data=data, index=all_var)
+            pandas_out = pandas.DataFrame(data=data, index=list(all_var))
             return True, pandas_out
     
     def verify(self, c, **temp_options):

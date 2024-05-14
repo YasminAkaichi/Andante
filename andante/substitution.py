@@ -22,7 +22,6 @@ Isabelle Linden, Jean-Marie Jacquet and Wim Vanhoof.
 from andante.logic_concepts import Clause, Constant, Variable, Function, Goal, Type, extract_variables
 from andante.utils import generate_variable_names, multiple_replace
 import re
-
 class SubstitutionError(Exception):
     def __init__(self, key, item):
         message = 'Substitution {%s/%s} is not valid' % (str(key), str(item))

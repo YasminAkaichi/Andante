@@ -21,7 +21,7 @@ Isabelle Linden, Jean-Marie Jacquet and Wim Vanhoof.
 
 import collections
 
-class OrderedSet(collections.OrderedDict, collections.MutableSet):
+class OrderedSet(collections.OrderedDict, collections.abc.MutableSet):
     """ Set object with ordered keys """
     def __init__(self, *args, **kwargs):
         if len(args)>1:

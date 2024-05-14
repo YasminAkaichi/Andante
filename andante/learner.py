@@ -253,7 +253,8 @@ class ProgolLearner(Learner):
             self.add_eventlog('Clause', C)
             
             # Add hypothesis to background knowledge
-            learned_knowledge.add(C)
+            if C is not None:
+                learned_knowledge.add(C)
             examples = {'pos':[e for e in examples['pos'] if not solver.succeeds_on(e.head, whole_knowledge, verbose=0)],
                         'neg':examples['neg']}
             

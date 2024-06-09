@@ -73,3 +73,14 @@ class OrderedSet(collections.OrderedDict, collections.abc.MutableSet):
     symmetric_difference = property(lambda self: self.__xor__)
     symmetric_difference_update = property(lambda self: self.__ixor__)
     union = property(lambda self: self.__or__)
+    
+    @staticmethod
+    def text_to_ordered_set(text: str) -> 'OrderedSet':
+        lines = text.strip().split('\n')
+        ordered_set = OrderedSet()
+        for line in lines:
+            line = line.strip()
+            if line:
+                ordered_set.add(line)
+        return ordered_set
+

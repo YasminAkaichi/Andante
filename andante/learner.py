@@ -21,6 +21,7 @@ in the period of October 1st 2021 to August 31st 2022 under the supervision of
 Isabelle Linden, Jean-Marie Jacquet and Wim Vanhoof. 
 """
 
+import re
 import itertools
 from abc import ABC, abstractmethod
 from andante.options import Options, SystemParameters, ObjectWithTemporaryOptions
@@ -267,7 +268,20 @@ class ProgolLearner(Learner):
         if self.options.update_knowledge:
             for c in learned_knowledge:
                 knowledge.add(c)
-            
+    
+        #add already background knoweldge already existing rules
+        background_rules = []
+        rule_pattern = re.compile(r'complication\(\w+\) :- .*\.')
+
+        for rule in knowledge:
+            if rule_pattern.match(str(rule)):
+                background_rules.append(rule)
+        
+        # Extract and add background knowledge rules to the learned knowledge
+        for rule in background_rules:
+            if rule not in learned_knowledge:
+                learned_knowledge.add(rule)
+
         self.rem_temporary_options()
         
         return learned_knowledge

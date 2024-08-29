@@ -20,10 +20,10 @@ modeb(*, recentnecksurgery(+patient)).
 modeb(*, cervicalcollar(+patient)).
 modeb(*, elderly(+patient)).
 modeb(*, eichman(+patient)).
-modeb(*, laryngodifficile(+patient)).
+modeb(*, hardlaryngo(+patient)).
 modeb(*, cardiacarrest(+patient)).
 modeb(*, secondoperator(+patient)).
-modeb(*, intubationdifficile(+patient)).
+modeb(*, hardintubation(+patient)).
 determination(complication/1, experience/1).
 determination(complication/1, hta/1).
 determination(complication/1, diabete/1).
@@ -44,16 +44,16 @@ determination(complication/1, epiglottitis/1).
 determination(complication/1, recentnecksurgery/1).
 determination(complication/1, cervicalcollar/1).
 determination(complication/1, elderly/1).
-determination(complication/1,laryngodifficile/1).
+determination(complication/1,hardlaryngo/1).
 determination(complication/1, eichman/1).
-determination(complication/1, intubationdifficile/1).
+determination(complication/1, hardintubation/1).
 determination(complication/1, secondoperator/1).
 determination(complication/1, cardiacarrest/1).
 
 :- begin_bg.
-complication(x) :- laryngodifficile(x).
+complication(x) :- hardlaryngo(x).
 largetongue(patient1).
-laryngodifficile(patient1).
+hardlaryngo(patient1).
 cardiacarrest(patient1).
 hta(patient5).
 bpco(patient5).
@@ -65,7 +65,7 @@ thyromentaldistance(patient5).
 recentnecksurgery(patient5).
 secondoperator(patient5).
 eichman(patient5).
-intubationdifficile(patient5).
+hardintubation(patient5).
 hypotention(patient5).
 desaturation(patient5).
 hta(patient6).
@@ -76,7 +76,7 @@ thyromentaldistance(patient6).
 betweenhyoidboneandthyroid(patient6).
 elderly(patient6).
 eichman(patient6).
-intubationdifficile(patient6).
+hardintubation(patient6).
 hypotention(patient6).
 desaturation(patient6).
 cardiacarrest(patient6).
@@ -84,10 +84,10 @@ bradycardie(patient6).
 bpco(patient7).
 beardormoustache(patient7).
 largetongue(patient7).
-laryngodifficile(patient7).
+hardlaryngo(patient7).
 secondoperator(patient7).
 eichman(patient7).
-intubationdifficile(patient7).
+hardintubation(patient7).
 hypotention(patient7).
 desaturation(patient7).
 extubation(patient7).
@@ -98,9 +98,9 @@ patientobese(patient11).
 higharchedpalate(patient11).
 beardormoustache(patient11).
 largetongue(patient11).
-laryngodifficile(patient11).
+hardlaryngo(patient11).
 eichman(patient12).
-intubationdifficile(patient12).
+hardintubation(patient12).
 cardiacarrest(patient12).
 experience(patient17).
 
@@ -108,7 +108,7 @@ hypotention(patient17).
 
 diabete(patient18).
 eichman(patient18).
-intubationdifficile(patient18).
+hardintubation(patient18).
 cardiacarrest(patient18).
 experience(patient20).
 hta(patient20).
@@ -118,7 +118,7 @@ shortneck(patient20).
 openingmouth(patient20).
 elderly(patient20).
 eichman(patient20).
-intubationdifficile(patient20).
+hardintubation(patient20).
 hypotention(patient20).
 diabete(patient22).
 beardormoustache(patient22).
@@ -148,10 +148,10 @@ coronarien(patient36).
 ic(patient36).
 higharchedpalate(patient36).
 largetongue(patient36).
-laryngodifficile(patient36).
+hardlaryngo(patient36).
 secondoperator(patient36).
 eichman(patient36).
-intubationdifficile(patient36).
+hardintubation(patient36).
 desaturation(patient36).
 cardiacarrest(patient36).
 
@@ -176,7 +176,7 @@ thyromentaldistance(patient56).
 experience(patient57).
 
 
-laryngodifficile(patient57).
+hardlaryngo(patient57).
 secondoperator(patient57).
 hypotention(patient57).
 desaturation(patient57).
@@ -193,10 +193,10 @@ experience(patient66).
 intubationselective(patient66).
 
 thyromentaldistance(patient70).
-laryngodifficile(patient70).
+hardlaryngo(patient70).
 secondoperator(patient70).
 eichman(patient70).
-intubationdifficile(patient70).
+hardintubation(patient70).
 desaturation(patient70).
 experience(patient71).
 asthme(patient71).
@@ -225,7 +225,7 @@ diabete(patient96).
 patientobese(patient96).
 shortneck(patient96).
 thyromentaldistance(patient96).
-laryngodifficile(patient96).
+hardlaryngo(patient96).
 experience(patient97).
 thyromentaldistance(patient97).
 hta(patient106).
@@ -239,9 +239,9 @@ diabete(patient111).
 patientobese(patient111).
 openingmouth(patient111).
 elderly(patient111).
-laryngodifficile(patient111).
+hardlaryngo(patient111).
 eichman(patient111).
-intubationdifficile(patient111).
+hardintubation(patient111).
 desaturation(patient111).
 hta(patient113).
 diabete(patient113).
@@ -252,10 +252,10 @@ hta(patient116).
 diabete(patient116).
 ic(patient116).
 
-laryngodifficile(patient116).
+hardlaryngo(patient116).
 secondoperator(patient116).
 eichman(patient116).
-intubationdifficile(patient116).
+hardintubation(patient116).
 desaturation(patient116).
 cardiacarrest(patient116).
 experience(patient117).
@@ -263,9 +263,9 @@ hta(patient117).
 diabete(patient117).
 patientobese(patient117).
 thyromentaldistance(patient117).
-laryngodifficile(patient117).
+hardlaryngo(patient117).
 eichman(patient117).
-intubationdifficile(patient117).
+hardintubation(patient117).
 :- end_bg.
 
 :- begin_in_pos.

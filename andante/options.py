@@ -31,7 +31,7 @@ class SystemParameters:
 @dataclass       
 class Options(object):
     i       = 2
-    c       = 2        # Maximal body size for new clauses
+    c       = 5        # Maximal body size for new clauses
     h       = 10000    # Maximal depth of deduction
     verbose = 0        # Level of logging output
     solver  = "AndanteSolver"

@@ -58,7 +58,7 @@ determination(complication/1, secondoperator/1).
 determination(complication/1, hypotention/1).
 :- begin_bg.
 hta(patient0).
-complication(x) :- laryngodifficile(x).
+hardintubation(x) :- hardlaryngo(x).
 coronarien(patient0).
 ic(patient0).
 beardormoustache(patient0).

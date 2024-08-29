@@ -133,7 +133,11 @@ class TreeShapedKnowledge(Knowledge):
             if not isinstance(clause, Iterable):
                 raise KeyError('Expected andante.logic_concepts.Clause or Iterable object, found : %s' % clause.__class__.__name__)
             for x in clause:
-                self.add(x)
+                print(f"Processing iterable element: {x}")
+                if isinstance(x,Clause):
+                    self.add(x)
+                else:
+                    raise TypeError('Iterable contains non-Clause elements: %s' % x.__class__.__name__)
             return
 
         if func is None: func = clause.head

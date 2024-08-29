@@ -56,20 +56,19 @@ determination(complication/1, cervicalcollar/1).
 determination(complication/1, lemonscore/1).
 determination(complication/1, elderly/1).
 :- begin_bg.
-complication(x) :- laryngodifficile(x).
 hta(patient0).
 coronarien(patient0).
 ic(patient0).
 indication(patient0).
 beardormoustache(patient0).
 elderly(patient0).
-laryngodifficile(patient0).
+hardlaryngo(patient0).
 experience(patient3).
 higharchedpalate(patient3).
 largetongue(patient3).
 openingmouth(patient3).
 elderly(patient3).
-laryngodifficile(patient3).
+hardlaryngo(patient3).
 secondoperator(patient3).
 hypotention(patient3).
 arret(patient3).
@@ -84,16 +83,16 @@ hta(patient13).
 patientobese(patient13).
 beardormoustache(patient13).
 elderly(patient13).
-laryngodifficile(patient13).
+hardlaryngo(patient13).
 desaturation(patient13).
 arret(patient13).
 higharchedpalate(patient15).
 largetongue(patient15).
-laryngodifficile(patient15).
+hardlaryngo(patient15).
 secondoperator(patient15).
 eichman(patient15).
 moyensupraglottique(patient15).
-intubationdifficile(patient15).
+hardintubation(patient15).
 hypotention(patient15).
 desaturation(patient15).
 arret(patient15).
@@ -108,9 +107,9 @@ eichman(patient16).
 arret(patient16).
 experience(patient19).
 lemonscore(patient19).
-laryngodifficile(patient19).
+hardlaryngo(patient19).
 eichman(patient19).
-intubationdifficile(patient19).
+hardintubation(patient19).
 desaturation(patient19).
 fracturedentaire(patient19).
 arret(patient19).
@@ -127,7 +126,7 @@ hta(patient30).
 lemonscore(patient30).
 secondoperator(patient30).
 eichman(patient30).
-intubationdifficile(patient30).
+hardintubation(patient30).
 hypotention(patient30).
 desaturation(patient30).
 sexe(patient33).
@@ -162,7 +161,7 @@ lemonscore(patient51).
 intubationselective(patient51).
 beardormoustache(patient52).
 largetongue(patient52).
-laryngodifficile(patient52).
+hardlaryngo(patient52).
 experience(patient59).
 hta(patient59).
 bpco(patient59).
@@ -172,10 +171,10 @@ hypotention(patient59).
 lemonscore(patient62).
 patientobese(patient78).
 lemonscore(patient78).
-laryngodifficile(patient78).
+hardlaryngo(patient78).
 secondoperator(patient78).
 bpco(patient80).
-laryngodifficile(patient80).
+hardlaryngo(patient80).
 secondoperator(patient80).
 hypotention(patient80).
 desaturation(patient80).
@@ -184,18 +183,18 @@ sexe(patient81).
 diabete(patient81).
 lemonscore(patient81).
 secondoperator(patient81).
-intubationdifficile(patient81).
+hardintubation(patient81).
 hypotention(patient81).
 desaturation(patient81).
 intubationoesophagienne(patient81).
 hta(patient82).
 higharchedpalate(patient82).
 openingmouth(patient82).
-laryngodifficile(patient82).
+hardlaryngo(patient82).
 secondoperator(patient82).
 eichman(patient82).
 moyensupraglottique(patient82).
-intubationdifficile(patient82).
+hardintubation(patient82).
 desaturation(patient82).
 intubationselective(patient82).
 intubationoesophagienne(patient82).
@@ -238,10 +237,10 @@ sexe(patient101).
 patientobese(patient101).
 shortneck(patient101).
 thyromentaldistance(patient101).
-laryngodifficile(patient101).
+hardlaryngo(patient101).
 diabete(patient102).
 lemonscore(patient102).
-laryngodifficile(patient102).
+hardlaryngo(patient102).
 secondoperator(patient102).
 desaturation(patient102).
 intubationoesophagienne(patient102).

@@ -110,7 +110,7 @@ GRAMMAR = Grammar(
     comparison = arithmetic_comparison / unification_comparison
     unification_comparison = term                  __ unification_comparison_symbol __  term
     arithmetic_comparison  = arithmetic_expression __ arithmetic_comparison_symbol  __  arithmetic_expression
-    unification_comparison_symbol = '='   / '\='  / '==' / '\==' / '@<' / '@<=' / '@>' / '@>=' 
+    unification_comparison_symbol = '='   / '\='  / '==' / '\==' / '@<' / '@<=' / '@>' / '@>=' / '>=' / '<='
     arithmetic_comparison_symbol  = '=:=' / '=\=' / '<'  / '<='  / '>'  / '>=' 
     
     arithmetic_expression = in_parenthesis_arithmetic_expression / basic_arithmetic_expression / trigo_expression / arithmetic_atom

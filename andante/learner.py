@@ -270,17 +270,17 @@ class ProgolLearner(Learner):
                 knowledge.add(c)
     
         #add already background knoweldge already existing rules
-        background_rules = []
-        rule_pattern = re.compile(r'complication\(\w+\) :- .*\.')
+        #background_rules = []
+        #rule_pattern = re.compile(r'complication\(\w+\) :- .*\.')
 
-        for rule in knowledge:
-            if rule_pattern.match(str(rule)):
-                background_rules.append(rule)
+        #for rule in knowledge:
+        #    if rule_pattern.match(str(rule)):
+        #        background_rules.append(rule)
         
         # Extract and add background knowledge rules to the learned knowledge
-        for rule in background_rules:
-            if rule not in learned_knowledge:
-                learned_knowledge.add(rule)
+        #for rule in background_rules:
+        #    if rule not in learned_knowledge:
+        #        learned_knowledge.add(rule)
 
         self.rem_temporary_options()
         

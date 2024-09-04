@@ -185,8 +185,6 @@ class AndanteProgram:
             
         return examples
     
-    
-    
     def generate_examples_from_clause(self, clause, mapping, update_examples=True):
         """
         clause: the clause that generates examples
@@ -229,15 +227,15 @@ class AndanteProgram:
         return examples
     
      # New method: Save AndanteProgram instance to a file
-    def save(self, filepath):
-        with open(filepath, 'wb') as f:
+  
+    def save(self, filename):
+        """Saves the current AndanteProgram instance to a file using pickle."""
+        with open(filename, 'wb') as f:
             pickle.dump(self, f)
-        print(f"AndanteProgram saved to {filepath}.")
+        print(f"AndanteProgram saved to {filename}")
 
-    # New method: Load AndanteProgram instance from a file
     @staticmethod
-    def load(filepath):
-        with open(filepath, 'rb') as f:
-            program = pickle.load(f)
-        print(f"AndanteProgram loaded from {filepath}.")
-        return program
+    def load(filename):
+        """Loads an AndanteProgram instance from a file."""
+        with open(filename, 'rb') as f:
+            return pickle.load(f)

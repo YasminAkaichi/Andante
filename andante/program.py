@@ -29,6 +29,7 @@ from andante.substitution import Substitution
 from andante.utils import generate_variable_names
 import itertools
 import pandas
+import pickle
 
 class AndanteProgram:
     def __init__(self, options=None, knowledge=None, modes=None, examples=None,results=None,parameters=None):
@@ -226,3 +227,17 @@ class AndanteProgram:
             self.examples['neg'].extend(examples['neg'])
             
         return examples
+    
+     # New method: Save AndanteProgram instance to a file
+    def save(self, filepath):
+        with open(filepath, 'wb') as f:
+            pickle.dump(self, f)
+        print(f"AndanteProgram saved to {filepath}.")
+
+    # New method: Load AndanteProgram instance from a file
+    @staticmethod
+    def load(filepath):
+        with open(filepath, 'rb') as f:
+            program = pickle.load(f)
+        print(f"AndanteProgram loaded from {filepath}.")
+        return program

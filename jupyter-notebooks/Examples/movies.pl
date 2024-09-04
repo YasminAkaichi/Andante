@@ -1,8 +1,6 @@
 % Mode Declarations
 modeh(*, recommend(+user, -movie)).
 modeb(*, m(+user)).
-modeb(*, not_n(+user)).
-modeb(*, not_n(+user)). 
 modeb(*, f(+user)).
 modeb(*, b18to24(+user)).
 modeb(*, b25to34(+user)).
@@ -19,6 +17,23 @@ modeb(*, not_comedy(+movie)).
 modeb(*, not_drama(+movie)).
 modeb(*, not_musical(+movie)).
 modeb(*, watched(+user,-movie)).
+modeb(1, m(+user)).
+modeb(1, f(+user)).
+modeb(1, b18to24(+user)).
+modeb(1, b25to34(+user)).
+modeb(1, b35to44(+user)).
+modeb(1, not_18to24(+user)).
+modeb(1, not_25to34(+user)).
+modeb(1, not_35to44(+user)).
+modeb(1, action(+movie)).
+modeb(1, comedy(+movie)).
+modeb(1, drama(+movie)).
+modeb(1, musical(+movie)).
+modeb(1, not_action(+movie)).
+modeb(1, not_comedy(+movie)).
+modeb(1, not_drama(+movie)).
+modeb(1, not_musical(+movie)).
+modeb(1, watched(+user,-movie)).
 
 % Determinations
 determination(recommend/2, m/1).
@@ -38,9 +53,19 @@ determination(recommend/2, not_comedy/1).
 determination(recommend/2, not_drama/1).
 determination(recommend/2, not_musical/1).
 determination(recommend/2, watched/2).
+
 % Background Knowledge
 :- begin_bg.
 
+not_25to34(A):- b18to24(A).
+not_35to44(A):- b18to24(A).
+%b18to24(A):- not_25to34(A), not_35to44(A).
+not_18to24(A):- b25to34(A).
+not_35to44(A):- b25to34(A).
+%b25to34(A):- not_18to24(A), not_35to44(A).
+not_18to24(A):- b35to44(A).
+not_25to34(A):- b35to44(A).
+%b35to44(A):- not_18to24(A), not_25to34(A).
 not_comedy(A) :- drama(A).
 not_comedy(A) :- musical(A).
 not_comedy(A) :- action(A).

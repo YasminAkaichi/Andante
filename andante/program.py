@@ -30,7 +30,6 @@ from andante.utils import generate_variable_names
 import itertools
 import pandas
 import pickle
-import dill as pickle  
 
 class AndanteProgram:
     def __init__(self, options=None, knowledge=None, modes=None, examples=None,results=None,parameters=None):
@@ -229,21 +228,15 @@ class AndanteProgram:
     
     def save(self, filename):
         """Saves the current AndanteProgram instance to a file using pickle."""
-        solver_backup = self.solver  # Backup the solver
-        self.solver = None
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
-        self.solver = solver_backup  # Restore the solver
         print(f"AndanteProgram saved to {filename}")
 
     @staticmethod
     def load(filename):
         """Loads an AndanteProgram instance from a file."""
         with open(filename, 'rb') as f:
-            instance = pickle.load(f)
-        instance.solver = getattr(andante.solver, instance.options.solver)(options=instance.options)
-        return pickle.load(f)
-        
+            return pickle.load(f)
         
     def add_background_knowledge(self,bk):
         """Add a Bk to an AndanteProgram from text"""

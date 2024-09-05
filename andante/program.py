@@ -370,26 +370,27 @@ class AndanteProgram:
         if not sigmas:
             return False, [], "No matching rules found."
 
-        # Step 7: If the query succeeds, gather possible substitutions and identify the rules activated
+        # Step 7: For each substitution (recommendation), gather the relevant rules
         data = dict()
         all_var = set()
         explanations = []
 
-        for i, sigma in enumerate(sigmas):
+        for i, (sigma, activated_rules) in enumerate(sigmas):  # Now the result includes activated rules
             data[i] = list()
             for var, value in sigma.subst.items():
                 data[i].append(value)
                 all_var.add(var)
 
-            # Capture which rules were activated for this specific substitution
-            matching_rules = self._find_relevant_rules_for_substitution(q, sigma)
-            explanations.append(f"Recommendation: {data[i]}\nMatched rule(s): {', '.join(matching_rules)}")
+            # Format the explanation for the specific rules that were activated for this recommendation
+            rules_str = ', '.join(str(rule) for rule in activated_rules)
+            explanations.append(f"Recommendation: {data[i]}\nMatched rule(s): {rules_str}")
 
         # Convert the results into a pandas DataFrame
         pandas_out = pandas.DataFrame(data=data, index=list(all_var))
 
         # Return the result with the activated rules
         return True, pandas_out, '\n'.join(explanations)
+
     
     def _find_relevant_rules_for_substitution(self, query, sigma):
         """

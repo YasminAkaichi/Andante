@@ -101,28 +101,43 @@ class AndanteProgram:
             Whether there exists a substitution for the query
         pandas.DataFrame
             Tabular aggregating all substitutions possible for the query.
-            Columns correspond to varibles.
+            Columns correspond to variables.
             Rows correspond to the various possible substitutions.
         """
         assert isinstance(q, (str, Goal))
         if isinstance(q, str):
             q = self.parser.parse(q, 'query')
+        
         sigmas = list(self.solver.query(q, self.knowledge, **temp_options))
         
         if not sigmas:
-            return False, []
-        else:
-            data = dict()
-            all_var = set()
-            for i, sigma in enumerate(sigmas):
-                data[i] = list()
-                for var, value in sigma.subst.items():
-                    data[i].append(value)
-                    all_var.add(var)
-                    
-            pandas_out = pandas.DataFrame(data=data, index=all_var)
-            return True, pandas_out
-    
+            # Return False and an empty DataFrame if no substitutions are found
+            return False, pandas.DataFrame()
+        
+        # Create a dictionary to hold the substitutions
+        data = dict()
+        all_var = set()
+
+        for i, sigma in enumerate(sigmas):
+            # Initialize a list for each substitution
+            data[i] = []
+            for var, value in sigma.subst.items():
+                data[i].append(value)
+                all_var.add(var)
+        
+        # If no variables were found, return an empty DataFrame
+        if not all_var:
+            return False, pandas.DataFrame()
+
+        # Convert the data into a pandas DataFrame
+        pandas_out = pandas.DataFrame(data=data, index=list(all_var))
+
+        return True, pandas_out
+
+
+
+
+
     def verify(self, c, **temp_options):
         """ Verify whether some clause is true, given the current background knowledge """
         assert isinstance(c, (str, Clause))

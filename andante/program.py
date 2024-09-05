@@ -120,7 +120,7 @@ class AndanteProgram:
                     data[i].append(value)
                     all_var.add(var)
                     
-            pandas_out = pandas.DataFrame(data=data, index=list(all_var))
+            pandas_out = pandas.DataFrame(data=data, index=all_var)
             return True, pandas_out
     
     def verify(self, c, **temp_options):
@@ -316,6 +316,8 @@ class AndanteProgram:
                 new_facts = [new_facts]
             for fact in new_facts:
                 self.add_background_knowledge_from_text(fact) 
+
+        print(self.knowledge)
 
     # Step 2: Skip inducing new rules (disable this as needed)
     # if induce_new_rules:

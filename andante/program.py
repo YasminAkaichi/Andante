@@ -290,39 +290,41 @@ class AndanteProgram:
 
     def query_with_explanation(self, q, new_facts=None, induce_new_rules=False, **temp_options):
         """Launch a query to the Andante solver, integrating new data and returning explanations.
+    
         Parameters
         ----------
         q : str or andante.logic_concepts.Goal
-            The query to be evaluated.
+        The query to be evaluated.
         new_facts : str or list of str, optional
-            New facts to be added to the knowledge base before the query.
+        New facts to be added to the knowledge base before the query.
         induce_new_rules : bool, optional
-            If True, induces new rules based on updated facts and examples.
+        If True, induces new rules based on updated facts and examples.
         **temp_options : Additional options for the solver.
 
         Returns
         -------
         bool
-            Whether there exists a substitution for the query.
+        Whether there exists a substitution for the query.
         pandas.DataFrame
-            Tabular aggregating all substitutions possible for the query.
+        Tabular aggregating all substitutions possible for the query.
         str
-            An explanation of which rules or facts led to the prediction.
+        An explanation of which rules or facts led to the prediction.
         """
-        # Step 1: Add new facts to the knowledge base if provided
+    # Step 1: Add new facts to the knowledge base if provided
         if new_facts:
             if isinstance(new_facts, str):
                 new_facts = [new_facts]
             for fact in new_facts:
                 self.add_background_knowledge_from_text(fact) 
 
-        # Step 2: Induce new rules if requested
-        if induce_new_rules:
-            self.results = self.induce()
+    # Step 2: Skip inducing new rules (disable this as needed)
+    # if induce_new_rules:
+    #     self.results = self.induce()
 
         # Step 3: Ensure induced rules from self.results are added to the knowledge base
-        for rule in self.results:
-            self.knowledge.add(rule)
+        if self.results:
+            for rule in self.results:
+                self.knowledge.add(rule)
 
         # Step 4: Parse the query
         assert isinstance(q, (str, Goal))
@@ -340,22 +342,23 @@ class AndanteProgram:
         data = dict()
         all_var = set()
         explanations = []
-
+        
         for i, sigma in enumerate(sigmas):
             data[i] = list()
             for var, value in sigma.subst.items():
                 data[i].append(value)
                 all_var.add(var)
-            # Step 8: Generate explanations based on matching rules
-            # Check which rules matched for this substitution
-            matching_rules = self._find_matching_rules(q, sigma)
-            explanations.append(f"Matched rule(s): {', '.join(matching_rules)}")
+        # Step 8: Generate explanations based on matching rules
+        # Check which rules matched for this substitution
+        matching_rules = self._find_matching_rules(q, sigma)
+        explanations.append(f"Matched rule(s): {', '.join(matching_rules)}")
 
-        # Convert the results into a pandas DataFrame
+    # Convert the results into a pandas DataFrame
         pandas_out = pandas.DataFrame(data=data, index=list(all_var))
 
-        # Step 9: Return the result with explanations
+    # Step 9: Return the result with explanations
         return True, pandas_out, '\n'.join(explanations)
+
 
     def _find_matching_rules(self, query, sigma):
         """Helper method to find which rules matched for a given query and substitution.

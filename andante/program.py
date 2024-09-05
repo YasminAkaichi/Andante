@@ -226,8 +226,6 @@ class AndanteProgram:
             
         return examples
     
-     # New method: Save AndanteProgram instance to a file
-  
     def save(self, filename):
         """Saves the current AndanteProgram instance to a file using pickle."""
         with open(filename, 'wb') as f:
@@ -239,3 +237,157 @@ class AndanteProgram:
         """Loads an AndanteProgram instance from a file."""
         with open(filename, 'rb') as f:
             return pickle.load(f)
+        
+    def add_background_knowledge(self,bk):
+        """Add a Bk to an AndanteProgram from text"""
+        self.knowledge.add(bk)
+
+    def add_background_knowledge_from_text(self, bk_text):
+        """Add new background knowledge to the AndanteProgram.
+        
+        Parameters
+        ----------
+        bk_text : str
+            Background knowledge in text format to be added to the knowledge base.
+        """
+        # Parse and add the new background knowledge
+        new_knowledge = self.parser.parse(bk_text, 'knowledge')
+        self.knowledge.add(new_knowledge)
+        print("Background knowledge added successfully.")
+
+    def infer_and_explain(self, new_data):
+
+        """Infer and explain recommendations for a new user based on the induced rules.
+        
+        Parameters
+        ----------
+        new_data : dict
+            Dictionary containing the new user's data (features).
+        
+        Returns
+        -------
+        dict
+            A dictionary containing the recommendation and the explanation of why it was made.
+        """
+        recommendations = []
+        explanations = []
+
+        # Iterate through the induced rules in `results`
+        for rule in self.results:
+            # Match the new user's data against the conditions in the rule's body.
+            match = True
+            explanation = []
+            for condition in rule.body:
+                # Here we would match each condition in the rule body with the user's data
+                # Example: if the rule has a condition on a specific feature, compare it with the new_user_data
+                feature = condition.symbol
+                expected_value = condition.arguments[0]
+
+                if new_data.get(feature) == expected_value:
+                    explanation.append(f"{feature} = {expected_value}")
+                else:
+                    match = False
+                    break
+            
+            if match:
+                # If all conditions match, this rule applies, so recommend the rule's head and explain why
+                recommendations.append(rule.head)
+                explanations.append(f"Recommendation based on: {' and '.join(explanation)}")
+
+        return {
+            'recommendations': recommendations,
+            'explanations': explanations
+        }
+    
+
+    def query_with_explanation(self, q, new_facts=None, induce_new_rules=False, **temp_options):
+        """Launch a query to the Andante solver, integrating new data and returning explanations.
+        
+        Parameters
+        ----------
+        q : str or andante.logic_concepts.Goal
+            The query to be evaluated.
+        new_facts : str or list of str, optional
+            New facts to be added to the knowledge base before the query.
+        induce_new_rules : bool, optional
+            If True, induces new rules based on updated facts and examples.
+        **temp_options : Additional options for the solver.
+
+        Returns
+        -------
+        bool
+            Whether there exists a substitution for the query.
+        pandas.DataFrame
+            Tabular aggregating all substitutions possible for the query.
+        str
+            An explanation of which rules or facts led to the prediction.
+        """
+        # Step 1: Add new facts to the knowledge base if provided
+        if new_facts:
+            if isinstance(new_facts, str):
+                new_facts = [new_facts]
+            for fact in new_facts:
+                self.add_background_knowledge(fact)
+
+        # Step 2: Induce new rules if requested
+        if induce_new_rules:
+            self.results = self.induce()
+
+        # Step 3: Ensure induced rules from self.results are added to the knowledge base
+        for rule in self.results:
+            self.knowledge.add(rule)
+
+        # Step 4: Parse the query
+        assert isinstance(q, (str, Goal))
+        if isinstance(q, str):
+            q = self.parser.parse(q, 'query')
+
+        # Step 5: Execute the query using the Andante solver
+        sigmas = list(self.solver.query(q, self.knowledge, **temp_options))
+
+        # Step 6: If the query fails, return no result
+        if not sigmas:
+            return False, [], "No matching rules found."
+
+        # Step 7: If the query succeeds, gather possible substitutions and build an explanation
+        data = dict()
+        all_var = set()
+        explanations = []
+
+        for i, sigma in enumerate(sigmas):
+            data[i] = list()
+            for var, value in sigma.subst.items():
+                data[i].append(value)
+                all_var.add(var)
+            # Step 8: Generate explanations based on matching rules
+            # Check which rules matched for this substitution
+            matching_rules = self._find_matching_rules(q, sigma)
+            explanations.append(f"Matched rule(s): {', '.join(matching_rules)}")
+
+        # Convert the results into a pandas DataFrame
+        pandas_out = pandas.DataFrame(data=data, index=list(all_var))
+
+        # Step 9: Return the result with explanations
+        return True, pandas_out, '\n'.join(explanations)
+
+    def _find_matching_rules(self, query, sigma):
+        """Helper method to find which rules matched for a given query and substitution.
+        
+        Parameters
+        ----------
+        query : Goal
+            The query being evaluated.
+        sigma : Substitution
+            The substitution that was applied during the query.
+        
+        Returns
+        -------
+        list
+            A list of rule descriptions that matched the query.
+        """
+        matching_rules = []
+        # Iterate through learned rules in self.results and check if they apply
+        for rule in self.results:
+            if self.solver.succeeds_on(query, self.knowledge):
+                matching_rules.append(str(rule))
+        return matching_rules

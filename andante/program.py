@@ -318,63 +318,11 @@ class AndanteProgram:
         except Exception as e:
             print(f"Error parsing background knowledge: {e}")
 
-    def query_explain(self, q, **temp_options):
-        """Launch a query to the andante solver, returning both the results and the matched rules.
-
-        Parameters
-        ----------
-        q : str or andante.logic_concepts.Goal
-            The query to be evaluated
-
-        Returns
-        -------
-        bool
-            Whether there exists a substitution for the query.
-        pandas.DataFrame
-            Tabular aggregating all substitutions possible for the query.
-        str
-            Explanation of which rules were matched and why the recommendations were made.
-        """
-        assert isinstance(q, (str, Goal))
-        if isinstance(q, str):
-            q = self.parser.parse(q, 'query')
-        
-        # Execute the query using the solver
-        sigmas = list(self.solver.query(q, self.knowledge, **temp_options))
-        
-        # If no results are found, return False and an empty list
-        if not sigmas:
-            return False, [], "No matching rules found."
-        
-        # Prepare to collect data (substitutions) and explanations
-        data = dict()
-        all_var = set()
-        explanations = []
-        
-        # Iterate over the results and collect both substitutions and explanations
-        for i, sigma in enumerate(sigmas):
-            # Collect substitutions
-            data[i] = list()
-            for var, value in sigma.subst.items():
-                data[i].append(value)
-                all_var.add(var)
-            
-            # Find which rules matched for this particular substitution
-            matching_rules = self._find_matching_rules(q, sigma)
-            
-            # Generate an explanation for the matched rules and substitutions
-            explanations.append(f"Matched rule(s) for result {i}: {', '.join(matching_rules)}")
-        
-        # Convert the results into a pandas DataFrame
-        pandas_out = pandas.DataFrame(data=data, index=list(all_var))
-        
-        # Return the results, along with the explanations
-        return True, pandas_out, '\n'.join(explanations)
     
     def query_with_rule_explanation(self, q, new_facts=None, induce_new_rules=False, **temp_options):
         """
-        Launch a query to the Andante solver, integrating new data and returning the rules used.
-        
+        Launch a query to the Andante solver, integrating new data and returning the rules used for each substitution.
+
         Parameters
         ----------
         q : str or andante.logic_concepts.Goal
@@ -392,22 +340,23 @@ class AndanteProgram:
         pandas.DataFrame
             Tabular aggregating all substitutions possible for the query.
         str
-            An explanation of which rules or facts led to the prediction.
+            An explanation of which rules or facts led to the prediction for each substitution.
         """
         # Step 1: Add new facts to the knowledge base if provided
         if new_facts:
             if isinstance(new_facts, str):
                 new_facts = [new_facts]
             for fact in new_facts:
-                self.add_background_knowledge_from_text(fact) 
+                self.add_background_knowledge_from_text(fact)
 
         # Step 2: Induce new rules if requested
         if induce_new_rules:
             self.results = self.induce()
 
         # Step 3: Ensure induced rules from self.results are added to the knowledge base
-        for rule in self.results:
-            self.knowledge.add(rule)
+        if self.results is not None:
+            for rule in self.results:
+                self.knowledge.add(rule)
 
         # Step 4: Parse the query
         assert isinstance(q, (str, Goal))
@@ -431,38 +380,42 @@ class AndanteProgram:
             for var, value in sigma.subst.items():
                 data[i].append(value)
                 all_var.add(var)
-            
-            # Capture which rules were activated for this query
-            matching_rules = self._find_matching_rules(q, sigma)
-            explanations.append(f"Matched rule(s): {', '.join(matching_rules)}")
+
+            # Capture which rules were activated for this specific substitution
+            matching_rules = self._find_relevant_rules_for_substitution(q, sigma)
+            explanations.append(f"Recommendation: {data[i]}\nMatched rule(s): {', '.join(matching_rules)}")
 
         # Convert the results into a pandas DataFrame
         pandas_out = pandas.DataFrame(data=data, index=list(all_var))
 
-        # Step 9: Return the result with the activated rules
+        # Return the result with the activated rules
         return True, pandas_out, '\n'.join(explanations)
     
-    def _find_matching_rules(self, query, sigma):
-        """Helper method to find which rules matched for a given query and substitution.
-        
+    def _find_relevant_rules_for_substitution(self, query, sigma):
+        """
+        Helper method to find which rules contributed to the given substitution.
+
         Parameters
         ----------
         query : Goal
             The query being evaluated.
         sigma : Substitution
             The substitution that was applied during the query.
-        
+
         Returns
         -------
         list
             A list of rule descriptions that matched the query.
         """
         matching_rules = []
-        # Iterate through learned rules in self.results and check if they apply
         for rule in self.results:
-            if self.solver.succeeds_on(query, self.knowledge):
+            # Check if the rule head matches the substitution and the rule body is satisfied
+            if self.solver.succeeds_on(rule.head, self.knowledge, sigma=sigma):
                 matching_rules.append(str(rule))
         return matching_rules
+
+
+
     
     
 

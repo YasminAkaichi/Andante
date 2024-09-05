@@ -242,18 +242,6 @@ class AndanteProgram:
         """Add a Bk to an AndanteProgram from text"""
         self.knowledge.add(bk)
 
-    def add_background_knowledge_from_text(self, bk_text):
-        """Add new background knowledge to the AndanteProgram.
-        
-        Parameters
-        ----------
-        bk_text : str
-            Background knowledge in text format to be added to the knowledge base.
-        """
-        # Parse and add the new background knowledge
-        new_knowledge = self.parser.parse(bk_text, 'knowledge')
-        self.knowledge.add(new_knowledge)
-        print("Background knowledge added successfully.")
 
     def infer_and_explain(self, new_data):
 
@@ -391,3 +379,23 @@ class AndanteProgram:
             if self.solver.succeeds_on(query, self.knowledge):
                 matching_rules.append(str(rule))
         return matching_rules
+    
+    def add_background_knowledge_from_text(self, bk_text):
+        """Add new background knowledge to the AndanteProgram.
+    
+        Parameters
+        ----------
+        bk_text : str
+        Background knowledge in text format to be added to the knowledge base.
+        """
+        # Debug: Print the background knowledge text before parsing
+        print("Background knowledge being added:\n", bk_text)
+    
+        # Parse and add the new background knowledge
+        try:
+            #new_knowledge = self.parser.parse(bk_text, 'knowledge')
+            new_knowledge = self.parser.parse(bk_text, rule='background')
+            self.knowledge.add(new_knowledge)
+            print("Background knowledge added successfully.")
+        except Exception as e:
+            print(f"Error parsing background knowledge: {e}")

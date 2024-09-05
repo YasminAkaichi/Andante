@@ -30,6 +30,7 @@ from andante.utils import generate_variable_names
 import itertools
 import pandas
 import pickle
+import dill as pickle  
 
 class AndanteProgram:
     def __init__(self, options=None, knowledge=None, modes=None, examples=None,results=None,parameters=None):
@@ -228,15 +229,21 @@ class AndanteProgram:
     
     def save(self, filename):
         """Saves the current AndanteProgram instance to a file using pickle."""
+        solver_backup = self.solver  # Backup the solver
+        self.solver = None
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
+        self.solver = solver_backup  # Restore the solver
         print(f"AndanteProgram saved to {filename}")
 
     @staticmethod
     def load(filename):
         """Loads an AndanteProgram instance from a file."""
         with open(filename, 'rb') as f:
-            return pickle.load(f)
+            instance = pickle.load(f)
+        instance.solver = getattr(andante.solver, instance.options.solver)(options=instance.options)
+        return pickle.load(f)
+        
         
     def add_background_knowledge(self,bk):
         """Add a Bk to an AndanteProgram from text"""
@@ -290,7 +297,6 @@ class AndanteProgram:
 
     def query_with_explanation(self, q, new_facts=None, induce_new_rules=False, **temp_options):
         """Launch a query to the Andante solver, integrating new data and returning explanations.
-        
         Parameters
         ----------
         q : str or andante.logic_concepts.Goal
@@ -315,7 +321,7 @@ class AndanteProgram:
             if isinstance(new_facts, str):
                 new_facts = [new_facts]
             for fact in new_facts:
-                self.add_background_knowledge(fact)
+                self.add_background_knowledge_from_text(fact) 
 
         # Step 2: Induce new rules if requested
         if induce_new_rules:

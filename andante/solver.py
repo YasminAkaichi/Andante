@@ -103,20 +103,37 @@ class AndanteSolver(Solver):
         self.rem_temporary_options()
 
     def _query(self, atoms, knowledge, sigma, activated_rules):
-        """ Subfunction for query
-
-        This function takes a list of andante.logic_concepts.Atom as inputs and
-        otherwise works the same way as the query method.
         """
+        Subfunction for query.
+
+        This function takes a list of andante.logic_concepts.Atom as inputs and otherwise
+        works the same way as the query method. It yields substitutions and activated rules.
+
+        Parameters:
+        atoms (list): List of atoms to be proven true.
+        knowledge (Knowledge): Background knowledge used for querying.
+        sigma (Substitution): The current substitution.
+        activated_rules (list): A list to collect the activated rules during the query.
+
+        Yields:
+        Substitution, list: The resulting substitution and the list of activated rules.
+        """
+        # Initialize AndanteState with the current atoms and a copy of the substitution
         s = AndanteState(atoms, sigma.copy())
         alternate_states = []
         count_h = 0
+        
         while count_h < self.options.h:
             if not s.has_atoms():
+                # Ensure sigma is of the correct type before calling methods on it
                 if isinstance(s.sigma, Substitution):
-                    yield s.sigma.remove_excess_variables(sigma.variables), s.activated_rules
+                    # Yield the substitution and the activated rules
+                    yield s.sigma.remove_excess_variables(sigma.variables), activated_rules
                 else:
-                    yield s.sigma, s.activated_rules
+                    # In case sigma isn't a Substitution object (shouldn't happen), yield as-is
+                    yield s.sigma, activated_rules
+                
+                # Handle alternate states (backtracking)
                 if alternate_states:
                     s = alternate_states.pop()
                 else:
@@ -124,12 +141,15 @@ class AndanteSolver(Solver):
 
             self.verboseprint('\nh', count_h)
 
+            # Get the next atom to process
             atom = s.next_atom()
             atom = s.sigma.substitute(atom)
             self.verboseprint('Atom', atom)
 
+            # Handle comparison or "Is" expressions
             if isinstance(atom, (Comparison, Is)):
                 if not atom.evaluate(s.sigma):
+                    # If the expression fails, backtrack if possible
                     if not alternate_states:
                         return
                     else:
@@ -138,11 +158,13 @@ class AndanteSolver(Solver):
                 else:
                     continue
 
-            # If a clause has not yet been matched to the atom
+            # If no clause has been matched yet, attempt to match the atom with a clause
             if not s.next_clause:
                 # 1. Get all clauses whose head matches the atom
                 candidates = knowledge.match(atom)
                 self.verboseprint('Candidates', candidates)
+                
+                # If no candidates found, backtrack if possible
                 if not candidates:
                     if not alternate_states:
                         return
@@ -150,10 +172,12 @@ class AndanteSolver(Solver):
                         s = alternate_states.pop()
                         continue
 
-                # 2. Generate new atoms in state
+                # 2. Handle candidate clauses
                 c1, *c2n = candidates
                 s.next_clause = c1
-                activated_rules.append(c1)  # Track the activated rule (add clause to activated rules)
+                activated_rules.append(c1)  # Track the activated rule
+
+                # Add other candidate clauses to alternate states for future consideration
                 for c in reversed(c2n):
                     s_ = s.copy()
                     s_.next_clause = c
@@ -162,7 +186,7 @@ class AndanteSolver(Solver):
 
                 self.verboseprint('Match', candidates)
 
-            # 3.
+            # 3. Process the clause and unify with the atom
             count_h += 1
             clause = s.next_clause
             s.next_clause = None
@@ -170,7 +194,7 @@ class AndanteSolver(Solver):
 
             self.verboseprint('Clause', clause)
 
-            # Unification of two atoms
+            # Try to unify the atom with the clause head
             try:
                 s.sigma.unify(atom, clause.head)
             except SubstitutionError:
@@ -178,14 +202,16 @@ class AndanteSolver(Solver):
                 if not alternate_states:
                     return
                 else:
-                    curr_state = alternate_states.pop()
+                    s = alternate_states.pop()  # Backtrack
                     continue
 
             self.verboseprint('Substitution', s.sigma)
 
+            # Add the clause body atoms to the list of atoms to be processed
             for b in reversed(clause.body):
                 s.atoms.append(s.sigma.substitute(b))
             self.verboseprint('Atoms', s.atoms)
+
 
     def succeeds_on(self, q, knowledge, sigma=None, **temp_options):
         # For literals and atoms

@@ -18,7 +18,6 @@ It was done by Simon Jacquet at the University of Namur (https://www.unamur.be)
 in the period of October 1st 2021 to August 31st 2022 under the supervision of
 Isabelle Linden, Jean-Marie Jacquet and Wim Vanhoof. 
 """
-
 import collections
 
 class OrderedSet(collections.OrderedDict, collections.abc.MutableSet):

@@ -71,37 +71,38 @@ class AndanteSolver(Solver):
         if isinstance(q, (Atom, Negation)):
             q = Goal([q])
         assert isinstance(q, Goal)
-        
+
         self.add_temporary_options(**temp_options)
-        
+
         # Initialisation
         sigma0 = sigma.copy() if sigma is not None else Substitution()
-        sigma0.add_variables(q) # add variables from q to domain of sigma
-        
+        sigma0.add_variables(q)  # add variables from q to domain of sigma
+
         generators = [iter([sigma0])] + [None for _ in range(len(q))]
         i = 0
-        while i>=0:
-            sigma = next(generators[i],None)
+        activated_rules = []  # List to store activated rules
+        while i >= 0:
+            sigma = next(generators[i], None)
             if sigma is None:
-                i-=1 # backtrack
+                i -= 1  # backtrack
                 continue
-            if i==len(q):
-                yield sigma.remove_excess_variables(sigma0.variables)
+            if i == len(q):
+                yield sigma.remove_excess_variables(sigma0.variables), activated_rules
                 continue
-            
-            if isinstance(q[i], Atom):                
-                generators[i+1] = self._query([q[i]], knowledge, sigma)
-                i+=1
-            else: # isinstance(q[i], Negation)
+
+            if isinstance(q[i], Atom):
+                generators[i + 1] = self._query([q[i]], knowledge, sigma, activated_rules)
+                i += 1
+            else:  # isinstance(q[i], Negation)
                 success = self.succeeds_on(q[i].goal, knowledge, sigma=sigma)
                 if not success:
-                    generators[i+1] = iter([sigma])
-                    i+=1
+                    generators[i + 1] = iter([sigma])
+                    i += 1
                 # if success, nothing happens, the solution sigma is ignored
-                
+
         self.rem_temporary_options()
-            
-    def _query(self, atoms, knowledge, sigma):
+
+    def _query(self, atoms, knowledge, sigma, activated_rules):
         """ Subfunction for query
 
         This function takes a list of andante.logic_concepts.Atom as inputs and
@@ -112,18 +113,18 @@ class AndanteSolver(Solver):
         count_h = 0
         while count_h < self.options.h:
             if not s.has_atoms():
-                yield s.sigma
+                yield s.sigma, activated_rules
                 if alternate_states:
                     s = alternate_states.pop()
                 else:
                     return
-                
-            self.verboseprint('\nh', count_h)            
-            
-            atom = s.next_atom()            
+
+            self.verboseprint('\nh', count_h)
+
+            atom = s.next_atom()
             atom = s.sigma.substitute(atom)
             self.verboseprint('Atom', atom)
-            
+
             if isinstance(atom, (Comparison, Is)):
                 if not atom.evaluate(s.sigma):
                     if not alternate_states:
@@ -133,13 +134,13 @@ class AndanteSolver(Solver):
                         continue
                 else:
                     continue
-            
-            # If a clause has not yet be matched to the atom
+
+            # If a clause has not yet been matched to the atom
             if not s.next_clause:
                 # 1. Get all clauses whose head matches the atom
                 candidates = knowledge.match(atom)
                 self.verboseprint('Candidates', candidates)
-                if not candidates: 
+                if not candidates:
                     if not alternate_states:
                         return
                     else:
@@ -149,62 +150,64 @@ class AndanteSolver(Solver):
                 # 2. Generate new atoms in state
                 c1, *c2n = candidates
                 s.next_clause = c1
+                activated_rules.append(c1)  # Track the activated rule (add clause to activated rules)
                 for c in reversed(c2n):
                     s_ = s.copy()
                     s_.next_clause = c
                     s_.atoms.append(atom)
                     alternate_states.append(s_)
-                    
+
                 self.verboseprint('Match', candidates)
-                
-            # 3. 
-            count_h  += 1
-            clause   = s.next_clause
+
+            # 3.
+            count_h += 1
+            clause = s.next_clause
             s.next_clause = None
-            clause   = s.sigma.rename_variables(clause)
-            
+            clause = s.sigma.rename_variables(clause)
+
             self.verboseprint('Clause', clause)
-            
+
             # Unification of two atoms
             try:
                 s.sigma.unify(atom, clause.head)
             except SubstitutionError:
                 self.verboseprint('Unification failed.')
-                if not alternate_states: return
+                if not alternate_states:
+                    return
                 else:
                     curr_state = alternate_states.pop()
-                    continue       
-                    
+                    continue
+
             self.verboseprint('Substitution', s.sigma)
-                    
+
             for b in reversed(clause.body):
                 s.atoms.append(s.sigma.substitute(b))
             self.verboseprint('Atoms', s.atoms)
-            
+
     def succeeds_on(self, q, knowledge, sigma=None, **temp_options):
         # For literals and atoms
         assert isinstance(q, (Atom, Goal, Negation))
-        
+
         self.add_temporary_options(**temp_options)
-        
+
         if sigma is None:
             sigma = Substitution()
             sigma.add_variables(q)
         else:
             sigma = sigma.copy()
-            
-        if   isinstance(q, Negation):
+
+        if isinstance(q, Negation):
             output_gen = self.query(q.goal, knowledge, sigma=sigma)
             sol_exists = next(output_gen, None) is not None
-            success    = not sol_exists
+            success = not sol_exists
         else:
             output_gen = self.query(q, knowledge, sigma=sigma)
             sol_exists = next(output_gen, None) is not None
-            success    = sol_exists
-            
-        if sol_exists: # generator is not finished, we need to do the following manually
+            success = sol_exists
+
+        if sol_exists:  # generator is not finished, we need to do the following manually
             self.rem_temporary_options()
-        
+
         self.rem_temporary_options()
         return success
 

@@ -1,174 +1,121 @@
 % Mode Declarations
-modeh(*, recommend(+user, -movie)).
-modeb(*, m(+user)).
-modeb(*, f(+user)).
-modeb(*, b18to24(+user)).
-modeb(*, b25to34(+user)).
+modeh(*, recommend(+user, +movie)).
 modeb(*, b35to44(+user)).
-modeb(*, not_18to24(+user)).
-modeb(*, not_25to34(+user)).
-modeb(*, not_35to44(+user)).
-modeb(*, action(+movie)).
-modeb(*, comedy(+movie)).
+modeb(*, b25to34(+user)).
+modeb(*, b45to49(+user)).
+modeb(*, b50to55(+user)).
+modeb(*, plus56(+user)).
+modeb(*, b18to24(+user)).
+modeb(*, f(+user)).
+modeb(*, m(+user)).
+modeb(*, sci_fi(+movie)).
 modeb(*, drama(+movie)).
-modeb(*, musical(+movie)).
-modeb(*, not_action(+movie)).
-modeb(*, not_comedy(+movie)).
-modeb(*, not_drama(+movie)).
-modeb(*, not_musical(+movie)).
-modeb(*, watched(+user,-movie)).
-modeb(1, m(+user)).
-modeb(1, f(+user)).
-modeb(1, b18to24(+user)).
-modeb(1, b25to34(+user)).
-modeb(1, b35to44(+user)).
-modeb(1, not_18to24(+user)).
-modeb(1, not_25to34(+user)).
-modeb(1, not_35to44(+user)).
-modeb(1, action(+movie)).
-modeb(1, comedy(+movie)).
-modeb(1, drama(+movie)).
-modeb(1, musical(+movie)).
-modeb(1, not_action(+movie)).
-modeb(1, not_comedy(+movie)).
-modeb(1, not_drama(+movie)).
-modeb(1, not_musical(+movie)).
-modeb(1, watched(+user,-movie)).
+modeb(*, horror(+movie)).
+modeb(*, comedy(+movie)).
+modeb(*, adventure(+movie)).
+modeb(*, crime(+movie)).
+modeb(*, action(+movie)).
 
 % Determinations
-determination(recommend/2, m/1).
-determination(recommend/2, f/1).
-determination(recommend/2, b18to24/1).
-determination(recommend/2, b25to34/1).
 determination(recommend/2, b35to44/1).
-determination(recommend/2, not_18to24/1).
-determination(recommend/2, not_25to34/1).
-determination(recommend/2, not_35to44/1).
-determination(recommend/2, action/1).
-determination(recommend/2, comedy/1).
+determination(recommend/2, b25to34/1).
+determination(recommend/2, b45to49/1).
+determination(recommend/2, b50to55/1).
+determination(recommend/2, plus56/1).
+determination(recommend/2, b18to24/1).
+determination(recommend/2, f/1).
+determination(recommend/2, m/1).
+determination(recommend/2, sci_fi/1).
 determination(recommend/2, drama/1).
-determination(recommend/2, musical/1).
-determination(recommend/2, not_action/1).
-determination(recommend/2, not_comedy/1).
-determination(recommend/2, not_drama/1).
-determination(recommend/2, not_musical/1).
-determination(recommend/2, watched/2).
+determination(recommend/2, horror/1).
+determination(recommend/2, comedy/1).
+determination(recommend/2, adventure/1).
+determination(recommend/2, crime/1).
+determination(recommend/2, action/1).
 
 % Background Knowledge
 :- begin_bg.
+action(m1374).
+action(m1676).
+adventure(m1259).
+adventure(m2987).
+b18to24(u1433).
+b18to24(u1778).
+b18to24(u2777).
+b18to24(u3418).
+b18to24(u4103).
+b18to24(u4411).
+b18to24(u621).
+b25to34(u2840).
+b25to34(u3123).
+b25to34(u3539).
+b25to34(u4138).
+b25to34(u4560).
+b25to34(u4607).
+b25to34(u5077).
+b35to44(u1197).
+b45to49(u5127).
+b50to55(u4981).
+comedy(m19).
+comedy(m2596).
+comedy(m2888).
+comedy(m3909).
+comedy(m691).
+crime(m47).
+drama(m1178).
+drama(m1619).
+drama(m17).
+drama(m1960).
+drama(m337).
+drama(m924).
+f(u1433).
+f(u3418).
+f(u3539).
+horror(m1348).
+m(u1197).
+m(u1778).
+m(u2777).
+m(u2840).
+m(u3123).
+m(u4083).
+m(u4103).
+m(u4138).
+m(u4411).
+m(u4560).
+m(u4607).
+m(u4981).
+m(u5077).
+m(u5127).
+m(u621).
+plus56(u4083).
+sci_fi(m1206).
 
-not_25to34(A):- b18to24(A).
-not_35to44(A):- b18to24(A).
-%b18to24(A):- not_25to34(A), not_35to44(A).
-not_18to24(A):- b25to34(A).
-not_35to44(A):- b25to34(A).
-%b25to34(A):- not_18to24(A), not_35to44(A).
-not_18to24(A):- b35to44(A).
-not_25to34(A):- b35to44(A).
-%b35to44(A):- not_18to24(A), not_25to34(A).
-not_comedy(A) :- drama(A).
-not_comedy(A) :- musical(A).
-not_comedy(A) :- action(A).
-
-not_musical(A) :- drama(A).
-not_musical(A) :- action(A).
-not_musical(A) :- comedy(A).
-
-not_action(A) :- drama(A).
-not_action(A) :- musical(A).
-not_action(A) :- comedy(A).
-
-not_drama(A) :- musical(A).
-not_drama(A) :- action(A).
-not_drama(A) :- comedy(A).
-
-
-m(1780).
-not_18to24(1780).
-not_25to34(1780).
-b35to44(1780).
-m(2790).
-not_18to24(2790).
-b25to34(2790).
-not_35to44(2790).
-m(3192).
-b18to24(3192).
-not_25to34(3192).
-not_35to44(3192).
-f(3664).
-not_18to24(3664).
-not_25to34(3664).
-b35to44(3664).
-m(3925).
-not_18to24(3925).
-b25to34(3925).
-not_35to44(3925).
-m(3999).
-not_18to24(3999).
-not_25to34(3999).
-b35to44(3999).
-m(4577).
-not_18to24(4577).
-not_25to34(4577).
-b35to44(4577).
-m(5285).
-b18to24(5285).
-not_25to34(5285).
-not_35to44(5285).
-action(153).
-not_comedy(153).
-not_drama(153).
-not_musical(153).
-not_action(953).
-not_comedy(953).
-drama(953).
-not_musical(953).
-action(1722).
-not_comedy(1722).
-not_drama(1722).
-not_musical(1722).
-action(2692).
-not_comedy(2692).
-not_drama(2692).
-not_musical(2692).
-not_action(223).
-comedy(223).
-not_drama(223).
-not_musical(223).
-not_action(3176).
-not_comedy(3176).
-drama(3176).
-not_musical(3176).
-not_action(3392).
-comedy(3392).
-not_drama(3392).
-not_musical(3392).
-not_action(1947).
-not_comedy(1947).
-not_drama(1947).
-musical(1947).
-watched(3664,953).
-watched(5285,223).
-watched(2790,3176).
-watched(3999,1722).
-watched(3925,2692).
-watched(4577,1947).
-watched(1780,3392).
-watched(3192,153).
 
 :- end_bg.
+
 % Positive Examples
 :- begin_in_pos.
-recommend(3664,953).
-recommend(5285,223).
-recommend(2790,3176).
-recommend(3999,1722).
-recommend(3925,2692).
+recommend(u5127, m924).
+recommend(u4411, m1619).
+recommend(u4103, m1960).
+recommend(u3418, m47).
+recommend(u5077, m1348).
+recommend(u3539, m2596).
+recommend(u3123, m2987).
+recommend(u621, m1259).
+recommend(u4138, m17).
+recommend(u4607, m1178).
+
 :- end_in_pos.
 
 % Negative Examples
 :- begin_in_neg.
-recommend(4577,1947).
-recommend(1780,3392).
-recommend(3192,153).
+recommend(u1778, m2888).
+recommend(u4981, m691).
+recommend(u2840, m19).
+recommend(u2777, m1374).
+recommend(u4083, m1206).
+recommend(u1433, m1676).
+recommend(u1197, m3909).
+recommend(u4560, m337).
 :- end_in_neg.

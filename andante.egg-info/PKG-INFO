@@ -3,3 +3,6 @@ Name: andante
 Version: 1.0
 License-File: LICENSE
 License-File: license_header
+Requires-Dist: parsimonious>=0.8.1
+Requires-Dist: dataclasses>=0.6
+Requires-Dist: ipywidgets>=7.6.5

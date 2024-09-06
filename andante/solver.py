@@ -113,7 +113,10 @@ class AndanteSolver(Solver):
         count_h = 0
         while count_h < self.options.h:
             if not s.has_atoms():
-                yield s.sigma, activated_rules
+                if isinstance(s.sigma, Substitution):
+                    yield s.sigma.remove_excess_variables(sigma.variables), s.activated_rules
+                else:
+                    yield s.sigma, s.activated_rules
                 if alternate_states:
                     s = alternate_states.pop()
                 else:
